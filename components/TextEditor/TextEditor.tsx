@@ -152,7 +152,9 @@ export default function TextEditor({ blog, saveBlogPost }: Props) {
     textDirection.current = textDirection.current === "ltr" ? "rtl" : "ltr";
   };
 
-  const onSaveBlogPost = (ev: MouseEvent<HTMLButtonElement>) => {};
+  const onSaveBlogPost = (ev: MouseEvent<HTMLButtonElement>) => {
+    saveBlogPost(blogPost);
+  };
 
   return (
     <section className="p-4 border border-gray-300 rounded text-black  bg-white">

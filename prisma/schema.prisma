@@ -19,15 +19,15 @@ model BlogPost {
   content     String
   published   Boolean
   createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  tags        Tag[]         @relation(references: [id])
+  updatedAt   DateTime?      @updatedAt
+  tags        Tag[]
   BlogPostTag BlogPostTag[]
 }
 
 model Tag {
   id          Int           @id @default(autoincrement())
   name        String        @unique
-  blogPosts   BlogPost[]    @relation(references: [id])
+  blogPosts   BlogPost[]
   BlogPostTag BlogPostTag[]
 }
 
