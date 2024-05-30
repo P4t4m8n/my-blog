@@ -13,6 +13,11 @@ import {
 } from "react";
 import { useModal } from "../hooks/useModal";
 import PlusSVG from "../svgs/PlusSVG";
+import BoldSVG from "../svgs/BoldSVG";
+import UnderlineSVG from "../svgs/UnderlineSVG";
+import ItalicSVG from "../svgs/ItalicSVG";
+import LinkSVG from "../svgs/LinkSVG";
+import TextDirSVG from "../svgs/TextDirSVG";
 
 interface Props {
   blog: BlogPostModel;
@@ -26,7 +31,7 @@ export default function TextEditor({ blog, saveBlogPost }: Props) {
   const tagsModelRef = useRef<HTMLUListElement>(null);
   const [blogPost, setBlogPost] = useState<BlogPostModel>(blog);
   const [isTagsModel, setTagsModelOpen] = useModal(tagsModelRef, null);
-  const textDirection = useRef<Direction>("ltr");
+  const [textDirection, setTexDirection] = useState<Direction>("ltr");
 
   const tags = getTags();
 
@@ -148,8 +153,7 @@ export default function TextEditor({ blog, saveBlogPost }: Props) {
   };
 
   const toggleDirection = () => {
-    console.log("textDirection.current:", textDirection.current);
-    textDirection.current = textDirection.current === "ltr" ? "rtl" : "ltr";
+    setTexDirection((prevDir) => (prevDir === "ltr" ? "rtl" : "ltr"));
   };
 
   const onSaveBlogPost = (ev: MouseEvent<HTMLButtonElement>) => {
@@ -163,31 +167,31 @@ export default function TextEditor({ blog, saveBlogPost }: Props) {
           onClick={() => applyFormat("bold")}
           className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
         >
-          Bold
+          <BoldSVG />
         </button>
         <button
           onClick={() => applyFormat("italic")}
           className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
         >
-          Italic
+          <ItalicSVG />
         </button>
         <button
           onClick={() => applyFormat("underline")}
           className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
         >
-          Underline
+          <UnderlineSVG />
         </button>
         <button
           onClick={() => applyFormat("link")}
           className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
         >
-          Insert Link
+          <LinkSVG />
         </button>
         <button
           onClick={toggleDirection}
           className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
         >
-          {textDirection.current === "ltr" ? "Switch to RTL" : "Switch to LTR"}
+          <TextDirSVG textDirection={textDirection} />
         </button>
         <div onClick={() => setTagsModelOpen(true)} className=" relative">
           Tags
@@ -238,7 +242,7 @@ export default function TextEditor({ blog, saveBlogPost }: Props) {
         onInput={handleInput}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        style={{ direction: textDirection.current }}
+        style={{ direction: textDirection }}
       ></div>
       <div>
         <h3 className=" text-black">{blogPost.content.length} - length</h3>
