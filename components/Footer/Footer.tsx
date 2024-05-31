@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className=" sticky bottom-0 pb-4 max-h-16  flex justify-between items-center ">
+    <footer className=" rounded-lg p-4 text-customLight bg-customDark sticky  max-h-20  flex justify-between items-center ">
       <div className=" space-y-1">
         <h3>Contact me</h3>
         <h3>lifeinabox@gmail.com</h3>

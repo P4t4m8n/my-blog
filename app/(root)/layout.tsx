@@ -1,6 +1,5 @@
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
-import React from "react";
 
 export default function layout({
   children,
@@ -8,7 +7,7 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className=" min-h-screen grid gap-4 px-8">
+    <main className=" min-h-screen relative grid gap-6 p-4">
       <Header />
       {children}
       <Footer />

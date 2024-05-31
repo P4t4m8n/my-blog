@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "npx tsc prisma/seed.ts && node prisma/seed.js",
+    "migrate": "npx prisma migrate dev",
+    "reset": "npx prisma migrate reset",
+    "purge":"npx tsc prisma/deleteAllBlogPosts.ts && node prisma/deleteAllBlogPosts.js"
   },
   "dependencies": {
     "@next/env": "^14.2.3",

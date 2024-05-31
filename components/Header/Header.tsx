@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Header() {
   return (
-    <header className=" pt-4 sticky top-0 max-h-16 flex justify-between items-center">
+    <header className="  z-10 after-header-bg font-workSans bg-customDark text-customLight pt-4 sticky p-4 top-[1rem] max-h-16 flex justify-between items-center rounded-t-lg">
       <Image
         priority={true}
         src="/logo.png"
@@ -12,9 +12,9 @@ export default function Header() {
         width={64}
         height={64}
       />
-      <nav className=" space-x-4">
+      <nav className="nav-links space-x-4">
         <Link href="/">Home</Link>
-        <Link href="/Blog">Blog</Link>
+        <Link href="/blog">Blog</Link>
         <Link href="/about">About</Link>
       </nav>
       <div className=" space-x-4">

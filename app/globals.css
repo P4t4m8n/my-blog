@@ -2,32 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.after-header-bg::after {
+  content: "";
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  display: block;
+  background-color: #222831;
+  height: 1rem;
+  width: 100%;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+.after-header-bg::before {
+  content: "";
+  position: absolute;
+  top: 4rem;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+  width: calc(100% - 2rem);
+  border-top: 2px solid #eeeeee;
+}
+.nav-links > a {
+  @apply focus:underline;
+}
+.card-curve-before::before {
+  --border-r: 1rem;
+  content: "";
+  width: var(--border-r);
+  height: var(--border-r);
+  position: absolute;
+  border-radius: 100vw;
+  right: -15%;
+  rotate: 90deg;
+  bottom: 0;
+  z-index: 0;
+  border-radius: 0 0 100vw 0;
+  box-shadow: 10px 10px 0 10px white;
+}
+.card-curve-after::after {
+  --border-r: 1rem;
+  content: "";
+  width: var(--border-r);
+  height: var(--border-r);
+  position: absolute;
+  border-radius: 100vw;
+  right: calc(var(--border-r) * -1);
+  rotate: 180deg;
+  top: 0;
+  z-index: 0;
+  border-radius: 0 0 100vw 0;
+  box-shadow: 10px 10px 0 10px white;
+}
+.zoom-hover-container {
+  position: relative;
+  overflow: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.zoom-hover-container img {
+  transition: transform 0.3s ease;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.zoom-hover-container:hover img {
+  transform: scale(1.05);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
 }
