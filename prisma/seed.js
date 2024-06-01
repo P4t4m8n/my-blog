@@ -58,7 +58,7 @@ function main() {
                     randomTags = tagNames
                         .sort(function () { return 0.5 - Math.random(); })
                         .slice(0, Math.floor(Math.random() * tagNames.length) + 1);
-                    imgs = imgUrls.slice(Math.floor(Math.random() * Math.floor(imgUrls.length / 3)), Math.floor(Math.random() * Math.floor(imgUrls.length)) + 1);
+                    imgs = [imgUrls[i]];
                     return [4 /*yield*/, prismaClient_1.prisma.blogPost.create({
                             data: {
                                 title: title,

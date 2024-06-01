@@ -14,10 +14,12 @@ async function main() {
     const randomTags = tagNames
       .sort(() => 0.5 - Math.random())
       .slice(0, Math.floor(Math.random() * tagNames.length) + 1);
-    const imgs = imgUrls.slice(
-      Math.floor(Math.random() * Math.floor(imgUrls.length / 3)),
-      Math.floor(Math.random() * Math.floor(imgUrls.length )) + 1
-    );
+    // const imgs = imgUrls.slice(
+    //   Math.floor(Math.random() * Math.floor(imgUrls.length / 3)),
+    //   Math.floor(Math.random() * Math.floor(imgUrls.length )) + 1
+    // );
+
+    const imgs = [imgUrls[i]];
 
     await prisma.blogPost.create({
       data: {

@@ -1,10 +1,15 @@
-import { BlogPostModel } from "@/models/blogPost.model";
+import { BlogPostDTO, BlogPostModel } from "@/models/blogPost.model";
+
 export const getEmptyBlogPost = (): BlogPostModel => {
   return {
     id: "",
     title: "",
     content: "",
+    description: "",
     published: false,
+    readTime: 0,
+    mainTag: "",
+    imgs: [],
     createdAt: new Date(),
     updatedAt: new Date(),
     tags: [],
@@ -24,4 +29,22 @@ export const calculateReadingTime = (text: string): number => {
   const readingTimeMinutes = words / wordsPerMinute;
 
   return readingTimeMinutes;
+};
+
+export const blogPostDTOtoModel = (dto: BlogPostDTO[]): BlogPostModel[] => {
+  return dto.map((post) => {
+    return {
+      id: post.id,
+      title: post.title,
+      content: post.content,
+      description: post.description,
+      imgs: post.imgs,
+      readTime: post.readTime,
+      published: post.published,
+      mainTag: post.mainTag,
+      createdAt: post.createdAt,
+      updatedAt: post.updatedAt,
+      tags: post.tags.map((tag) => tag.name),
+    };
+  });
 };
