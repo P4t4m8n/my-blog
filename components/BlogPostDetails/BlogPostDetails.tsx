@@ -2,6 +2,7 @@ import { getBlogById } from "@/service/blog.server";
 import Image from "next/image";
 import BackSVG from "../svgs/BackSVG";
 import SocialMediaSVGS from "../svgs/SocialMediaSVGS";
+import { redirect } from "next/navigation";
 
 interface Props {
   BlogPostId: string;
@@ -25,8 +26,8 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
   return (
     <section className=" flex flex-col gap-12 bg-customDark rounded-lg px-16 p-4 text-customLight font-bitter">
       <header className=" ml-detailsHeaderLeft">
-        <div className="flex items-center  gap-4">
-          <button className=" bg-customTeal rounded-full">
+        <div className="flex items-center">
+          <button className=" bg-customTeal rounded-full mr-32">
             <BackSVG />
           </button>
           <h1 className=" text-4xl font-bold">{title}</h1>
