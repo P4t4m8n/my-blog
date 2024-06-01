@@ -8,10 +8,8 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      margin: {
+        detailsHeaderLeft: "calc(20% + 1rem)",
       },
       minHeight: { "screen-minus-sticky": "calc(100vh - 12rem)" },
       maxHeight: { "screen-minus-sticky": "calc(100vh - 16rem)" },
@@ -21,9 +19,9 @@ const config: Config = {
         customTeal: "#00ADB5",
         customLight: "#EEEEEE",
         customCardBgYellow: "#F9ED69",
-        customCardBgOrange: "F08A5D",
-        customCardBgMaroon: "B83B5E",
-        customCardBgPurple: "6A2C70",
+        customCardBgOrange: "#F08A5D",
+        customCardBgMaroon: "#B83B5E",
+        customCardBgPurple: "#6A2C70",
       },
       fontFamily: {
         bitter: ["var(--font-bitter)"],

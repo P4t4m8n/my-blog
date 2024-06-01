@@ -76,3 +76,18 @@
   -ms-overflow-style: none; /* For Internet Explorer and Edge */
   scrollbar-width: none; /* For Firefox */
 }
+
+.border-longer::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -2rem;
+  width: calc(100% + 4rem);
+  display: block;
+  border-bottom: 1px solid white;
+  background-color: #eeeeee;
+}
+
+.shape-outside {
+  shape-outside: circle(50%);
+}

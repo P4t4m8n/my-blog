@@ -1,4 +1,6 @@
+import BlogPostDetails from "@/components/BlogPostDetails/BlogPostDetails";
 import { getBlogById } from "@/service/blog.server";
+import { Suspense } from "react";
 
 interface Props {
   params: { id: string };
@@ -6,6 +8,9 @@ interface Props {
 
 export default async function BlogDetails({ params }: Props) {
   const { id } = params;
-  const blogPost = await getBlogById(id);
-  return <section></section>;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BlogPostDetails BlogPostId={id} />
+    </Suspense>
+  );
 }
