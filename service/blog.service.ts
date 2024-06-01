@@ -1,4 +1,9 @@
-import { BlogPostDTO, BlogPostModel } from "@/models/blogPost.model";
+import {
+  BlogPostDTO,
+  BlogPostModel,
+  SmallBlogPostDTO,
+  SmallBlogPostModel,
+} from "@/models/blogPost.model";
 
 export const getEmptyBlogPost = (): BlogPostModel => {
   return {
@@ -31,7 +36,24 @@ export const calculateReadingTime = (text: string): number => {
   return readingTimeMinutes;
 };
 
-export const blogPostDTOtoModel = (dto: BlogPostDTO[]): BlogPostModel[] => {
+export const convertSmallBlogPostDTOsToSmallModels = (
+  dto: SmallBlogPostDTO[]
+): SmallBlogPostModel[] => {
+  return dto.map((post) => {
+    return {
+      id: post.id,
+      title: post.title,
+      description: post.description,
+      img: post.imgs[0],
+      readTime: post.readTime,
+      mainTag: post.mainTag,
+      createdAt: post.createdAt,
+    };
+  });
+};
+export const convertBlogPostDTOsToModels = (
+  dto: BlogPostDTO[]
+): BlogPostModel[] => {
   return dto.map((post) => {
     return {
       id: post.id,

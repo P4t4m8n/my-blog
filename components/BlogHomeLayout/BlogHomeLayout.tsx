@@ -1,7 +1,7 @@
 import BlogHomeList from "./BlogHomeList/BlogHomeList";
-import { getBlogPosts } from "@/service/blog.server";
+import { getSmallBlogPosts } from "@/service/blog.server";
 export default async function BlogHomeLayout() {
-  const blogs = await getBlogPosts({ orderBy: "desc" });
+  const blogs = await getSmallBlogPosts({ orderBy: "desc" });
 
   return (
     <section className="hide-scrollbar">

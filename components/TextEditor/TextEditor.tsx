@@ -51,7 +51,6 @@ export default function TextEditor({ blog, saveBlogPost }: Props) {
   ) => {
     ev.preventDefault();
     const { type } = ev;
-    console.log("type:", type);
     if (type === "input") {
       const content = editorRef.current?.innerHTML || "";
       setBlogPost((prevState) => ({ ...prevState, content }));

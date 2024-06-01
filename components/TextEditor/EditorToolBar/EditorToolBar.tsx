@@ -1,4 +1,3 @@
-import React from "react";
 
 export default function EditorToolBar() {
   const formatText = (command: string, value = null) => {};

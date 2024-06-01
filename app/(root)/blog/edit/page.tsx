@@ -2,7 +2,7 @@ import TextEditor from "@/components/TextEditor/TextEditor";
 import { BlogPostModel } from "@/models/blogPost.model";
 import { prisma } from "@/prisma/prismaClient";
 import { getBlogById } from "@/service/blog.server";
-import { getEmptyBlogPost } from "@/service/blog.service";
+import { calculateReadingTime, getEmptyBlogPost } from "@/service/blog.service";
 
 export default async function BlogEdit({
   searchParams,
@@ -15,6 +15,12 @@ export default async function BlogEdit({
       data: {
         title: blogPost.title,
         content: blogPost.content,
+        description: blogPost.description,
+        bgColor: "#fff",
+        readTime: calculateReadingTime(blogPost.content),
+        imgs: blogPost.imgs || [],
+        mainTag: blogPost.mainTag,
+
         published: false,
         tags: {
           connectOrCreate: blogPost.tags.map((tag) => ({
@@ -24,7 +30,6 @@ export default async function BlogEdit({
         },
       },
     });
-    console.log("savedBlog:", savedBlog);
   };
 
   let blog;

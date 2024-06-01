@@ -1,21 +1,19 @@
-import { BlogPostModel } from "@/models/blogPost.model";
+import { SmallBlogPostModel } from "@/models/blogPost.model";
 import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
-  blogPost: BlogPostModel;
+  blogPost: SmallBlogPostModel;
   isFirst: boolean;
 }
 export default function BlogHomePreview({ blogPost, isFirst }: Props) {
-  console.log("isFirst:", isFirst);
-  if (isFirst) console.log("blogPost:", blogPost);
-  const { title, description, imgs, readTime, createdAt, mainTag, id } =
+  const { title, description, img, readTime, createdAt, mainTag, id } =
     blogPost;
   return (
     <Link href={`/blog/${id}`}>
       <Image
         className="rounded-2xl shadow-md hover:bac"
-        src={imgs[0]}
+        src={img || "/images/placeholder.jpg"}
         alt={title}
         fill={true}
       />

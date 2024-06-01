@@ -1,14 +1,27 @@
-export interface BlogPostModel {
+export interface SmallBlogPostModel {
   id?: string;
   title: string;
-  content: string;
   description: string;
-  imgs: string[];
   readTime: number;
-  published: boolean;
   mainTag: string;
   createdAt: Date;
-  updatedAt?: Date|null;
+  img?: string;
+}
+export interface SmallBlogPostDTO {
+  id?: string;
+  title: string;
+  description: string;
+  readTime: number;
+  mainTag: string;
+  createdAt: Date;
+  imgs: string[];
+}
+
+export interface BlogPostModel extends SmallBlogPostModel {
+  content: string;
+  imgs: string[];
+  published: boolean;
+  updatedAt?: Date | null;
   tags: string[];
 }
 

@@ -1,8 +1,8 @@
-import { BlogPostModel } from "@/models/blogPost.model";
+import { SmallBlogPostModel } from "@/models/blogPost.model";
 import BlogHomePreview from "../BlogHomePreview/BlogHomePreview";
 
 interface Props {
-  blogPosts: BlogPostModel[];
+  blogPosts: SmallBlogPostModel[];
 }
 
 export default function BlogHomeList({ blogPosts }: Props) {
