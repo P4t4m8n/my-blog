@@ -30,7 +30,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "components/BlogPostDetails"
   ],
   "exclude": ["node_modules"]
 }

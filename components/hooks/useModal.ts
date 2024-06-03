@@ -17,6 +17,7 @@ export const useModal = (
   }, [open, ref.current]);
 
   const checkClickOutside = (ev: any) => {
+    console.log("ref.current:", ref.current);
     if (!ev.target) return;
     if (!open) return;
 

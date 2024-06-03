@@ -4,7 +4,7 @@ import { BlogPostModel, SmallBlogPostModel } from "@/models/blogPost.model";
 import {
   convertBlogPostDTOsToModels,
   convertSmallBlogPostDTOsToSmallModels,
-} from "./blog.service";
+} from "../service/blog.service";
 import { FilterSortBy } from "@/models/filterSortBy";
 import { prisma } from "@/prisma/prismaClient";
 

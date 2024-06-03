@@ -1,5 +1,7 @@
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
+import LoginModel from "@/components/Login/LoginModel/LoginModel";
+import { AuthProvider } from "@/components/contexts/AuthContext/AuthContext";
 
 export default function layout({
   children,
@@ -8,9 +10,12 @@ export default function layout({
 }>) {
   return (
     <main className=" min-h-screen relative grid  p-4">
-      <Header />
-      {children}
-      <Footer />
+      <AuthProvider>
+        <Header />
+        {children}
+        <Footer />
+        <LoginModel/>
+      </AuthProvider>
     </main>
   );
 }

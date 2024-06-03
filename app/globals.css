@@ -91,3 +91,18 @@
 .shape-outside {
   shape-outside: circle(50%);
 }
+
+input {
+  box-shadow: none;
+  outline: none;
+}
+
+body:has(.model) {
+  .model,
+  .model * {
+    pointer-events: all;
+  }
+  :not(.model, .model *) {
+    pointer-events: none;
+  }
+}

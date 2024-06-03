@@ -8,8 +8,8 @@ const TextEditor = dynamic(
 
 import { BlogPostModel } from "@/models/blogPost.model";
 import { prisma } from "@/prisma/prismaClient";
-import { getBlogById } from "@/service/blog.server";
 import { calculateReadingTime, getEmptyBlogPost } from "@/service/blog.service";
+import { getBlogById } from "@/server/blog.server";
 
 export default async function BlogEdit({
   searchParams,

@@ -1,9 +1,9 @@
-import { getBlogById } from "@/service/blog.server";
 import Image from "next/image";
 import SocialMediaSVGS from "../svgs/SocialMediaSVGS";
 import BackButton from "../Buttons/BackButton";
 import { JSDOM } from 'jsdom';
 import DOMPurify from 'dompurify';
+import { getBlogById } from "@/server/blog.server";
 interface Props {
   BlogPostId: string;
 }

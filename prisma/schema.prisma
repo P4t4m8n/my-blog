@@ -47,3 +47,15 @@ model BlogPostTag {
   @@index([tagId], name: "tag_id")
   @@index([blogPostId], name: "blog_post_id")
 }
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  username  String
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
