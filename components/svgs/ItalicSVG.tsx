@@ -11,8 +11,8 @@ export default function ItalicSVG() {
         {" "}
         <path
           d="M10 3H20M4 21H14M15 3L9 21"
-          stroke="#000000"
-          strokeWidth="2"
+          className=" stroke-customDark"
+          strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
         ></path>{" "}

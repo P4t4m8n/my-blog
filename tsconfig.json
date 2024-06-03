@@ -10,6 +10,10 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+
+    "target": "es2015",
+    "downlevelIteration": true,
+
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
@@ -21,6 +25,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/BlogPostDetails"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "components/BlogPostDetails"
+  ],
   "exclude": ["node_modules"]
 }

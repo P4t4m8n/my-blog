@@ -17,7 +17,7 @@ import BoldSVG from "../svgs/BoldSVG";
 import UnderlineSVG from "../svgs/UnderlineSVG";
 import ItalicSVG from "../svgs/ItalicSVG";
 import LinkSVG from "../svgs/LinkSVG";
-import TextDirSVG from "../svgs/TextDirSVG";
+import TextDirSVG from "../svgs/TextDirSVGs";
 
 interface Props {
   blog: BlogPostModel;
@@ -74,10 +74,13 @@ export default function TextEditor({ blog, saveBlogPost }: Props) {
 
   const applyFormat = (format: Format) => {
     const selection: Selection | null = window.getSelection();
+    console.log("selection:", selection)
     if (!selection || (selection && !selection.rangeCount)) return;
     const range: Range = selection.getRangeAt(0);
+    console.log("range:", range)
 
     let selectedText = range.extractContents();
+    console.log("selectedText:", selectedText)
     let span = document.createElement("span");
 
     switch (format) {
