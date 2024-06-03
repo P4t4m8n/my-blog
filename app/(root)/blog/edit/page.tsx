@@ -1,7 +1,6 @@
-import TextEditor from "@/components/TextEditor/TextEditor";
 import dynamic from "next/dynamic";
-const TextEditorTest = dynamic(
-  () => import("../../../../components/TextEditor/test"),
+const TextEditor = dynamic(
+  () => import("../../../../components/TextEditor/Texteditor"),
   {
     ssr: false,
   }
@@ -137,8 +136,7 @@ export default async function BlogEdit({
   };
   return (
     <section className=" min-h-screen-minus-sticky">
-      {/* <TextEditor saveBlogPost={onSaveBlogPost} blog={blog} /> */}
-      <TextEditorTest />
+      <TextEditor/>
     </section>
   );
 }

@@ -1,9 +1,9 @@
 import { getBlogById } from "@/service/blog.server";
 import Image from "next/image";
-import BackSVG from "../svgs/BackSVG";
 import SocialMediaSVGS from "../svgs/SocialMediaSVGS";
-import { redirect } from "next/navigation";
-
+import BackButton from "../Buttons/BackButton";
+import { JSDOM } from 'jsdom';
+import DOMPurify from 'dompurify';
 interface Props {
   BlogPostId: string;
 }
@@ -23,13 +23,15 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
     updatedAt,
   } = blogPost;
 
+ 
+  const window = new JSDOM('').window;
+  const purify = DOMPurify(window);
+  const markUp = purify.sanitize(content)
   return (
     <section className=" flex flex-col gap-12 bg-customDark rounded-lg px-16 p-4 text-customLight font-bitter">
       <header className=" ml-detailsHeaderLeft">
         <div className="flex items-center">
-          <button className=" bg-customTeal rounded-full mr-32">
-            <BackSVG />
-          </button>
+          <BackButton />
           <h1 className=" text-4xl font-bold">{title}</h1>
         </div>
         <div className=" mt-[5%] flex items-center  ">
@@ -91,7 +93,7 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
           </div>
         </div>
         <main>
-          <article>{content}</article>
+          <article>{markUp}</article>
           <div>
             <h3 className=" text-4xl text-customTeal mt-8">Tags</h3>
             <ul className="mt-8 flex gap-4 flex-wrap">

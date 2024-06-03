@@ -1,260 +1,165 @@
 "use client";
+import { useState, useEffect } from "react";
+import ReactQuill, { Quill } from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import hljs from "highlight.js";
+import "highlight.js/styles/monokai-sublime.css"; // Import Highlight.js styles
 
-import { BlogPostModel } from "@/models/blogPost.model";
-import { getTags } from "@/service/blog.service";
-import {
-  ChangeEvent,
-  DragEvent,
-  FormEvent,
-  MouseEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useModal } from "../hooks/useModal";
-import PlusSVG from "../svgs/PlusSVG";
-import BoldSVG from "../svgs/BoldSVG";
-import UnderlineSVG from "../svgs/UnderlineSVG";
-import ItalicSVG from "../svgs/ItalicSVG";
-import LinkSVG from "../svgs/LinkSVG";
-import TextDirSVG from "../svgs/TextDirSVGs";
+// Custom fonts
+const fonts = [
+  "Arial",
+  "Courier",
+  "Garamond",
+  "Tahoma",
+  "Times New Roman",
+  "Verdana",
+];
+const Font = Quill.import("formats/font") as any;
+Font.whitelist = fonts;
+Quill.register(Font, true);
+// Register Syntax module
+Quill.register("modules/syntax", true);
+// Register History module
+const History = Quill.import("modules/history");
+Quill.register("modules/history", History, true);
+/////////////*******************//////////////////
+const TextEditor = () => {
+  const [content, setContent] = useState("");
 
-interface Props {
-  blog: BlogPostModel;
-  saveBlogPost: (blogPost: BlogPostModel) => void;
-}
-type Direction = "ltr" | "rtl";
-type Format = "bold" | "italic" | "underline" | "link";
-
-export default function TextEditor({ blog, saveBlogPost }: Props) {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const tagsModelRef = useRef<HTMLUListElement>(null);
-  const [blogPost, setBlogPost] = useState<BlogPostModel>(blog);
-  const [isTagsModel, setTagsModelOpen] = useModal(tagsModelRef, null);
-  const [textDirection, setTexDirection] = useState<Direction>("ltr");
-
-  const tags = getTags();
-
+  // Load content from localStorage when the component mounts
   useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.innerHTML = blogPost.content;
+    const savedContent = localStorage.getItem("quill-content");
+    if (savedContent) {
+      setContent(savedContent);
     }
   }, []);
 
-  const handleInput = (
-    ev:
-      | FormEvent<HTMLDivElement>
-      | ChangeEvent<HTMLInputElement>
-      | MouseEvent<HTMLButtonElement>,
-    isRemove?: boolean,
-    tag?: string
-  ) => {
-    ev.preventDefault();
-    const { type } = ev;
-    if (type === "input") {
-      const content = editorRef.current?.innerHTML || "";
-      setBlogPost((prevState) => ({ ...prevState, content }));
-    } else if (type === "change") {
-      const title = (ev.target as HTMLInputElement).value;
-      setBlogPost((prevState) => ({ ...prevState, title }));
-    } else if (type === "click") {
-      if (isRemove) {
-        setBlogPost((prevState) => ({
-          ...prevState,
-          tags: prevState.tags.filter((_tag) => _tag !== tag),
-        }));
-      } else {
-        setBlogPost((prevState) => ({
-          ...prevState,
-          tags: [...prevState.tags, tag!],
-        }));
-      }
-    }
+  // Save content to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("quill-content", content);
+  }, [content]);
+
+  const handleChange = (value: string) => {
+    setContent(value);
   };
 
-  const applyFormat = (format: Format) => {
-    const selection: Selection | null = window.getSelection();
-    console.log("selection:", selection)
-    if (!selection || (selection && !selection.rangeCount)) return;
-    const range: Range = selection.getRangeAt(0);
-    console.log("range:", range)
-
-    let selectedText = range.extractContents();
-    console.log("selectedText:", selectedText)
-    let span = document.createElement("span");
-
-    switch (format) {
-      case "bold":
-        span.style.fontWeight = "bold";
-        break;
-      case "italic":
-        span.style.fontStyle = "italic";
-        break;
-      case "underline":
-        span.style.textDecoration = "underline";
-        break;
-        // case "link":
-        //   const url = prompt("Enter URL:", "http://");
-        //   if (url) {
-        //     span = document.createElement("a");
-        //     span.href = url;
-        //     span.target = "_blank";
-        //   }
-        break;
-      default:
-        break;
-    }
-
-    span.appendChild(selectedText);
-    range.insertNode(span);
-
-    // Move the cursor after the inserted node
-    range.setStartAfter(span);
-    range.setEndAfter(span);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  };
-
-  const handleDragOver = (ev: DragEvent<HTMLDivElement>) => {
-    ev.preventDefault();
-  };
-
-  const handleDrop = (ev: DragEvent<HTMLDivElement>) => {
-    ev.preventDefault();
-    const files = ev.dataTransfer.files;
-
-    if (files.length > 0) {
-      const file = files[0];
-      if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          insertImageAtCursor(event.target?.result as string);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-  };
-
-  const insertImageAtCursor = (imageUrl: string) => {
-    const imgElement = document.createElement("img");
-    imgElement.src = imageUrl;
-    imgElement.style.maxWidth = "100%";
-
-    const selection = window.getSelection();
-    if (!selection?.rangeCount) return;
-
-    const range = selection.getRangeAt(0);
-    range.deleteContents();
-    range.insertNode(imgElement);
-
-    // Move the cursor after the image
-    range.setStartAfter(imgElement);
-    range.setEndAfter(imgElement);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  };
-
-  const toggleDirection = () => {
-    setTexDirection((prevDir) => (prevDir === "ltr" ? "rtl" : "ltr"));
-  };
-
-  const onSaveBlogPost = (ev: MouseEvent<HTMLButtonElement>) => {
-    saveBlogPost(blogPost);
+  const handleSave = () => {
+    console.log("Editor content:", content);
+    // Here you can add the code to save the content to the database
   };
 
   return (
-    <section className="p-4 border border-gray-300 rounded text-black  bg-white">
-      <div className="mb-2 flex space-x-2">
-        <button
-          onClick={() => applyFormat("bold")}
-          className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-        >
-          <BoldSVG />
-        </button>
-        <button
-          onClick={() => applyFormat("italic")}
-          className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-        >
-          <ItalicSVG />
-        </button>
-        <button
-          onClick={() => applyFormat("underline")}
-          className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-        >
-          <UnderlineSVG />
-        </button>
-        <button
-          onClick={() => applyFormat("link")}
-          className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-        >
-          <LinkSVG />
-        </button>
-        <button
-          onClick={toggleDirection}
-          className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-        >
-          <TextDirSVG textDirection={textDirection} />
-        </button>
-        <div onClick={() => setTagsModelOpen(true)} className=" relative">
-          Tags
-          {isTagsModel && (
-            <ul
-              ref={tagsModelRef}
-              className=" absolute flex flex-col gap-4 top-full min-w-fit"
-            >
-              {tags.map((tag) => {
-                const isRemoved = blogPost.tags.some((_tag) => tag === _tag);
-                return (
-                  <li
-                    key={tag}
-                    className=" items-center j flex justify-between gap-8 min-w-fit bg-slate-600"
-                  >
-                    <span>{tag}</span>
-                    <button
-                      onClick={(ev) => handleInput(ev, isRemoved, tag)}
-                      className=" "
-                    >
-                      <PlusSVG isRemove={isRemoved} />
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
+    <div>
+      <div id="toolbar-container">
+        <span className="ql-formats">
+          <select className="ql-font">
+            {fonts.map((font) => (
+              <option value={font} key={font}>
+                {font}
+              </option>
+            ))}
+          </select>
+          <select className="ql-size"></select>
+        </span>
+        <span className="ql-formats">
+          <button className="ql-bold"></button>
+          <button className="ql-italic"></button>
+          <button className="ql-underline"></button>
+          <button className="ql-strike"></button>
+        </span>
+        <span className="ql-formats">
+          <select className="ql-color"></select>
+          <select className="ql-background"></select>
+        </span>
+        <span className="ql-formats">
+          <button className="ql-script" value="sub"></button>
+          <button className="ql-script" value="super"></button>
+        </span>
+        <span className="ql-formats">
+          <button className="ql-header" value="1"></button>
+          <button className="ql-header" value="2"></button>
+          <button className="ql-blockquote"></button>
+          <button className="ql-code-block"></button>
+        </span>
+        <span className="ql-formats">
+          <button className="ql-list" value="ordered"></button>
+          <button className="ql-list" value="bullet"></button>
+          <button className="ql-indent" value="-1"></button>
+          <button className="ql-indent" value="+1"></button>
+        </span>
+        <span className="ql-formats">
+          <button className="ql-direction" value="rtl"></button>
+          <select className="ql-align"></select>
+        </span>
+        <span className="ql-formats">
+          <button className="ql-link"></button>
+          <button className="ql-image"></button>
+          <button className="ql-video"></button>
+          <button className="ql-formula"></button>
+        </span>
+        <span className="ql-formats">
+          <button className="ql-clean"></button>
+        </span>
       </div>
-      <ul className="flex gap-4">
-        {blogPost.tags.map((tag) => (
-          <li key={tag} className="bg-gray-200 inline-block p-2 rounded">
-            {tag}
-          </li>
-        ))}
-      </ul>
-      <input
-        onChange={handleInput}
-        type="text"
-        value={blogPost.title}
-        placeholder="Title"
-        className="w-full  text-black  p-2 mb-2"
+      <ReactQuill
+        value={content}
+        onChange={handleChange}
+        modules={TextEditor.modules}
+        formats={TextEditor.formats}
+        theme="snow"
       />
-      <div
-        contentEditable
-        className="p-4 outline-none min-h-[200px] text-black bg-gray-100"
-        ref={editorRef}
-        onInput={handleInput}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        style={{ direction: textDirection }}
-      ></div>
-      <div>
-        <h3 className=" text-black">{blogPost.content.length} - length</h3>
-        <button
-          onClick={onSaveBlogPost}
-          className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-        >
-          Save
-        </button>
+      <button onClick={handleSave}>Save Content</button>
+      <div className="content-preview">
+        <h3>Content Preview:</h3>
+        <div dangerouslySetInnerHTML={{ __html: content }}></div>
       </div>
-    </section>
+    </div>
   );
-}
+};
+
+// Configure Quill modules (toolbar, clipboard, syntax, history, etc.)
+TextEditor.modules = {
+  toolbar: {
+    container: "#toolbar-container",
+  },
+  clipboard: {
+    matchVisual: false,
+  },
+  syntax: {
+    highlight: (text: string) => hljs.highlightAuto(text).value,
+  },
+
+  history: {
+    delay: 2000,
+    maxStack: 500,
+    userOnly: true,
+  },
+};
+
+// Configure Quill formats
+TextEditor.formats = [
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "color",
+  "background",
+  "script",
+  "header",
+  "blockquote",
+  "code-block",
+  "list",
+  "bullet",
+  "indent",
+  "direction",
+  "align",
+  "link",
+  "image",
+  "video",
+  "formula",
+  "clean",
+];
+
+export default TextEditor;

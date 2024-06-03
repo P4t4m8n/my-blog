@@ -9,8 +9,6 @@ interface Props {
 export default async function BlogDetails({ params }: Props) {
   const { id } = params;
   return (
-    <Suspense fallback={<BlogDetailsSkeleton />}>
       <BlogPostDetails BlogPostId={id} />
-    </Suspense>
   );
 }

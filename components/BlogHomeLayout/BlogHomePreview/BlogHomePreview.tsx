@@ -17,10 +17,9 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
         className="rounded-2xl shadow-md hover:bac"
         src={img || "/images/placeholder.jpg"}
         alt={title}
-       
         fill={true}
       />
-      <div className="  p-2 absolute bottom-4 left-0 ">
+      <div className="  p-2 absolute -bottom-6 left-0 ">
         {isFirst && (
           <div className="bg-white relative card-curve-before p-4 w-fit rounded-t-2xl">
             <h3 className="bg-black w-fit p-1 px-2 rounded-3xl text-white text-center">
@@ -43,6 +42,7 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
           <h4>{createdAt.toDateString()}</h4>
           <h4>{readTime + " min read"} </h4>
         </div>
+        ֱ
       </div>
     </Link>
   );
