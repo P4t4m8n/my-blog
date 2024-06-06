@@ -9,7 +9,7 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className=" min-h-screen relative grid  p-4">
+    <main className=" min-h-screen relative grid   p-4">
       <AuthProvider>
         <Header />
         {children}

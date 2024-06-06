@@ -2,8 +2,6 @@
 
 import { useAuth } from "@/components/contexts/AuthContext/AuthContext";
 import { useModal } from "@/components/hooks/useModal";
-import { UserModel } from "@/models/user.model";
-import { getEmptyUser } from "@/service/user.service";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
 
@@ -12,12 +10,10 @@ export default function LoginModel() {
   const modelRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [model, setModel] = useModal(modelRef, router.back);
+
   const { login, register } = useAuth();
   const searchParams = useSearchParams();
-
-  const modalRef = useRef<null | HTMLDialogElement>(null);
   const showModal = searchParams.get("showDialog");
-  console.log("showModal:", showModal);
   const _isLogin = searchParams.has("login");
 
   useEffect(() => {
@@ -29,18 +25,20 @@ export default function LoginModel() {
 
   const handleSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    console.log("ev:", ev);
     const formData = new FormData(ev.currentTarget);
-
     try {
-      if (isLogin) login(formData);
-      else register(formData);
+      if (isLogin) {
+        const user = await login(formData);
+        console.log("user:", user)
+        setModel(false);
+      } else {
+        await register(formData);
+        setIsLogin(true);
+      }
     } catch (error: any) {
       alert(error.message);
     }
   };
-
- 
 
   return (
     <>

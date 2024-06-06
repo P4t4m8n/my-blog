@@ -1,4 +1,4 @@
 
 export default async function UserDetails() {
-  return <div>page</div>;
+  return <div>Profile</div>;
 }

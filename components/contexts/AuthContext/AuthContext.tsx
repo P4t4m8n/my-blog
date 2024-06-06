@@ -1,5 +1,4 @@
 "use client";
-
 import {
   createContext,
   useContext,
@@ -8,11 +7,12 @@ import {
   ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
-import { UserModel } from "@/models/user.model";
 import { signupSchema } from "@/server/user.server";
+import { getUserDataFromCookies } from "@/service/user.service";
+import { UserModel } from "@/models/user.model";
 
 interface AuthContextModel {
-  user: { token: string } | null;
+  user: UserModel | null;
   login: (formData: FormData) => Promise<void>;
   logout: () => void;
   register: (formData: FormData) => Promise<void>;
@@ -21,16 +21,15 @@ interface AuthContextModel {
 const AuthContext = createContext<AuthContextModel | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<{ token: string } | null>(null);
+  const [user, setUser] = useState<UserModel | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="));
-    if (token) {
-      const jwtToken = token.split("=")[1];
-      setUser({ token: jwtToken });
+  
+    const data = getUserDataFromCookies();
+    console.log("data:", data)
+    if (data) {
+      setUser({ ...data.user });
     }
   }, []);
 
@@ -41,21 +40,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const password = formData.get("password") as string;
     const username = formData.get("username") as string;
 
-    const validateData = signupSchema.parse({ firstName, lastName, email, password, username })
-    console.log("validateData:", validateData)
+    const validateData = signupSchema.parse({
+      firstName,
+      lastName,
+      email,
+      password,
+      username,
+    });
 
     const res = await fetch("/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(Object.fromEntries(formData.entries()) ),
+      body: JSON.stringify(Object.fromEntries(formData.entries())),
     });
 
     const data = await res.json();
 
     if (res.status === 200) {
       router.push("/login");
+      return data;
     } else {
       throw new Error(data.message);
     }
@@ -75,8 +80,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await res.json();
 
     if (res.status === 200) {
-      setUser({ token: data.token });
-      router.push("/dashboard");
+      console.log("data.user:", data)
+      setUser(data.user);
+      router.push("/");
     } else {
       throw new Error(data.message);
     }
@@ -85,7 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     await fetch("/api/logout");
     setUser(null);
-    router.push("/login");
+    router.push("/");
   };
 
   return (

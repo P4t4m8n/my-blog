@@ -40,7 +40,6 @@ var handleGenerateDescription = function (content) { return __awaiter(_this, voi
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log("aaaa");
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 4, , 5]);

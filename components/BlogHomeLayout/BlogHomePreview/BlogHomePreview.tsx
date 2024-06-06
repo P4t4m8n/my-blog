@@ -10,14 +10,17 @@ interface Props {
 export default function BlogHomePreview({ blogPost, isFirst }: Props) {
   const { title, description, img, readTime, createdAt, mainTag, id } =
     blogPost;
-  // const placeholder = getBlurDataURL(img || "");
+  const placeholder = getBlurDataURL(img || "");
   return (
-    <Link href={`/blog/${id}`}>
+    <>
       <Image
-        className="rounded-2xl shadow-md hover:bac"
+        className="rounded-2xl shadow-md hover:bac "
         src={img || "/images/placeholder.jpg"}
         alt={title}
-        fill={true}
+        fill
+        placeholder="blur"
+        blurDataURL={placeholder}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
       <div className="  p-2 absolute -bottom-6 left-0 ">
         {isFirst && (
@@ -44,6 +47,6 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
         </div>
         ֱ
       </div>
-    </Link>
+    </>
   );
 }

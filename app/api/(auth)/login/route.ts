@@ -1,38 +1,50 @@
-import { NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import { serialize } from 'cookie';
-
-const SECRET_KEY = 'your-secret-key';
-const users: { username: string, password: string }[] = [
-  {
-    username: 'admin',
-    password: '$2b$10$u7c6oD5dzM.bI7bPaa5nKuKiP.aQfR6BOQ5/fP0CVfQpJ8XffgjHG', // hashed password for 'password'
-  },
-];
+import { NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { serialize } from "cookie";
+import { prisma } from "@/prisma/prismaClient";
 
 export async function POST(request: Request) {
-  const { username, password } = await request.json();
-  
-  const user = users.find((user) => user.username === username);
-  
-  if (user) {
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    
-    if (isPasswordValid) {
-      const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' });
-      const cookie = serialize('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        maxAge: 60 * 60,
-        path: '/',
-      });
-      const response = NextResponse.json({ message: 'Login successful' });
-      response.headers.set('Set-Cookie', cookie);
-      return response;
+  const { email, password } = await request.json();
+
+  try {
+    const userData = await prisma.user.findFirstOrThrow({
+      where: {
+        email: {
+          equals: email,
+        },
+      },
+    });
+    const isPasswordValid = await bcrypt.compare(password, userData.password);
+    if (!isPasswordValid) {
+      throw new Error("Invalid username or password");
     }
+    const user = {
+      id: userData.id,
+      email: userData.email,
+      username: userData.username,
+      role: userData.role,
+    };
+
+    const token = jwt.sign({ user }, process.env.SECRET_KEY as string, {
+      expiresIn: "72h",
+    });
+    const cookie = serialize("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 60 * 60 * 72,
+      path: "/",
+    });
+    const response = NextResponse.json({ message: "Login successful", user });
+    response.headers.set("Set-Cookie", cookie);
+    return response;
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Invalid username or password" },
+      { status: 401 }
+    );
+  } finally {
+    await prisma.$disconnect();
   }
-  
-  return NextResponse.json({ message: 'Invalid username or password' }, { status: 401 });
 }
