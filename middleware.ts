@@ -20,7 +20,6 @@ export async function middleware(req: NextRequest) {
     return res;
   }
   const user = await decodeJWT(token.value, process.env.SECRET_KEY as string);
-  console.log("user:", user)
   const cookieData = JSON.stringify(user);
 
   res.cookies.set("user", cookieData, {

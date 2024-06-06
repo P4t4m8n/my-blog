@@ -20,11 +20,9 @@ export const getEmptyBlogPost = (): BlogPostModel => {
     tags: [],
   };
 };
-
 export const getTags = (): string[] => {
   return ["personal", "tech", "travel", "food", "music", "other"];
 };
-
 export const calculateReadingTime = (text: string): number => {
   // Average reading speed
   const wordsPerMinute = 225;
@@ -35,7 +33,6 @@ export const calculateReadingTime = (text: string): number => {
 
   return readingTimeMinutes;
 };
-
 export const convertSmallBlogPostDTOsToSmallModels = (
   dto: SmallBlogPostDTO[]
 ): SmallBlogPostModel[] => {
@@ -69,4 +66,8 @@ export const convertBlogPostDTOsToModels = (
       tags: post.tags.map((tag) => tag.name),
     };
   });
+};
+export  const isHebrew = (text: string):boolean => {
+  const hebrewPattern = /[\u0590-\u05FF]/;
+  return hebrewPattern.test(text);
 };

@@ -23,6 +23,7 @@
     "dompurify": "^3.1.5",
     "env": "^0.0.2",
     "highlight.js": "^11.9.0",
+    "html-react-parser": "^5.1.10",
     "js-cookie": "^3.0.5",
     "jsdom": "^24.1.0",
     "jsonwebtoken": "^9.0.2",

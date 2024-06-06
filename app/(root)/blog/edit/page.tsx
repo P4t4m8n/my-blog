@@ -17,8 +17,9 @@ export default async function BlogEdit({
   searchParams: { id: string };
 }) {
   const handleGenerateDescription = async (content: string) => {
+    'use server'
     try {
-      const response = await fetch("/api/generateDescription", {
+      const response = await fetch("http://localhost:3000/api/generateDescription", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,13 +28,15 @@ export default async function BlogEdit({
       });
 
       const data = await response.json();
+      return data
     } catch (error) {
       console.error("Error generating description:", error);
     }
   };
   const onSaveBlogPost = async (blogPost: BlogPostModel) => {
     "use server";
-
+    const {description} =   await handleGenerateDescription(blogPost.content)
+    console.log("description:", description)
     if (blogPost.id) {
       const savedBlog = await prisma.blogPost.update({
         where: { id: blogPost.id },
@@ -59,7 +62,7 @@ export default async function BlogEdit({
         data: {
           title: blogPost.title,
           content: blogPost.content,
-          description: blogPost.description,
+          description: description,
           bgColor: "#fff",
           readTime: calculateReadingTime(blogPost.content),
           imgs: blogPost.imgs || [],
@@ -136,7 +139,7 @@ export default async function BlogEdit({
   };
   return (
     <section className=" min-h-screen-minus-sticky">
-      <TextEditor/>
+      <TextEditor blogPost={blog} onSaveBlogPost={onSaveBlogPost} />
     </section>
   );
 }

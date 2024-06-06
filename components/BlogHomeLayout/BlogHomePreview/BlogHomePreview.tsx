@@ -1,4 +1,5 @@
 import { SmallBlogPostModel } from "@/models/blogPost.model";
+import { isHebrew } from "@/service/blog.service";
 import { getBlurDataURL } from "@/service/images.service";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,8 +10,13 @@ interface Props {
 }
 export default function BlogHomePreview({ blogPost, isFirst }: Props) {
   const { title, description, img, readTime, createdAt, mainTag, id } =
-    blogPost;
-  const placeholder = getBlurDataURL(img || "");
+  blogPost;
+  if(!img) console.log("no img",id)
+  const placeholder = getBlurDataURL(img || "https://res.cloudinary.com/dpnevk8db/image/upload/v1716540633/samples/bearbnb/inside-weather-Uxqlfigh6oE-unsplash_lunru1.jpg");
+const date = `${createdAt.getDate()}/${createdAt.getMonth()}/${createdAt.getFullYear()}`
+const directionClass = isHebrew(title)
+    ? "text-right direction-rtl"
+    : "text-left direction-ltr";
   return (
     <>
       <Image
@@ -22,7 +28,7 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
         blurDataURL={placeholder}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
-      <div className="  p-2 absolute -bottom-6 left-0 ">
+      <div className="  p-2 absolute -bottom-6 left-0 w-full ">
         {isFirst && (
           <div className="bg-white relative card-curve-before p-4 w-fit rounded-t-2xl">
             <h3 className="bg-black w-fit p-1 px-2 rounded-3xl text-white text-center">
@@ -31,7 +37,7 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
           </div>
         )}
         <div
-          className={` grid gap-1   bg-white w-fit p-2 rounded-e-2xl ${
+          className={` grid gap-1   bg-white min-w-[100%] p-2 rounded-e-2xl ${directionClass} ${
             !isFirst ? "rounded-t-2xl" : ""
           } `}
         >
@@ -42,7 +48,7 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
           <h4 className="  bg-gray-300 rounded-2xl min-w-fit px-4 py-1">
             {mainTag}
           </h4>
-          <h4>{createdAt.toDateString()}</h4>
+          <h4>{date}</h4>
           <h4>{readTime + " min read"} </h4>
         </div>
         ֱ

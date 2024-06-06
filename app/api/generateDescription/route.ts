@@ -8,7 +8,6 @@ export async function POST(request: Request) {
 
   try {
     const { content } = await request.json();
-    console.log("Request content:", content);
 
     const response = await fetch(HUGGING_FACE_API_URL, {
       method: "POST",
@@ -19,13 +18,12 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         inputs: content,
         parameters: {
-          max_length: 200, // Specify max length for summarization
+          max_length: 100, // Specify max length for summarization
           min_length: 50, // Optionally specify min length for summarization
         },
       }),
     });
 
-    console.log("Hugging Face response status:", response.status);
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
@@ -34,7 +32,6 @@ export async function POST(request: Request) {
     }
 
     const data = await response.json();
-    console.log("Hugging Face response data:", data);
 
     // Reverse the Hebrew text
     const reverseString = (str: string) => str.split("").reverse().join("");

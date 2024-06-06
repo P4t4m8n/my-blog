@@ -13,7 +13,7 @@ const config: Config = {
       },
       minHeight: {
         "screen-minus-sticky": "calc(100vh - 14rem)",
-        "text-editor": "calc(100vh - 24rem)",
+        "text-editor": "calc(100vh - 23rem)",
       },
       maxWidth:{
         "editor": "calc(100vw - 2rem)",

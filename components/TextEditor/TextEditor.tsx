@@ -4,6 +4,13 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css"; // Import Highlight.js styles
+import { BlogPostModel } from "@/models/blogPost.model";
+import { isHebrew } from "@/service/blog.service";
+
+interface Props {
+  onSaveBlogPost: (blogPost: BlogPostModel) => void
+  blogPost: BlogPostModel;
+}
 
 // Custom fonts
 const fonts = [
@@ -23,14 +30,19 @@ Quill.register("modules/syntax", true);
 const History = Quill.import("modules/history");
 Quill.register("modules/history", History, true);
 /////////////*******************//////////////////
-const TextEditor = () => {
-  const [content, setContent] = useState("");
+const TextEditor = ({onSaveBlogPost,blogPost}:Props) => {
+  const [content, setContent] = useState(blogPost.content);
+  const [title, setTitle] = useState(blogPost.title);
 
   // Load content from localStorage when the component mounts
   useEffect(() => {
     const savedContent = localStorage.getItem("quill-content");
     if (savedContent) {
       setContent(savedContent);
+      }
+    const savedTitle = localStorage.getItem("quill-title");
+    if (savedTitle) {
+      setTitle(savedTitle);
     }
   }, []);
 
@@ -38,15 +50,32 @@ const TextEditor = () => {
   useEffect(() => {
     localStorage.setItem("quill-content", content);
   }, [content]);
+  useEffect(() => {
+    localStorage.setItem("quill-title", title);
+  }, [title]);
 
   const handleChange = (value: string) => {
     setContent(value);
   };
 
   const handleSave = () => {
-    console.log("Editor content:", content);
-    // Here you can add the code to save the content to the database
-  };
+    const blogPostToSave = {
+      ...blogPost,
+      content,
+      title,
+    };
+    try {
+      const savedBlog = onSaveBlogPost(blogPostToSave);
+      console.log("savedBlog:", savedBlog)
+      
+    } catch (error) {
+      
+    }
+    }
+  
+  const titleClass = isHebrew(title)
+    ? "text-right direction-rtl"
+    : "text-left direction-ltr";
 
   return (
     <>
@@ -101,16 +130,27 @@ const TextEditor = () => {
           <button className="ql-clean"></button>
         </span>
       </div>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title"
+        className={`bg-customDark text-customLight p-4 pl-8 w-full border-2 border-customLight ${titleClass}`}
+      />
       <ReactQuill
-      className="bg-customDark text-customLight p-4 min-h-text-editor max-w-editor"
+        className="bg-customDark text-customLight p-4 border-2  border-customLight min-h-text-editor max-w-editor outline-none"
         value={content}
         onChange={handleChange}
         modules={TextEditor.modules}
         formats={TextEditor.formats}
         theme="snow"
       />
-      <button className=" float-right p-4 mt-2 rounded font-workSans bg-customTeal" onClick={handleSave}>Save Content</button>
-     
+      <button
+        className=" float-right p-4 mt-2 rounded font-workSans bg-customTeal"
+        onClick={handleSave}
+      >
+        Save Content
+      </button>
     </>
   );
 };

@@ -107,4 +107,7 @@ body:has(.model) {
   }
 }
 
+.ql-container {
+  border: none !important;
+}
 
