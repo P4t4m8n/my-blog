@@ -11,7 +11,13 @@ const config: Config = {
       margin: {
         detailsHeaderLeft: "calc(20% + 1rem)",
       },
-      minHeight: { "screen-minus-sticky": "calc(100vh - 14rem)" },
+      minHeight: {
+        "screen-minus-sticky": "calc(100vh - 14rem)",
+        "text-editor": "calc(100vh - 24rem)",
+      },
+      maxWidth:{
+        "editor": "calc(100vw - 2rem)",
+      },
       maxHeight: { "screen-minus-sticky": "calc(100vh - 14rem)" },
       colors: {
         customDark: "#222831",

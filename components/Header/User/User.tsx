@@ -37,12 +37,15 @@ export default function User() {
           >
             Profile
           </button>
-          <button
-            onClick={() => handleNavigation("/profile/saved-posts")}
-            className=" hover:animate-text-color-slide   "
-          >
-            Saved
-          </button>
+
+          {user.role === "admin" && (
+            <button
+              className=" hover:animate-text-color-slide"
+              onClick={() => handleNavigation("/blog/edit")}
+            >
+              Editor
+            </button>
+          )}
           <button
             onClick={() => handleNavigation("/")}
             className=" hover:animate-text-color-slide   "

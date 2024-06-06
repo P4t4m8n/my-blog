@@ -29,7 +29,6 @@ export default function LoginModel() {
     try {
       if (isLogin) {
         const user = await login(formData);
-        console.log("user:", user)
         setModel(false);
       } else {
         await register(formData);

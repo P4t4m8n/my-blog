@@ -27,7 +27,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
   
     const data = getUserDataFromCookies();
-    console.log("data:", data)
     if (data) {
       setUser({ ...data.user });
     }
@@ -80,7 +79,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await res.json();
 
     if (res.status === 200) {
-      console.log("data.user:", data)
       setUser(data.user);
       router.push("/");
     } else {

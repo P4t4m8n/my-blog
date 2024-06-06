@@ -16,6 +16,5 @@ export const getEmptyUser = (): UserDTO => {
 
 export const getUserDataFromCookies = () => {
   const userData = Cookies.get("user");
-  console.log("userData:", userData);
   return userData ? JSON.parse(userData) : null;
 };

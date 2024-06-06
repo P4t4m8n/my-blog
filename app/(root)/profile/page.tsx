@@ -1,4 +1,4 @@
 
-export default async function UserDetails() {
+export default  function UserDetails() {
   return <div>Profile</div>;
 }

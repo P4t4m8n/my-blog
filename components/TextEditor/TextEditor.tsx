@@ -49,17 +49,17 @@ const TextEditor = () => {
   };
 
   return (
-    <div>
-      <div id="toolbar-container">
-        <span className="ql-formats">
-          <select className="ql-font">
+    <>
+      <div className="" id="toolbar-container">
+        <span className="ql-formats text-customLight fill-customLight">
+          <select className="ql-font  text-customLight fill-customLight  ">
             {fonts.map((font) => (
               <option value={font} key={font}>
                 {font}
               </option>
             ))}
           </select>
-          <select className="ql-size"></select>
+          <select className="ql-size "></select>
         </span>
         <span className="ql-formats">
           <button className="ql-bold"></button>
@@ -102,18 +102,16 @@ const TextEditor = () => {
         </span>
       </div>
       <ReactQuill
+      className="bg-customDark text-customLight p-4 min-h-text-editor max-w-editor"
         value={content}
         onChange={handleChange}
         modules={TextEditor.modules}
         formats={TextEditor.formats}
         theme="snow"
       />
-      <button onClick={handleSave}>Save Content</button>
-      <div className="content-preview">
-        <h3>Content Preview:</h3>
-        <div dangerouslySetInnerHTML={{ __html: content }}></div>
-      </div>
-    </div>
+      <button className=" float-right p-4 mt-2 rounded font-workSans bg-customTeal" onClick={handleSave}>Save Content</button>
+     
+    </>
   );
 };
 
@@ -124,9 +122,6 @@ TextEditor.modules = {
   },
   clipboard: {
     matchVisual: false,
-  },
-  syntax: {
-    highlight: (text: string) => hljs.highlightAuto(text).value,
   },
 
   history: {

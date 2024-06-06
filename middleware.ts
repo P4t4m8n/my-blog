@@ -3,7 +3,6 @@ import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import { decodeJWT } from "./server/middleware.server";
 
-
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token");
   const res = NextResponse.next();
@@ -17,17 +16,24 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!token) {
-    console.log("No token found");
+    console.error("No token found");
     return res;
-    }
+  }
   const user = await decodeJWT(token.value, process.env.SECRET_KEY as string);
+  console.log("user:", user)
   const cookieData = JSON.stringify(user);
 
-  res.cookies.set('user', cookieData, {
+  res.cookies.set("user", cookieData, {
     httpOnly: false,
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
   });
+
+  if (pathname === "/blog/edit" && user?.user?.role !== "admin") {
+    const returnUrl = req.nextUrl.clone();
+    returnUrl.pathname = "/";
+    return NextResponse.redirect(returnUrl);
+  }
 
   return res;
 }
