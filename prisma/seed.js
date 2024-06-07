@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var prismaClient_1 = require("./prismaClient");
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var i, title, randomNumber, content, published, description, readTime, mainTag, bgColor, randomTags, imgs;
+        var i, title, randomNumber, content, published, description, readTime, mainTag, randomTags, imgs;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -54,7 +54,6 @@ function main() {
                     description = content.slice(0, 100);
                     readTime = calculateReadingTime(content);
                     mainTag = tagNames[Math.floor(Math.random() * tagNames.length)];
-                    bgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
                     randomTags = tagNames
                         .sort(function () { return 0.5 - Math.random(); })
                         .slice(0, Math.floor(Math.random() * tagNames.length) + 1);
@@ -67,7 +66,6 @@ function main() {
                                 description: description,
                                 readTime: readTime,
                                 mainTag: mainTag,
-                                bgColor: bgColor,
                                 imgs: imgs,
                                 tags: {
                                     connectOrCreate: randomTags.map(function (name) { return ({

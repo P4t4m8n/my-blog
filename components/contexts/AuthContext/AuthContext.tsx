@@ -9,10 +9,10 @@ import {
 import { useRouter } from "next/navigation";
 import { signupSchema } from "@/server/user.server";
 import { getUserDataFromCookies } from "@/service/user.service";
-import { UserModel } from "@/models/user.model";
+import { UserSmallModel } from "@/models/user.model";
 
 interface AuthContextModel {
-  user: UserModel | null;
+  user: UserSmallModel | null;
   login: (formData: FormData) => Promise<void>;
   logout: () => void;
   register: (formData: FormData) => Promise<void>;
@@ -21,7 +21,7 @@ interface AuthContextModel {
 const AuthContext = createContext<AuthContextModel | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<UserModel | null>(null);
+  const [user, setUser] = useState<UserSmallModel | null>(null);
   const router = useRouter();
 
   useEffect(() => {

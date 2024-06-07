@@ -1,10 +1,13 @@
-export interface SmallBlogPostModel {
+export interface MinimumBlogPostModel {
   id?: string;
   title: string;
-  description: string;
-  readTime: number;
   mainTag: string;
   createdAt: Date;
+}
+
+export interface SmallBlogPostModel extends MinimumBlogPostModel {
+  description: string;
+  readTime: number;
   img?: string;
 }
 export interface SmallBlogPostDTO {
@@ -36,7 +39,6 @@ export interface BlogPostDTO {
   published: boolean;
   imgs: string[];
   readTime: number;
-  bgColor: string;
   mainTag: string;
   createdAt: Date;
   updatedAt: Date | null;

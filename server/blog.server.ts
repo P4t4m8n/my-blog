@@ -1,6 +1,10 @@
 "use server";
 
-import { BlogPostModel, SmallBlogPostModel } from "@/models/blogPost.model";
+import {
+  BlogPostModel,
+  MinimumBlogPostModel,
+  SmallBlogPostModel,
+} from "@/models/blogPost.model";
 import {
   convertBlogPostDTOsToModels,
   convertSmallBlogPostDTOsToSmallModels,
@@ -48,12 +52,38 @@ export const getSmallBlogPosts = async (
         imgs: true,
       },
       orderBy: {
-        createdAt: orderBy,
+        createdAt: orderBy || "desc",
       },
-      take: 10,
+      take: criteria.take || 10,
     });
 
     const blogs = convertSmallBlogPostDTOsToSmallModels(dbBlogPosts);
+    return blogs;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Error fetching blog posts: ${error}`);
+  } finally {
+    prisma.$disconnect();
+  }
+};
+
+export const getMinimumBlogPosts = async (
+  criteria: FilterSortBy
+): Promise<MinimumBlogPostModel[]> => {
+  try {
+    const blogs = await prisma.blogPost.findMany({
+      select: {
+        id: true,
+        title: true,
+        mainTag: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: criteria.orderBy || "desc",
+      },
+      take: criteria.take || 99999,
+    });
+
     return blogs;
   } catch (error) {
     console.error(error);

@@ -9,7 +9,6 @@ async function main() {
     const description = content.slice(0, 100);
     const readTime = calculateReadingTime(content);
     const mainTag = tagNames[Math.floor(Math.random() * tagNames.length)];
-    const bgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
 
     const randomTags = tagNames
       .sort(() => 0.5 - Math.random())
@@ -29,7 +28,6 @@ async function main() {
         description,
         readTime,
         mainTag,
-        bgColor,
         imgs,
         tags: {
           connectOrCreate: randomTags.map((name) => ({
