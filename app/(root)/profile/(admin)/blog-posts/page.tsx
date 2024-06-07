@@ -96,7 +96,7 @@ export default async function blogPosts() {
 
   const navigateToEdit = async (blogPost: Record<string, any>) => {
     "use server";
-    redirect(`blog/edit/${blogPost.id}`);
+    redirect(`/blog/edit${blogPost.id ? `/${blogPost.id}` : "/new"}`);
   };
 
   const actions = [

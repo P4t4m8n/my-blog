@@ -31,6 +31,7 @@ const History = Quill.import("modules/history");
 Quill.register("modules/history", History, true);
 /////////////*******************//////////////////
 const TextEditor = ({onSaveBlogPost,blogPost}:Props) => {
+  console.log("blogPost:", blogPost)
   const [content, setContent] = useState(blogPost.content);
   const [title, setTitle] = useState(blogPost.title);
 

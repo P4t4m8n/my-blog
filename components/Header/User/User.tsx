@@ -38,11 +38,11 @@ export default function User() {
             Profile
           </button>
 
-          {user.role === "admin" && (
+          {user.role === "ADMIN" && (
             <>
             <button
               className=" hover:animate-text-color-slide"
-              onClick={() => handleNavigation("/blog/edit")}
+              onClick={() => handleNavigation("/blog/edit/new")}
               >
               Editor
             </button>

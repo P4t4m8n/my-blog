@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       data: {
         ...validateData,
         password: hashedPassword,
-        role: "public",
+        role: "PUBLIC",
       },
     });
 

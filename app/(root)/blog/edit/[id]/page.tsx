@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 const TextEditor = dynamic(
-  () => import("../../../../components/TextEditor/Texteditor"),
+  () => import("../../../../../components/TextEditor/Texteditor"),
   {
     ssr: false,
   }
@@ -80,61 +80,11 @@ export default async function BlogEdit({
 
   let blog;
   const { id } = searchParams;
+  console.log("id:", id)
   if (id) blog = await getBlogById(id);
   else blog = getEmptyBlogPost();
 
-  const defaultSettings = {
-    id: "",
-    defParagraphSeparator: "p",
-    parentSelector: "body",
-    actions: {
-      bold: {
-        type: "strong",
-        icon: "bold",
-        format: "inline",
-        command: "bold",
-      },
-      italic: {
-        type: "em",
-        icon: "italic",
-        format: "inline",
-        command: "italic",
-      },
-      underline: {
-        type: "u",
-        icon: "underline",
-        format: "inline",
-        command: "underline",
-      },
-      highlight: {
-        type: "mark",
-        icon: "highlight",
-        format: "inline",
-        command: "hiliteColor",
-        value: "#ffe066",
-      },
-      olist: {
-        type: "ol",
-        icon: "list-ol",
-        format: "block",
-        command: "insertOrderedList",
-      },
-      ulist: {
-        type: "ul",
-        icon: "list-ul",
-        format: "block",
-        command: "insertUnorderedList",
-      },
-      link: {
-        type: "a",
-        icon: "link",
-        format: "inline",
-        command: "createLink",
-      },
-    },
-    inlineActionKeys: ["bold", "italic", "underline", "link"],
-    blockActionKeys: ["olist", "ulist"],
-  };
+ 
   return (
     <section className=" min-h-screen-minus-sticky">
       <TextEditor blogPost={blog} onSaveBlogPost={onSaveBlogPost} />
