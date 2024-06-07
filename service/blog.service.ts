@@ -67,7 +67,11 @@ export const convertBlogPostDTOsToModels = (
     };
   });
 };
-export  const isHebrew = (text: string):boolean => {
+export const isHebrew = (text: string): boolean => {
   const hebrewPattern = /[\u0590-\u05FF]/;
   return hebrewPattern.test(text);
+};
+
+export const getFixedDateAStr = (date: Date): string => {
+  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 };

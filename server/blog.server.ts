@@ -76,7 +76,9 @@ export const getMinimumBlogPosts = async (
         id: true,
         title: true,
         mainTag: true,
+        accessibleBy: true,
         createdAt: true,
+        updatedAt: true,
       },
       orderBy: {
         createdAt: criteria.orderBy || "desc",

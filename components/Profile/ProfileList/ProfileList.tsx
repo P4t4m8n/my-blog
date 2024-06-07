@@ -1,46 +1,60 @@
 "use client";
 
-import { useModal } from "@/components/hooks/useModal";
-import { useRef } from "react";
-import ActionModel from "./ActionModel/ActionModel";
+import { useState } from "react";
+import ProfileListPreview from "./ProfileListPreview/ProfileListPreview";
 
-interface Props {
-  data: Array<Record<string, any>>;
-  actions: Array<{
-    name: string;
-    handler: (item: Record<string, any>) => void;
-  }>;
+interface Action {
+  name: string;
+  handler: (item: Record<string, any>) => Promise<Record<string, any>>;
 }
 
-export default function ProfileList({ data, actions }: Props) {
-  // Get the unique set of fields
-  const fields = Array.from(new Set(data.flatMap(Object.keys)));
-  const actionModelRef = useRef(null);
-  const [actionModel, setActionModel] = useModal(actionModelRef, null);
+interface Props {
+  initialData: Array<Record<string, any>>;
+  actions: Array<Action>;
+}
+
+export default function ProfileList({ initialData, actions }: Props) {
+
+  const fields = Array.from(new Set(initialData.flatMap(Object.keys)));
+
+  const gridColsClasses = [
+    "grid-cols-1",
+    "grid-cols-2",
+    "grid-cols-3",
+    "grid-cols-4",
+    "grid-cols-5",
+    "grid-cols-6",
+    "grid-cols-7",
+    "grid-cols-8",
+    "grid-cols-9",
+    "grid-cols-10",
+    "grid-cols-11",
+    "grid-cols-12",
+  ];
+  const numCols = fields.length + (actions.length > 0 ? 1 : 0);
+  const gridColsClass = gridColsClasses[numCols - 1];
+
+
 
   return (
     <div className="min-h-[90%] my-4 rounded">
-      <ul className="flex bg-customDark p-4 w-full justify-around ">
+      <ul className={`grid ${gridColsClass} w-full rounded-t-lg place-items-center bg-customDark p-4`}>
         {fields.map((field) => (
-          <li key={field} className=" font-bold">
+          <li key={field} className="w-fit font-bold">
             {field}
           </li>
         ))}
-        {actions.length > 0 && <li className=" font-bold">Actions</li>}
+        {actions.length > 0 && <li className="font-bold">Actions</li>}
       </ul>
-      {data.map((item, index) => (
-        <ul
-          ref={actionModelRef}
+      {initialData.map((item, index) => (
+        <ProfileListPreview
           key={index}
-          className="flex relative bg-customDark p-4 w-full justify-around my-2"
-        >
-          {fields.map((field) => (
-            <li key={field} className="">
-              {item[field] !== undefined ? item[field].toString() : "N/A"}
-            </li>
-          ))}
-          <ActionModel item={item} actions={actions} />
-        </ul>
+          item={item}
+          index={index}
+          actions={actions}
+          gridColsClass={gridColsClass}
+          fields={fields}
+        />
       ))}
     </div>
   );

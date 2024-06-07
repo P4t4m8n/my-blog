@@ -1,8 +1,12 @@
+import { Role } from "@prisma/client";
+
 export interface MinimumBlogPostModel {
   id?: string;
   title: string;
   mainTag: string;
   createdAt: Date;
+  updatedAt?: Date | null;
+  accessibleBy?: Role;
 }
 
 export interface SmallBlogPostModel extends MinimumBlogPostModel {
