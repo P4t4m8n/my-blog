@@ -3,5 +3,5 @@ import { getUsers } from "@/server/user.server";
 
 export default async function users() {
   const users = await getUsers();
-  return <ProfileList data={users} />;
+  return <ProfileList initialData={users!} actions={[]} />;
 }

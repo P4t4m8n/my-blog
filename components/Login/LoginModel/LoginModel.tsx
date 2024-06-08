@@ -1,7 +1,7 @@
 "use client";
 
-import { useAuth } from "@/components/contexts/AuthContext/AuthContext";
-import { useModal } from "@/components/hooks/useModal";
+import { useModal } from "@/hooks/useModal";
+import { useAuthStore } from "@/store/auth.store";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
 
@@ -11,7 +11,7 @@ export default function LoginModel() {
   const router = useRouter();
   const [model, setModel] = useModal(modelRef, router.back);
 
-  const { login, register } = useAuth();
+  const { login, register } = useAuthStore();
   const searchParams = useSearchParams();
   const showModal = searchParams.get("showDialog");
   const _isLogin = searchParams.has("login");
@@ -30,12 +30,13 @@ export default function LoginModel() {
       if (isLogin) {
         const user = await login(formData);
         setModel(false);
+        router.back()
       } else {
         await register(formData);
         setIsLogin(true);
       }
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      alert(error);
     }
   };
 

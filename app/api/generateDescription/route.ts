@@ -4,7 +4,6 @@ const HUGGING_FACE_API_URL =
   "https://api-inference.huggingface.co/models/imvladikon/het5_summarization";
 
 export async function POST(request: Request) {
-  console.log("Received request at /api/generateDescription");
 
   try {
     const { content } = await request.json();

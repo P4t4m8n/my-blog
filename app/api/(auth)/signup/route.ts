@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { signupSchema } from "@/server/user.server";
 import { prisma } from "@/prisma/prismaClient";
+import { signupSchema } from "@/service/user.service";
 
 export async function POST(request: Request) {
   const { firstName, lastName, username, email, password } =

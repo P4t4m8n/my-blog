@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useModal } from "@/components/hooks/useModal";
+import { useModal } from "@/hooks/useModal";
 
 interface Props {
   item: Record<string, any>;
@@ -19,7 +19,6 @@ export default function ActionModel({ item, actions, setStateItem }: Props) {
     item: Record<string, any>
   ) => {
     const updatedItem = await actionHandler(item);
-    console.log("updatedItem:", updatedItem)
     setStateItem({...updatedItem});
   };
 

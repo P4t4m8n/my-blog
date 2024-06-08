@@ -7,18 +7,20 @@ export interface UserDTO {
   username: string;
   role: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
-export interface UserSmallModel{
+export interface UserSmallModel {
   id?: string;
   username: string;
   email: string;
-  role: RoleType
+  role: RoleType;
   createdAt?: Date;
+  likes?: { id: string; blogId: string }[];
+  comments?: { id: string; blogId: string }[];
 }
 
-export interface UserModel extends UserSmallModel{
+export interface UserModel extends UserSmallModel {
   lastName: string;
   firstName: string;
 }

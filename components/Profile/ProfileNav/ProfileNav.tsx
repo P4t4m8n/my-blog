@@ -1,10 +1,10 @@
 "use client";
-import { useAuth } from "@/components/contexts/AuthContext/AuthContext";
+import { useAuthStore } from "@/store/auth.store";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function ProfileNav() {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const pathname = usePathname();
 
   // Function to determine if the link is active

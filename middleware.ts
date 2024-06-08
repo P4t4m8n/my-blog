@@ -20,13 +20,8 @@ export async function middleware(req: NextRequest) {
     return res;
   }
   const user = await decodeJWT(token.value, process.env.SECRET_KEY as string);
-  const cookieData = JSON.stringify(user);
 
-  res.cookies.set("user", cookieData, {
-    httpOnly: false,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-  });
+ 
 
   if (pathname === "/blog/edit" && user?.user?.role !== "admin") {
     const returnUrl = req.nextUrl.clone();

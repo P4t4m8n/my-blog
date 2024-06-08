@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 export default async function savedPosts() {
   const cookieStore = cookies();
   const user = cookieStore.get("user");
-  console.log("user:", user)
   if(!user) throw new Error("User not found in cookies");
   const likes = await getLikesByUserId('');
 

@@ -36,7 +36,6 @@ export default async function BlogEdit({
   const onSaveBlogPost = async (blogPost: BlogPostModel) => {
     "use server";
     const {description} =   await handleGenerateDescription(blogPost.content)
-    console.log("description:", description)
     if (blogPost.id) {
       const savedBlog = await prisma.blogPost.update({
         where: { id: blogPost.id },
@@ -80,7 +79,6 @@ export default async function BlogEdit({
 
   let blog;
   const { id } = searchParams;
-  console.log("id:", id)
   if (id) blog = await getBlogById(id);
   else blog = getEmptyBlogPost();
 

@@ -20,7 +20,6 @@ export default function ProfileListPreview({
   fields,
 }: Props) {
   const [stateItem, setStateItem] = useState(item);
-  console.log("stateItem:", stateItem)
 
   return (
     <ul

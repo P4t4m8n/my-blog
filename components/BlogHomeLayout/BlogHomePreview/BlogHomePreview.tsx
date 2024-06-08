@@ -1,8 +1,8 @@
+import LikeButton from "@/components/Buttons/LikeButton";
 import { SmallBlogPostModel } from "@/models/blogPost.model";
-import { isHebrew } from "@/service/blog.service";
+import { getFixedDateAStr, isHebrew } from "@/service/blog.service";
 import { getBlurDataURL } from "@/service/images.service";
 import Image from "next/image";
-import Link from "next/link";
 
 interface Props {
   blogPost: SmallBlogPostModel;
@@ -10,11 +10,13 @@ interface Props {
 }
 export default function BlogHomePreview({ blogPost, isFirst }: Props) {
   const { title, description, img, readTime, createdAt, mainTag, id } =
-  blogPost;
-  if(!img) console.log("no img",id)
-  const placeholder = getBlurDataURL(img || "https://res.cloudinary.com/dpnevk8db/image/upload/v1716540633/samples/bearbnb/inside-weather-Uxqlfigh6oE-unsplash_lunru1.jpg");
-const date = `${createdAt.getDate()}/${createdAt.getMonth()}/${createdAt.getFullYear()}`
-const directionClass = isHebrew(title)
+    blogPost;
+  const placeholder = getBlurDataURL(
+    img ||
+      "https://res.cloudinary.com/dpnevk8db/image/upload/v1716540633/samples/bearbnb/inside-weather-Uxqlfigh6oE-unsplash_lunru1.jpg"
+  );
+  const date = getFixedDateAStr(createdAt);
+  const directionClass = isHebrew(title)
     ? "text-right direction-rtl"
     : "text-left direction-ltr";
   return (
@@ -28,6 +30,7 @@ const directionClass = isHebrew(title)
         blurDataURL={placeholder}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
+      <LikeButton blogId={id!} />
       <div className="  p-2 absolute -bottom-6 left-0 w-full ">
         {isFirst && (
           <div className="bg-white relative card-curve-before p-4 w-fit rounded-t-2xl">

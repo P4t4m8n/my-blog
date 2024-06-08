@@ -27,16 +27,16 @@ model BlogPost {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime?     @updatedAt
   tags         Tag[]
-  BlogPostTag  BlogPostTag[]
-  Review       Comments[]
-  Like         Like[]
+  blogPostTag  BlogPostTag[]
+  comment      Comments[]
+  like         Like[]
 }
 
 model Tag {
   id          Int           @id @default(autoincrement())
   name        String        @unique
   blogPosts   BlogPost[]
-  BlogPostTag BlogPostTag[]
+  blogPostTag BlogPostTag[]
 }
 
 model BlogPostTag {
@@ -61,8 +61,8 @@ model User {
   role      Role
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  Comments  Comments[]
-  Like      Like[]
+  comments  Comments[]
+  like      Like[]
 }
 
 model Comments {

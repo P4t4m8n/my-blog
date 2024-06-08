@@ -1,11 +1,9 @@
-import {
-  RoleType,
-  UserDTO,
-  UserModel,
-  UserSmallModel,
-} from "@/models/user.model";
+"use server";
+
+import { RoleType, UserDTO, UserModel } from "@/models/user.model";
 import { prisma } from "@/prisma/prismaClient";
-import { z } from "zod";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
 export const getUsers = async (): Promise<UserModel[]> => {
   try {
@@ -28,9 +26,31 @@ export const getUsers = async (): Promise<UserModel[]> => {
   }
 };
 
+export const getSessionUser = async (): Promise<UserModel | null> => {
+  "use server";
+  const token = cookies().get("token");
+  if (!token) {
+    return null;
+  }
+
+  try {
+    const decoded = jwt.decode(token.value) as { userId: string };
+    if (!decoded || !decoded.userId) return null;
+    const user = getUserById(decoded.userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user;
+  } catch (err) {
+    throw new Error(`Error fetching session user: ${err}`);
+  }
+};
+
 export const getUserById = async (userId: string): Promise<UserModel> => {
   try {
-    const user:UserDTO = await prisma.user.findUniqueOrThrow({
+    const user: UserDTO = await prisma.user.findUniqueOrThrow({
       where: {
         id: userId,
       },
@@ -46,11 +66,3 @@ export const getUserById = async (userId: string): Promise<UserModel> => {
     throw new Error(`Error fetching user: ${error}`);
   }
 };
-
-export const signupSchema = z.object({
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
-  username: z.string().min(4, "Username is required"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
-});
