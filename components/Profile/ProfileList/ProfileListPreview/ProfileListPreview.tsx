@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import ActionModel from "../ActionModel/ActionModel";
 
@@ -6,7 +7,7 @@ interface Props {
   fields: Array<string>;
   actions: Array<{
     name: string;
-    handler: (item: Record<string, any>) => Promise<Record<string, any>>;
+    handler: (item: Record<string, any>) => Promise<Record<string, any> | null>;
   }>;
   index: number;
   gridColsClass: string;
@@ -19,23 +20,32 @@ export default function ProfileListPreview({
   gridColsClass,
   fields,
 }: Props) {
-  const [stateItem, setStateItem] = useState(item);
-
+  const [stateItem, setStateItem] = useState<Record<string,any>|null>(item);
+  if (!stateItem) {
+    console.log("stateItem:", stateItem)
+    console.log(index);
+    return;
+  }
   return (
-    <ul
+    <li
       key={index}
       className={`grid ${gridColsClass} last:rounded-b-lg place-items-center bg-customDark p-4`}
     >
-      {fields.map((field) => (
-        <li key={field} className="">
-          {stateItem[field] !== undefined ? stateItem[field].toString() : "N/A"}
-        </li>
-      ))}
-      <ActionModel
-        item={stateItem}
-        actions={actions}
-        setStateItem={setStateItem}
-      />
-    </ul>
+      {fields.map((field) => {
+        if (stateItem[field] !== undefined && field !== "data")
+          return (
+            <h3 key={field} className="">
+              {stateItem[field].toString()}
+            </h3>
+          );
+      })}
+      
+        <ActionModel
+          item={stateItem}
+          actions={actions}
+          setStateItem={setStateItem}
+        />
+     
+    </li>
   );
 }

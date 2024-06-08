@@ -28,8 +28,8 @@ model BlogPost {
   updatedAt    DateTime?     @updatedAt
   tags         Tag[]
   blogPostTag  BlogPostTag[]
-  comment      Comments[]
-  like         Like[]
+  comments      Comments[]
+  likes         Like[]
 }
 
 model Tag {
@@ -62,7 +62,7 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   comments  Comments[]
-  like      Like[]
+  likes      Like[]
 }
 
 model Comments {
@@ -83,5 +83,4 @@ model Like {
   blogPost   BlogPost @relation(fields: [blogPostId], references: [id])
   blogPostId String
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 }

@@ -94,14 +94,20 @@ export default async function BlogPosts() {
     }
   };
 
-  const deleteBlogPost = async (blogPost: Record<string, any>) => {
+  const deleteBlogPost = async (
+    blogPost: Record<string, any>
+  ): Promise<null> => {
     "use server";
-    await prisma.blogPost.delete({
-      where: {
-        id: blogPost.id,
-      },
-    });
-    redirect("/profile/blog-posts");
+    try {
+      await prisma.blogPost.delete({
+        where: {
+          id: blogPost.id,
+        },
+      });
+      return null;
+    } catch (error) {
+      throw new Error(`Error deleting blog post: ${error}`);
+    }
   };
 
   const publishBlogPost = async (blogPost: Record<string, any>) => {

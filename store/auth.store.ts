@@ -1,14 +1,14 @@
 import { create } from "zustand";
-import { UserSmallModel } from "@/models/user.model";
+import { UserModel, UserSmallModel } from "@/models/user.model";
 import { signupSchema } from "@/service/user.service";
 
 interface AuthState {
-  user: UserSmallModel | null;
+  user: UserModel | null;
   login: (formData: FormData) => Promise<void>;
   logout: () => void;
   register: (formData: FormData) => Promise<void>;
-  setUser: (user: UserSmallModel | null) => void;
-  setUserNoRender: (user: UserSmallModel) => void;
+  setUser: (user: UserModel | null) => void;
+  setUserNoRender: (user: UserModel) => void;
 }
 
 export const useAuthStore = create<AuthState>((set, get, api) => ({

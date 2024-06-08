@@ -1,8 +1,9 @@
 export interface CommentModel {
   id?: string;
+  content: string;
+  username: string;
   userId: string;
   blogPostId: string;
-  content: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt: Date | null;
 }

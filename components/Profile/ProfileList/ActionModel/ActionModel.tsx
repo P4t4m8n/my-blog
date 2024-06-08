@@ -1,13 +1,13 @@
-import { useRef } from "react";
+import { MouseEvent, useRef } from "react";
 import { useModal } from "@/hooks/useModal";
 
 interface Props {
   item: Record<string, any>;
   actions: Array<{
     name: string;
-    handler: (item: Record<string, any>) => Promise<Record<string, any>>;
+    handler: (item: Record<string, any>) => Promise<Record<string, any> | null>;
   }>;
-  setStateItem: (item: Record<string, any>) => void;
+  setStateItem: (item: Record<string, any>|null) => void;
 }
 
 export default function ActionModel({ item, actions, setStateItem }: Props) {
@@ -15,11 +15,15 @@ export default function ActionModel({ item, actions, setStateItem }: Props) {
   const [actionModel, setActionModel] = useModal(actionModelRef, null);
 
   const handleAction = async (
-    actionHandler: (item: Record<string, any>) => Promise<Record<string, any>>,
+    ev: MouseEvent<HTMLButtonElement>,
+    actionHandler: (
+      item: Record<string, any>
+    ) => Promise<Record<string, any> | null>,
     item: Record<string, any>
   ) => {
     const updatedItem = await actionHandler(item);
-    setStateItem({...updatedItem});
+    if (!updatedItem) setStateItem(null);
+    else setStateItem({ ...updatedItem });
   };
 
   return (
@@ -36,7 +40,7 @@ export default function ActionModel({ item, actions, setStateItem }: Props) {
             <button
               key={actionIndex}
               className="text-customDark hover:text-customCardBgMaroon rounded"
-              onClick={() => handleAction(action.handler, item)}
+              onClick={(ev) => handleAction(ev, action.handler, item)}
             >
               {action.name}
             </button>

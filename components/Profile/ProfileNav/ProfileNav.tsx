@@ -11,7 +11,7 @@ export default function ProfileNav() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="w-full h-8 bg-customDark flex rounded px-4 items-center justify-between">
+    <nav className="w-full h-8 bg-customGray flex rounded px-4 items-center justify-between">
       <Link
         href="/profile"
         className={`hover:text-customCardBgOrange ${

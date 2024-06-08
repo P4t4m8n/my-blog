@@ -1,7 +1,8 @@
-import ProfileList from "@/components/Profile/ProfileList/ProfileList";
+import ProfileUsers from "@/components/Profile/ProfileUsers/ProfileUsers";
 import { getUsers } from "@/server/user.server";
 
 export default async function users() {
   const users = await getUsers();
-  return <ProfileList initialData={users!} actions={[]} />;
+
+  return <ProfileUsers users={users} />;
 }

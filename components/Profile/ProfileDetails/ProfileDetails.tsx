@@ -1,10 +1,15 @@
+"use client";
 import { UserModel } from "@/models/user.model";
-
+import { useAuthStore } from "@/store/auth.store";
 interface Props {
   user: UserModel;
 }
-export default function ProfileDetails({ user }: Props) {
+export default function ProfileDetails() {
+  const { user } = useAuthStore();
+
+  if (!user) return null;
   const { firstName, lastName, email, username, role } = user;
+
   return (
     <section className="bg-customDark text-2xl min-h-[90%] my-4 p-4 rounded">
       <div className="flex gap-4">

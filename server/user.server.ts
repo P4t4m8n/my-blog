@@ -4,6 +4,7 @@ import { RoleType, UserDTO, UserModel } from "@/models/user.model";
 import { prisma } from "@/prisma/prismaClient";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import { Role } from "@prisma/client";
 
 export const getUsers = async (): Promise<UserModel[]> => {
   try {
@@ -54,6 +55,20 @@ export const getUserById = async (userId: string): Promise<UserModel> => {
       where: {
         id: userId,
       },
+      include: {
+        likes: {
+          select: {
+            id: true,
+            blogPostId: true,
+          },
+        },
+        comments: {
+          select: {
+            id: true,
+            blogPostId: true,
+          },
+        },
+      },
     });
 
     const mappedUser = {
@@ -64,5 +79,58 @@ export const getUserById = async (userId: string): Promise<UserModel> => {
     return mappedUser;
   } catch (error) {
     throw new Error(`Error fetching user: ${error}`);
+  }
+};
+
+export const updateUserRole = async (
+  role: Role,
+  userId: string
+): Promise<UserModel> => {
+  try {
+    const updatedUser: UserDTO = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        role: role,
+      },
+    });
+
+    const mappedUser = {
+      ...updatedUser,
+      role: updatedUser.role as RoleType,
+    };
+    delete mappedUser?.password;
+    return mappedUser;
+  } catch (error) {
+    throw new Error(`Error updating user role: ${error}`);
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+export const updateUser = async (user: UserModel): Promise<UserModel> => {
+  try {
+    const updatedUser: UserDTO = await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+      },
+    });
+
+    const mappedUser = {
+      ...updatedUser,
+      role: updatedUser.role as RoleType,
+    };
+    delete mappedUser?.password;
+    return mappedUser;
+  } catch (error) {
+    throw new Error(`Error updating user: ${error}`);
+  } finally {
+    await prisma.$disconnect();
   }
 };

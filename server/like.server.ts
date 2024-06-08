@@ -1,15 +1,70 @@
-'use server'
+"use server";
 
-import { LikeModel } from "@/models/like.model";
+import { LikeDTO, LikeModel, LikeSmallModel } from "@/models/like.model";
 import { prisma } from "@/prisma/prismaClient";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+import { title } from "process";
 
-export const getLikesByUserId = async (
-  userId: string
-): Promise<LikeModel[]> => {
+export const getLikesBySession = async (): Promise<LikeModel[] | null> => {
+  const token = cookies().get("token");
+  if (!token) {
+    return null;
+  }
+  try {
+    const decoded = jwt.decode(token.value) as { userId: string };
+    if (!decoded || !decoded.userId) return null;
+    const likesData = await _getLikesByUserId(decoded.userId);
+
+    const likes = likesData.map((like) => {
+      const { id, blogPost, userId, createdAt, blogPostId } = like;
+      return {
+        
+        id,
+        blogPostId,
+        userId,
+        createdAt,
+        title: blogPost.title,
+       
+      };
+    });
+
+    if (!likes) {
+      throw new Error("User not found");
+    }
+
+    return likes;
+  } catch (err) {
+    throw new Error(`Error fetching session user: ${err}`);
+  }
+};
+
+// Add or remove a like from the database based on the input.
+export const updateLike = async (
+  likeId: string | null | undefined,
+  blogId?: string,
+  userId?: string
+): Promise<LikeSmallModel | null> => {
+  if (likeId) return await _deleteLike(likeId);
+  if (blogId && userId) return await _addLike(userId, blogId);
+  throw new Error("Invalid input");
+};
+
+//**********private functions**********//
+
+const _getLikesByUserId = async (userId: string): Promise<LikeDTO[]> => {
   try {
     const likes = await prisma.like.findMany({
       where: {
         userId: userId,
+      },
+      include: {
+        blogPost: {
+          select: {
+            title: true,
+            imgs: true,
+          },
+        },
       },
     });
     return likes;
@@ -19,19 +74,6 @@ export const getLikesByUserId = async (
     await prisma.$disconnect();
   }
 };
-
-// Add or remove a like from the database based on the input.
-export const updateLike = async (
-  likeId: string | null | undefined,
-  blogId?: string,
-  userId?: string
-): Promise<LikeModel | null> => {
-  if (likeId) return await _deleteLike(likeId);
-  if (blogId && userId) return await _addLike(userId, blogId);
-  throw new Error("Invalid input");
-};
-
-//**********private functions**********//
 
 const _deleteLike = async (likeId: string): Promise<null> => {
   try {
@@ -48,7 +90,10 @@ const _deleteLike = async (likeId: string): Promise<null> => {
     await prisma.$disconnect();
   }
 };
-const _addLike = async (userId: string, blogId: string): Promise<LikeModel> => {
+const _addLike = async (
+  userId: string,
+  blogId: string
+): Promise<LikeSmallModel> => {
   try {
     return await prisma.like.create({
       data: {

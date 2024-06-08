@@ -24,6 +24,7 @@ export const getBlogById = async (id: string): Promise<BlogPostModel> => {
             name: true,
           },
         },
+        comments: true,
       },
     });
 

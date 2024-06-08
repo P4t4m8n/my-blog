@@ -28,11 +28,18 @@ const config: Config = {
       minHeight: {
         "screen-minus-sticky": "calc(100vh - 14rem)",
         "text-editor": "calc(100vh - 23rem)",
+        "profile-minus": "calc(100vh - 18rem) ",
+      },
+      height: {
+        "profile-minus": "calc(100vh - 18rem) ",
       },
       maxWidth: {
         editor: "calc(100vw - 2rem)",
       },
-      maxHeight: { "screen-minus-sticky": "calc(100vh - 14rem)" },
+      maxHeight: {
+        "screen-minus-sticky": "calc(100vh - 14rem)",
+        "profile-minus": "calc(100vh - 18rem) ",
+      },
       colors: {
         customDark: "#222831",
         customGray: "#393E46",
