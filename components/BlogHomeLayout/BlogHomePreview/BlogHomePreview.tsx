@@ -31,24 +31,24 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
       <LikeButton blogId={id!} />
-      <div className="  p-2 absolute -bottom-6 left-0 w-full ">
+      <div className="   p-2 absolute -bottom-6 left-0 w-full ">
         {isFirst && (
-          <div className="bg-white relative card-curve-before p-4 w-fit rounded-t-2xl">
-            <h3 className="bg-black w-fit p-1 px-2 rounded-3xl text-white text-center">
+          <div className=" previewCard relative card-curve-before p-4 w-fit rounded-t-2xl">
+            <h3 className=" w-fit p-1 px-2 rounded-3xl text-center">
               LATEST
             </h3>
           </div>
         )}
         <div
-          className={` grid gap-1   bg-white min-w-[100%] p-2 rounded-e-2xl ${directionClass} ${
+          className={` grid gap-1    min-w-[100%] p-2 rounded-e-2xl  previewCard  ${directionClass} ${
             !isFirst ? "rounded-t-2xl" : ""
           } `}
         >
-          <h3 className="font-bold text-2xl z-10  ">{title}</h3>
-          <p className=" font-semibold z-10  ">{description}</p>
+          <h3 className="font-bold text-2xl z-10 previewCard  ">{title}</h3>
+          <p className=" font-semibold z-10 previewCard   ">{description}</p>
         </div>
-        <div className="bg-white w-[90%] font-medium card-curve-after relative p-4 flex items-center gap-4 rounded-b-2xl">
-          <h4 className="  bg-gray-300 rounded-2xl min-w-fit px-4 py-1">
+        <div className=" w-[90%] font-medium card-curve-after  previewCard relative p-4 flex items-center gap-4 rounded-b-2xl">
+          <h4 className="  300 rounded-2xl min-w-fit px-4 py-1">
             {mainTag}
           </h4>
           <h4>{date}</h4>

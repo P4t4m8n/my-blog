@@ -2,59 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.after-header-bg::after {
-  content: "";
-  position: absolute;
-  top: 4rem;
-  left: 0;
-  display: block;
-  background-color: #222831;
-  height: 1rem;
-  width: 100%;
-  border-bottom-right-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
-}
-.after-header-bg::before {
-  content: "";
-  position: absolute;
-  top: 4rem;
-  left: 50%;
-  z-index: 1;
-  transform: translateX(-50%);
-  width: calc(100% - 2rem);
-  border-top: 2px solid #eeeeee;
-}
+
 .nav-links > a {
+  outline: none;
   @apply focus:underline;
 }
-.card-curve-before::before {
-  --border-r: 1rem;
-  content: "";
-  width: var(--border-r);
-  height: var(--border-r);
-  position: absolute;
-  border-radius: 100vw;
-  right: -15%;
-  rotate: 90deg;
-  bottom: 0;
-  z-index: 0;
-  border-radius: 0 0 100vw 0;
-  box-shadow: 10px 10px 0 10px white;
-}
-.card-curve-after::after {
-  --border-r: 1rem;
-  content: "";
-  width: var(--border-r);
-  height: var(--border-r);
-  position: absolute;
-  border-radius: 100vw;
-  right: calc(var(--border-r) * -1);
-  rotate: 180deg;
-  top: 0;
-  z-index: 0;
-  border-radius: 0 0 100vw 0;
-  box-shadow: 10px 10px 0 10px white;
-}
+
 .zoom-hover-container {
   position: relative;
   overflow: hidden;
@@ -111,3 +64,106 @@ body:has(.model) {
   border: none !important;
 }
 
+/* [data-theme="dark"] body {
+  background-color: red;
+  color: #F3F4F4;
+}
+[data-theme="light"] body {
+  background-color: #F3F4F4;
+  color: #163A61;
+} */
+
+/* :root {
+  --background-color: theme('colors.light.background');
+  --text-color: theme('colors.light.text');
+} */
+
+/* [class~="dark"] {
+  --background-color: theme('colors.dark.background');
+  --text-color: theme('colors.dark.text');
+}
+[class~="light"] {
+  --background-color: theme('colors.dark.text');
+  --text-color: theme('colors.dark.background');
+}
+
+body,.previewCard {
+  @apply bg-[var(--background-color)] text-[var(--text-color)];
+} */
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+:root {
+  --background-gradient: linear-gradient(270deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+  --text-color: #000000;
+  --background-size: 400% 400%;
+  --preview-background: #ff9a9e;
+}
+
+.dark {
+  --background-gradient: linear-gradient(270deg, #121212, #3a3a3a, #3a3a3a, #121212);
+  --text-color: #ffffff;
+  --preview-background: #121212;
+}
+
+.previewCard {
+  background-color: var(--preview-background);
+
+ 
+}
+body{
+  background: var(--background-gradient);
+  color: var(--text-color);
+  background-size: var(--background-size);
+  animation: gradientShift 15s ease infinite;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+.card-curve-before::before {
+  --border-r: 1rem;
+  content: "";
+  width: var(--border-r);
+  height: var(--border-r);
+  position: absolute;
+  border-radius: 100vw;
+  right: -15%;
+  rotate: 90deg;
+  bottom: 0;
+  z-index: 0;
+  border-radius: 0 0 100vw 0;
+  box-shadow: 10px 10px 0 10px var(--preview-background);
+}
+.card-curve-after::after {
+  --border-r: 1rem;
+  content: "";
+  width: var(--border-r);
+  height: var(--border-r);
+  position: absolute;
+  border-radius: 100vw;
+  right: calc(var(--border-r) * -1);
+  rotate: 180deg;
+  top: 0;
+  z-index: 0;
+  border-radius: 0 0 100vw 0;
+  box-shadow: 10px 10px 0 10px var(--preview-background);
+}
+
+.minimized-header {
+  max-width: 64px;
+  max-height: 64px;
+  overflow: hidden;
+}
+.expanded-header {
+  width: 100%;
+  max-height: none;
+}

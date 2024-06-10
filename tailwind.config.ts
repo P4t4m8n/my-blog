@@ -41,15 +41,14 @@ const config: Config = {
         "profile-minus": "calc(100vh - 18rem) ",
       },
       colors: {
-        customDark: "#222831",
-        customGray: "#393E46",
-        customHighlight: "#42f5d4",
-        customTeal: "#00ADB5",
-        customLight: "#EEEEEE",
-        customCardBgYellow: "#F9ED69",
-        customCardBgOrange: "#F08A5D",
-        customCardBgMaroon: "#B83B5E",
-        customCardBgPurple: "#6A2C70",
+        light: {
+          background: "#7CC5E2",
+          text: "#7CC5E2",
+        },
+        dark: {
+          background: "#163A61",
+          text: "#F3F4F4",
+        },
       },
       fontFamily: {
         bitter: ["var(--font-bitter)"],
@@ -72,5 +71,6 @@ const config: Config = {
     },
   },
   plugins: [],
+  darkMode: "class",
 };
 export default config;

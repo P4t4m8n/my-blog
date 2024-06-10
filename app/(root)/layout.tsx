@@ -9,13 +9,13 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className=" min-h-screen relative grid   p-4">
-        <Header />
-        {children}
-        <Footer />
-        <Suspense fallback={<div>Loading...</div>}>
-          <LoginModel />
-        </Suspense>
+    <main className=" flex flex-col gap-12   p-4">
+      <Header />
+      <section className="mt-12">{children}</section>
+      <Footer />
+      <Suspense fallback={<div>Loading...</div>}>
+        <LoginModel />
+      </Suspense>
     </main>
   );
 }

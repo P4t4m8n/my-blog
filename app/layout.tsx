@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bitter, Work_Sans } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,9 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-customLight min-h-vh min-w-full ${bitter.variable} ${work_sans.variable}`}
+        className={` min-w-full ${bitter.variable} ${work_sans.variable}`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
