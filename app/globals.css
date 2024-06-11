@@ -2,10 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.nav-links > a {
-  outline: none;
-  @apply focus:underline;
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid;
 }
 
 .zoom-hover-container {
@@ -64,33 +71,6 @@ body:has(.model) {
   border: none !important;
 }
 
-/* [data-theme="dark"] body {
-  background-color: red;
-  color: #F3F4F4;
-}
-[data-theme="light"] body {
-  background-color: #F3F4F4;
-  color: #163A61;
-} */
-
-/* :root {
-  --background-color: theme('colors.light.background');
-  --text-color: theme('colors.light.text');
-} */
-
-/* [class~="dark"] {
-  --background-color: theme('colors.dark.background');
-  --text-color: theme('colors.dark.text');
-}
-[class~="light"] {
-  --background-color: theme('colors.dark.text');
-  --text-color: theme('colors.dark.background');
-}
-
-body,.previewCard {
-  @apply bg-[var(--background-color)] text-[var(--text-color)];
-} */
-
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
@@ -104,31 +84,52 @@ body,.previewCard {
 }
 
 :root {
-  --background-gradient: linear-gradient(270deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+  --background-gradient: linear-gradient(
+    270deg,
+    #ff9a9e,
+    #fad0c4,
+    #fad0c4,
+    #ff9a9e
+  );
   --text-color: #000000;
   --background-size: 400% 400%;
   --preview-background: #ff9a9e;
+  --highlight-color: rgb(233, 40, 40);
 }
 
 .dark {
-  --background-gradient: linear-gradient(270deg, #121212, #3a3a3a, #3a3a3a, #121212);
+  --background-gradient: linear-gradient(
+    270deg,
+    #121212,
+    #3a3a3a,
+    #3a3a3a,
+    #121212
+  );
   --text-color: #ffffff;
   --preview-background: #121212;
+  --highlight-color: rgb(233, 40, 40);
 }
 
+.bg-text {
+  background-color: var(--text-color);
+}
+
+.like-svg-color-default {
+  fill: var(--preview-background);
+}
+.like-svg-color-liked {
+  fill: var(--highlight-color);
+}
 .previewCard {
   background-color: var(--preview-background);
-
- 
 }
-body{
+body {
   background: var(--background-gradient);
   color: var(--text-color);
   background-size: var(--background-size);
   animation: gradientShift 15s ease infinite;
   transition: background 0.5s ease, color 0.5s ease;
 }
-
 .card-curve-before::before {
   --border-r: 1rem;
   content: "";
@@ -157,13 +158,8 @@ body{
   border-radius: 0 0 100vw 0;
   box-shadow: 10px 10px 0 10px var(--preview-background);
 }
+svg {
+  fill: var(--text-color);
+}
 
-.minimized-header {
-  max-width: 64px;
-  max-height: 64px;
-  overflow: hidden;
-}
-.expanded-header {
-  width: 100%;
-  max-height: none;
-}
+

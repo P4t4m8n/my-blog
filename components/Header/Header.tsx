@@ -5,13 +5,15 @@ import Link from "next/link";
 import User from "./User/User";
 import { useEffect, useRef, useState } from "react";
 import ThemeSwitch from "@/hooks/useTheme";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
   const [minimized, setMinimized] = useState(false);
-  console.log("minimized:", minimized);
   const [animationPhase, setAnimationPhase] = useState(0);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-  const t = useRef(false);
+  const scrollUpCheck = useRef(false);
+  const pathname = usePathname();
+  console.log("pathname:", pathname)
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -21,7 +23,7 @@ export default function Header() {
         if (!entries[0].isIntersecting) {
           setAnimationPhase(1);
           setMinimized(true);
-        } else if (t.current) {
+        } else if (scrollUpCheck.current) {
           setAnimationPhase(3);
         }
       },
@@ -50,7 +52,7 @@ export default function Header() {
       }, 500);
     } else if (animationPhase === 2) {
       setTimeout(() => {
-        t.current = true;
+        scrollUpCheck.current = true;
       }, 200);
     } else if (animationPhase === 3) {
       setTimeout(() => {
@@ -58,20 +60,19 @@ export default function Header() {
       }, 500);
     } else if (animationPhase === 4) {
       setTimeout(() => {
-        t.current = false;
+        scrollUpCheck.current = false;
         setMinimized(false);
         setAnimationPhase(0);
       }, 200);
     }
   }, [animationPhase]);
-  console.log("animationPhase:", animationPhase);
 
   return (
     <>
-      <div ref={sentinelRef} className="h-1 static top-0 w-full"></div>
+      <div ref={sentinelRef} className="h-1 absolute top-0 w-[50%]"></div>
 
       <header
-        className={`fixed previewCard top-0 right-0 z-50 font-workSans p-4 transition-all flex justify-between   ease-in ${
+        className={`fixed previewCard top-0 right-0 z-50 font-workSans p-4 transition-width flex justify-between   ease-in ${
           minimized ? "w-24 h-24 " : "w-full h-24"
         } ${
           animationPhase === 1 ? "w-24 h-24 transition-width duration-500" : ""
@@ -99,7 +100,7 @@ export default function Header() {
           height={64}
         />
         <nav
-          className={`flex items-center ${
+          className={`flex items-center nav-links ${
             animationPhase === 2 || animationPhase === 3
               ? "flex-col justify-center"
               : ""
@@ -107,7 +108,7 @@ export default function Header() {
           ${animationPhase === 3 || animationPhase === 1 ? "opacity-0" : ""}
           `}
         >
-          <Link href="/">Home</Link>
+          <Link className={`${pathname ==='/' && `nav-underline`}`} href="/">Home</Link>
           <Link href="/blog">Blog</Link>
           <Link href="/about">About</Link>
           <ThemeSwitch />

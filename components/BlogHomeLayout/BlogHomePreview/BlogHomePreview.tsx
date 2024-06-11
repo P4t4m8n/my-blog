@@ -40,15 +40,15 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
           </div>
         )}
         <div
-          className={` grid gap-1    min-w-[100%] p-2 rounded-e-2xl  previewCard  ${directionClass} ${
+          className={` grid gap-1 min-w-[90%] p-2 rounded-e-2xl  previewCard  ${directionClass} ${
             !isFirst ? "rounded-t-2xl" : ""
           } `}
         >
           <h3 className="font-bold text-2xl z-10 previewCard  ">{title}</h3>
-          <p className=" font-semibold z-10 previewCard   ">{description}</p>
+          <p className=" font-semibold z-10 previewCard truncate-multiline  ">{description}</p>
         </div>
-        <div className=" w-[90%] font-medium card-curve-after  previewCard relative p-4 flex items-center gap-4 rounded-b-2xl">
-          <h4 className="  300 rounded-2xl min-w-fit px-4 py-1">
+        <div className=" w-[80%] font-medium card-curve-after justify-evenly previewCard relative p-4 flex items-center  rounded-b-2xl mobile:flex-col mobile:items-start">
+          <h4 className="  300 rounded-2xl min-w-fit  ">
             {mainTag}
           </h4>
           <h4>{date}</h4>

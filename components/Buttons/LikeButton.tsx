@@ -16,7 +16,7 @@ export default function LikeButton({ blogId }: Props) {
 
   useEffect(() => {
     onGetLike();
-  },[]);
+  }, []);
 
   const onGetLike = async () => {
     if (!user?.likes?.length) return;
@@ -28,7 +28,7 @@ export default function LikeButton({ blogId }: Props) {
 
   const onLike = async (ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
-    ev.stopPropagation()
+    ev.stopPropagation();
     if (!user) return alert("Please login to like");
     //Optimistic update
     setIsLiked((prev) => !prev);
@@ -39,7 +39,6 @@ export default function LikeButton({ blogId }: Props) {
     } catch (error) {
       console.error("error:", error);
     } finally {
-    
       //Make sure to update the state if the like was not successful
       if (!likeIdRef.current && isLiked) setIsLiked(false);
       if (likeIdRef.current && !isLiked) setIsLiked(true);
@@ -47,7 +46,10 @@ export default function LikeButton({ blogId }: Props) {
   };
 
   return (
-    <button onClick={onLike}>
+    <button
+      className="w-8 h-8 p-1 absolute bg-text stroke-[40] shadow-md border rounded-full  right-4"
+      onClick={onLike}
+    >
       <LikeSVG isLiked={isLiked} />
     </button>
   );

@@ -8,7 +8,6 @@ import { useAuthStore } from "@/store/auth.store";
 import { getSessionUser } from "@/server/user.server";
 
 export default function User() {
-  console.log("User");
   const { user, logout, setUser } = useAuthStore();
   const modelRef = useRef(null);
   const [isModel, setModel] = useModal(modelRef, null);

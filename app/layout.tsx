@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` min-w-full ${bitter.variable} ${work_sans.variable}`}
+        className={` max-w-screen  ${bitter.variable} ${work_sans.variable}`}
       >
         <Providers>{children}</Providers>
       </body>

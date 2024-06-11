@@ -25,8 +25,10 @@ const config: Config = {
       margin: {
         detailsHeaderLeft: "calc(20% + 1rem)",
       },
+      
       minHeight: {
-        "screen-minus-sticky": "calc(100vh - 14rem)",
+        "screen-minus-sticky": "calc(100svh - 12rem)",
+        "screen-minus-sticky-mobile": "calc(100svh - 14rem)",
         "text-editor": "calc(100vh - 23rem)",
         "profile-minus": "calc(100vh - 18rem) ",
       },
@@ -68,9 +70,26 @@ const config: Config = {
         "bg-slide": "bg-slide 0.5s ease-in-out forwards",
         "text-color-slide": "text-color-slide 0.2s ease-in-out forwards",
       },
+
+      screens: {
+        mobile: {
+          max: "640px",
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [function ({ addUtilities }: any) {
+    const newUtilities = {
+      '.truncate-multiline': {
+        display: '-webkit-box',
+        '-webkit-box-orient': 'vertical',
+        overflow: 'hidden',
+        'text-overflow': 'ellipsis',
+        '-webkit-line-clamp': '3', 
+      },
+    };
+    addUtilities(newUtilities, ['responsive', 'hover']);
+  },],
   darkMode: "class",
 };
 export default config;

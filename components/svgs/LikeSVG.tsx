@@ -1,9 +1,9 @@
 export default function LikeSVG({ isLiked = false }) {
-  const fill = isLiked ? "fill-customHighlight" : "fill-customGray";
+  const fill = isLiked ? "like-svg-color-liked" : "like-svg-color-default";
   return (
     <svg
       viewBox="0 0 1024.00 1024.00"
-      className="w-6 h-6 absolute stroke-customDark stroke-[40]  right-4"
+      
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g

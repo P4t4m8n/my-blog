@@ -12,7 +12,7 @@ export default function BlogHomeList({ blogPosts }: Props) {
       {blogPosts.map((blog, idx) => (
         <Link
           href={`/blog/${blog.id}`}
-          className="rounded-2xl    basis-[20rem] relative min-h-[23rem]  flex-1 p-4 zoom-hover-container "
+          className="rounded-2xl basis-[25rem] relative min-h-screen-minus-sticky flex-1 p-4 zoom-hover-container mobile:min-h-screen-minus-sticky-mobile mobile:my-4"
           key={blog.id}
         >
           <BlogHomePreview blogPost={blog} isFirst={!idx} />

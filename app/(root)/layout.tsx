@@ -9,9 +9,9 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className=" flex flex-col gap-12   p-4">
+    <main className=" flex flex-col">
       <Header />
-      <section className="mt-12">{children}</section>
+      <section className=" my-24 px-24 max-h-screen-minus-sticky">{children}</section>
       <Footer />
       <Suspense fallback={<div>Loading...</div>}>
         <LoginModel />
