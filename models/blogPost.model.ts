@@ -1,5 +1,5 @@
 import { Role } from "@prisma/client";
-import { CommentModel } from "./comment.model";
+import { CommentModel, commentDTO } from "./comment.model";
 
 export interface MinimumBlogPostModel {
   id?: string;
@@ -35,9 +35,6 @@ export interface BlogPostModel extends SmallBlogPostModel {
 }
 
 export interface BlogPostDTO {
-  tags: {
-    name: string;
-  }[];
   id: string;
   title: string;
   content: string;
@@ -45,7 +42,12 @@ export interface BlogPostDTO {
   published: boolean;
   imgs: string[];
   readTime: number;
+  accessibleBy: Role;
   mainTag: string;
   createdAt: Date;
   updatedAt: Date | null;
+    tags: {
+      name: string;
+    }[];
+  comments: commentDTO[];
 }

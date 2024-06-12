@@ -6,14 +6,16 @@ import DOMPurify from "dompurify";
 import { getBlogById } from "@/server/blog.server";
 import parse from "html-react-parser";
 import { isHebrew } from "@/service/blog.service";
-import CommentsIndex from "./Comments/CommentsIndex";
+import CommentList from "./Comments/CommentList/CommentList";
+import { saveComment } from "@/server/comment.server";
+import { CommentModel } from "@/models/comment.model";
 
 interface Props {
-  BlogPostId: string;
+  blogPostId: string;
 }
 
-export default async function BlogPostDetails({ BlogPostId }: Props) {
-  const blogPost = await getBlogById(BlogPostId);
+export default async function BlogPostDetails({ blogPostId }: Props) {
+  const blogPost = await getBlogById(blogPostId);
 
   const {
     title,
@@ -26,10 +28,25 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
     updatedAt,
     comments,
   } = blogPost;
+    console.log("comments:", comments)
 
   const window = new JSDOM("").window;
   const purify = DOMPurify(window);
   const sanitizedContent = purify.sanitize(content);
+
+  const saveCommentServer = async (
+    content: string,
+    userId: string
+  ): Promise<CommentModel> => {
+    "use server";
+    const comment = {
+      content,
+      userId,
+      blogPostId,
+    };
+    const updatedComment = await saveComment(comment);
+    return updatedComment;
+  };
 
   const titleClass = isHebrew(title)
     ? "text-right direction-rtl"
@@ -38,7 +55,7 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
   return (
     <section
       className={
-        "flex flex-col gap-12 bg-customDark rounded-lg px-16 p-4 max-h-screen-minus-sticky overflow-auto  text-customLight font-bitter " +
+        "flex flex-col gap-12 bg-customDark rounded-lg px-16 p-4  font-bitter " +
         titleClass
       }
     >
@@ -61,8 +78,8 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
         </div>
       </header>
       <div className="flex gap-4">
-        <div className="min-w-[20%]">
-          <div className="bg-customCardBgMaroon px-12 py-4 rounded-lg font-light mb-4">
+        <div className="min-w-fit ">
+          <div className="background-theme-1 min-w-fit px-12 py-4 rounded-lg font-light mb-4">
             <h3 className="text-xl font-light relative border-longer">
               Details
             </h3>
@@ -83,14 +100,14 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
               <h3 className="font-medium">{readTime} Minutes</h3>
             </div>
           </div>
-          <div className="bg-customCardBgPurple px-12 py-4 rounded-lg font-light">
+          <div className="background-theme-2  px-12 py-4 rounded-lg font-light">
             <h3 className="text-xl font-light relative border-longer mb-1">
-              Share On
+              Share
             </h3>
             <div>
-              <button className="flex gap-4">
+              <button className="flex @container gap-4">
                 <SocialMediaSVGS type="facebook" />
-                <span>Facebook</span>
+                <span className="">Facebook</span>
               </button>
               <button className="flex gap-4">
                 <SocialMediaSVGS type="twitter" />
@@ -107,14 +124,14 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
             </div>
           </div>
         </div>
-        <main className={`prose prose-customLight ${titleClass}`}>
+        <main className={` ${titleClass}`}>
           <article>{parse(sanitizedContent)}</article>
           <div>
-            <h3 className="text-4xl text-customTeal mt-8">Tags</h3>
+            <h3 className="text-4xl mt-8">Tags</h3>
             <ul className="mt-8 flex gap-4 flex-wrap">
               {tags.map((tag) => (
                 <li
-                  className="bg-customGray text-xl font-medium p-4 rounded-lg"
+                  className="highlight-theme-background text-xl font-medium p-4 rounded-lg"
                   key={tag}
                 >
                   {tag}
@@ -122,7 +139,10 @@ export default async function BlogPostDetails({ BlogPostId }: Props) {
               ))}
             </ul>
           </div>
-          <CommentsIndex comments={comments || []} />
+          <CommentList
+            saveCommentServer={saveCommentServer}
+            comments={comments || []}
+          />
           <h1 className="text-4xl my-8 text-customCardBgYellow">
             Thanks you for reading
           </h1>

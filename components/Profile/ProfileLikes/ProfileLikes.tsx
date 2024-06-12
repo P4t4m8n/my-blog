@@ -17,7 +17,7 @@ export default function ProfileLikes({ likes }: Props) {
 
   useEffect(() => {
     setUserNoRender({ ...user!, likes });
-  });
+  },[userLikes]);
 
   const onDislike = useCallback(
     async (likeId: string): Promise<void> => {

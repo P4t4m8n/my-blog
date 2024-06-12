@@ -24,9 +24,19 @@ export const getBlogById = async (id: string): Promise<BlogPostModel> => {
             name: true,
           },
         },
-        comments: true,
+        comments: {
+          include: {
+            user: {
+              select: {
+                username: true,
+              },
+            },
+          },
+        
+        },
       },
     });
+    console.log("dbBlogPost:", dbBlogPost)
 
     const blog = convertBlogPostDTOsToModels([dbBlogPost])[0];
     return blog;

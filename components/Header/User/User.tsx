@@ -1,13 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useModal } from "@/hooks/useModal";
 import { AvatarSVG } from "@/components/svgs/AvatarSVG";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/auth.store";
 import { getSessionUser } from "@/server/user.server";
+import LoginModel from "@/components/Login/LoginModel/LoginModel";
 
-export default function User() {
+interface Props {
+  isMinimized: boolean;
+}
+
+export default function User({ isMinimized }: Props) {
   const { user, logout, setUser } = useAuthStore();
   const modelRef = useRef(null);
   const [isModel, setModel] = useModal(modelRef, null);
@@ -15,7 +20,7 @@ export default function User() {
 
   useEffect(() => {
     loadUser();
-  });
+  }, []);
 
   const loadUser = async () => {
     const _user = await getSessionUser();
@@ -31,13 +36,17 @@ export default function User() {
   return user ? (
     <div
       ref={modelRef}
-      className="flex items-center relative space-x-4 border p-2 z-15 rounded"
+      className="flex items-center relative gap-4  border p-2 z-15 rounded"
       onClick={() => setModel(true)}
     >
       <h3 className="hover:cursor-pointer">{user?.username}</h3>
-      <AvatarSVG />
+      {!isMinimized && <AvatarSVG />}
       {isModel && (
-        <div className="bg-customDark border shadow-md rounded-lg gap-4 flex flex-col items-start p-2 w-full absolute h-fit -left-[1rem] top-[4rem] z-20">
+        <div
+          className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-full absolute h-fit ${
+            isMinimized ? " -top-[11rem]" : `left-0 top-[4rem]`
+          } z-20`}
+        >
           <button
             onClick={() => handleNavigation("/profile")}
             className="hover:animate-text-color-slide"
@@ -71,9 +80,6 @@ export default function User() {
       )}
     </div>
   ) : (
-    <div className="space-x-4">
-      <button>English</button>
-      <Link href={{ pathname: "/login", query: "login" }}>Login</Link>
-    </div>
+    <LoginModel />
   );
 }

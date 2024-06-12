@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import User from "./User/User";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import ThemeSwitch from "@/hooks/useTheme";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [minimized, setMinimized] = useState(false);
@@ -13,25 +13,27 @@ export default function Header() {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const scrollUpCheck = useRef(false);
   const pathname = usePathname();
-  console.log("pathname:", pathname)
+
+  // Observer callback function
+  const handleIntersect = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      if (!entries[0].isIntersecting) {
+        setAnimationPhase(1);
+        setMinimized(true);
+      } else if (scrollUpCheck.current) {
+        setAnimationPhase(3);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) {
-          setAnimationPhase(1);
-          setMinimized(true);
-        } else if (scrollUpCheck.current) {
-          setAnimationPhase(3);
-        }
-      },
-      {
-        threshold: [1.0],
-        rootMargin: "0px 0px 0px 0px",
-      }
-    );
+    const observer = new IntersectionObserver(handleIntersect, {
+      threshold: [1.0],
+      rootMargin: "0px 0px 0px 0px",
+    });
 
     if (sentinel) {
       observer.observe(sentinel);
@@ -43,7 +45,7 @@ export default function Header() {
       }
       observer.disconnect();
     };
-  }, []);
+  }, [handleIntersect]);
 
   useEffect(() => {
     if (animationPhase === 1) {
@@ -72,8 +74,8 @@ export default function Header() {
       <div ref={sentinelRef} className="h-1 absolute top-0 w-[50%]"></div>
 
       <header
-        className={`fixed previewCard top-0 right-0 z-50 font-workSans p-4 transition-width flex justify-between   ease-in ${
-          minimized ? "w-24 h-24 " : "w-full h-24"
+        className={`fixed background-theme top-0 right-0 z-50 font-workSans p-4 transition-all flex justify-between items-center ease-in ${
+          minimized ? "w-24 h-24" : "w-full h-24"
         } ${
           animationPhase === 1 ? "w-24 h-24 transition-width duration-500" : ""
         } ${
@@ -82,15 +84,13 @@ export default function Header() {
             : ""
         } ${
           animationPhase === 3
-            ? "h-24 transition-height w-24 transition-width duration-500 flex-col "
+            ? "h-24 transition-height w-24 transition-width duration-500 flex-col"
             : ""
-        }
-        ${
+        } ${
           animationPhase === 4
-            ? "w-full transition-width duration-700 flex-row "
+            ? "w-full transition-width duration-700 flex-row"
             : ""
-        }
-         flex  `}
+        }`}
       >
         <Image
           priority={true}
@@ -104,17 +104,29 @@ export default function Header() {
             animationPhase === 2 || animationPhase === 3
               ? "flex-col justify-center"
               : ""
-          } opacity-1 justify-end gap-2 transition-opacity duration-500
-          ${animationPhase === 3 || animationPhase === 1 ? "opacity-0" : ""}
-          `}
+          } opacity-1 justify-end gap-2 transition-opacity duration-500 ${
+            animationPhase === 3 || animationPhase === 1 ? "opacity-0" : ""
+          }`}
         >
-          <Link className={`${pathname ==='/' && `nav-underline`}`} href="/">Home</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/about">About</Link>
+          <Link className={pathname === "/" ? "nav-underline" : ""} href="/">
+            Home
+          </Link>
+          <Link
+            className={pathname === "/blog" ? "nav-underline" : ""}
+            href="/blog"
+          >
+            Blog
+          </Link>
+          <Link
+            className={pathname === "/about" ? "nav-underline" : ""}
+            href="/about"
+          >
+            About
+          </Link>
           <ThemeSwitch />
         </nav>
 
-        <User />
+        <User isMinimized={minimized} />
       </header>
     </>
   );

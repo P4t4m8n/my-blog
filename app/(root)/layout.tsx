@@ -11,11 +11,9 @@ export default function layout({
   return (
     <main className=" flex flex-col">
       <Header />
-      <section className=" my-24 px-24 max-h-screen-minus-sticky">{children}</section>
+      <section className=" my-24 px-24 h-full ">{children}</section>
       <Footer />
-      <Suspense fallback={<div>Loading...</div>}>
-        <LoginModel />
-      </Suspense>
+    
     </main>
   );
 }

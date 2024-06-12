@@ -2,26 +2,13 @@
 
 import { useModal } from "@/hooks/useModal";
 import { useAuthStore } from "@/store/auth.store";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 export default function LoginModel() {
   const [isLogin, setIsLogin] = useState(false);
   const modelRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  const [model, setModel] = useModal(modelRef, router.back);
-
+  const [model, setModel] = useModal(modelRef, null);
   const { login, register } = useAuthStore();
-  const searchParams = useSearchParams();
-  const showModal = searchParams.get("showDialog");
-  const _isLogin = searchParams.has("login");
-
-  useEffect(() => {
-    if (showModal && showModal === "y") {
-      setModel(true);
-      setIsLogin(_isLogin);
-    }
-  }, [showModal, _isLogin, setModel]);
 
   const handleSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -30,7 +17,6 @@ export default function LoginModel() {
       if (isLogin) {
         const user = await login(formData);
         setModel(false);
-        router.back();
       } else {
         await register(formData);
         setIsLogin(true);
@@ -42,10 +28,11 @@ export default function LoginModel() {
 
   return (
     <>
+      <button onClick={() => setModel(true)}>Login</button>
       {model && (
         <section
           ref={modelRef}
-          className="model  flex  z-30 flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  fixed min-h-screen-minus-sticky rounded p-4 items-center bg-customDark font-workSans"
+          className="model background-theme flex z-30 flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  fixed min-h-screen-minus-sticky rounded p-4 items-center bg-customDark font-workSans"
         >
           <form
             className="flex flex-col gap-2 h-[65vh] max-w-[30rem] bg-customLight rounded-lg p-8  "

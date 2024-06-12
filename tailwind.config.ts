@@ -87,6 +87,7 @@ const config: Config = {
         'text-overflow': 'ellipsis',
         '-webkit-line-clamp': '3', 
       },
+      
     };
     addUtilities(newUtilities, ['responsive', 'hover']);
   },],

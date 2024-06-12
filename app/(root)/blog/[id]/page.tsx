@@ -9,6 +9,6 @@ interface Props {
 export default async function BlogDetails({ params }: Props) {
   const { id } = params;
   return (
-      <BlogPostDetails BlogPostId={id} />
+      <BlogPostDetails blogPostId={id} />
   );
 }

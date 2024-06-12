@@ -4,6 +4,7 @@ import {
   SmallBlogPostDTO,
   SmallBlogPostModel,
 } from "@/models/blogPost.model";
+import { commentDTOToCommentModel } from "./comment.service";
 
 export const getEmptyBlogPost = (): BlogPostModel => {
   return {
@@ -64,6 +65,9 @@ export const convertBlogPostDTOsToModels = (
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
       tags: post.tags.map((tag) => tag.name),
+      comments: post.comments.map((comment) =>
+        commentDTOToCommentModel(comment)
+      ),
     };
   });
 };
