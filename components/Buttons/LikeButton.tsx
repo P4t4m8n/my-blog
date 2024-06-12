@@ -16,7 +16,7 @@ export default function LikeButton({ blogId }: Props) {
 
   useEffect(() => {
     onGetLike();
-  }, []);
+  });
 
   const onGetLike = async () => {
     if (!user?.likes?.length) return;

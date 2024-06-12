@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         },
       },
       include: {
-        like: {
+        likes: {
           select: {
             id: true,
             blogPostId: true,

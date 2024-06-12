@@ -21,7 +21,7 @@ export default function LoginModel() {
       setModel(true);
       setIsLogin(_isLogin);
     }
-  }, [showModal, _isLogin]);
+  }, [showModal, _isLogin, setModel]);
 
   const handleSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -30,7 +30,7 @@ export default function LoginModel() {
       if (isLogin) {
         const user = await login(formData);
         setModel(false);
-        router.back()
+        router.back();
       } else {
         await register(formData);
         setIsLogin(true);

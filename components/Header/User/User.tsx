@@ -15,7 +15,7 @@ export default function User() {
 
   useEffect(() => {
     loadUser();
-  }, []);
+  });
 
   const loadUser = async () => {
     const _user = await getSessionUser();
