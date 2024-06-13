@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useModal } from "@/hooks/useModal";
-import { AvatarSVG } from "@/components/svgs/AvatarSVG";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/auth.store";
@@ -10,9 +9,12 @@ import LoginModel from "@/components/Login/LoginModel/LoginModel";
 
 interface Props {
   isMinimized: boolean;
+  isMobile: boolean;
 }
 
-export default function User({ isMinimized }: Props) {
+export default function User({ isMinimized, isMobile }: Props) {
+  console.log("isMinimized:", isMinimized)
+  console.log("isMobile:", isMobile)
   const { user, logout, setUser } = useAuthStore();
   const modelRef = useRef(null);
   const [isModel, setModel] = useModal(modelRef, null);
@@ -42,11 +44,13 @@ export default function User({ isMinimized }: Props) {
       onClick={() => setModel(true)}
     >
       <h3 className="hover:cursor-pointer">{user?.username}</h3>
-    
+
       {isModel && (
         <div
-          className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-full absolute h-fit ${
-            isMinimized ? " -top-[11rem]" : `left-0 top-[4rem]`
+          className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-fit absolute h-fit ${
+            isMinimized
+              ? ` -top-[11rem] -left-8 `
+              : `-left-8 top-[3rem] ${isMobile ? ` -top-[12rem] -left-8` : ""}`
           } z-20`}
         >
           <button

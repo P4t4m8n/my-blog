@@ -22,8 +22,7 @@ export default function ProfileListPreview({
 }: Props) {
   const [stateItem, setStateItem] = useState<Record<string,any>|null>(item);
   if (!stateItem) {
-    console.log("stateItem:", stateItem)
-    console.log(index);
+
     return;
   }
   return (

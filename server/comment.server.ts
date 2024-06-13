@@ -38,7 +38,6 @@ export const getCommentsByUserId = async (
 export const saveComment = async (
   comment: CommentSaveModel
 ): Promise<CommentModel> => {
-  console.log("comment:", comment);
   try {
     if (!comment.id) {
       return await _createComment(comment);

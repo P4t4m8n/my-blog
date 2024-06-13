@@ -133,7 +133,7 @@ export default function Header() {
           minimized={minimized}
         />
 
-        <User isMinimized={minimized} />
+        <User isMinimized={minimized} isMobile={isMobile.current} />
       </header>
     </>
   );
