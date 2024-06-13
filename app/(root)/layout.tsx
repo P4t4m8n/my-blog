@@ -11,7 +11,7 @@ export default function layout({
   return (
     <main className=" flex flex-col">
       <Header />
-      <section className=" my-24 px-24 h-full ">{children}</section>
+      <section className=" my-24 px-24 mobile:px-8 h-full ">{children}</section>
       <Footer />
     
     </main>

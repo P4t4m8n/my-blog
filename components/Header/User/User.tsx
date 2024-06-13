@@ -36,11 +36,13 @@ export default function User({ isMinimized }: Props) {
   return user ? (
     <div
       ref={modelRef}
-      className="flex items-center relative gap-4  border p-2 z-15 rounded"
+      className={`flex items-center relative gap-4  border p-2 z-15 rounded ${
+        isMinimized ? "mobile:hidden" : ""
+      }`}
       onClick={() => setModel(true)}
     >
       <h3 className="hover:cursor-pointer">{user?.username}</h3>
-      {!isMinimized && <AvatarSVG />}
+    
       {isModel && (
         <div
           className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-full absolute h-fit ${

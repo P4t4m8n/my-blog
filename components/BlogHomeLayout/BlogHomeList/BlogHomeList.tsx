@@ -8,7 +8,7 @@ interface Props {
 
 export default function BlogHomeList({ blogPosts }: Props) {
   return (
-    <ul className="flex flex-wrap overflow-auto  text-customDark gap-4 font-bitter hide-scrollbar  ">
+    <ul className="flex flex-wrap overflow-auto  gap-4 font-bitter hide-scrollbar  ">
       {blogPosts.map((blog, idx) => (
         <Link
           href={`/blog/${blog.id}`}

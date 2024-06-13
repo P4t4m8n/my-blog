@@ -1,21 +1,10 @@
 export default function PlusSVG({ isRemove }: { isRemove: boolean }) {
   const add = isRemove ? "rotate-45" : "";
   return (
-    <svg viewBox="0 0 24 24" className={" w-4 h-4 " + add}>
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g
-        id="SVGRepo_tracerCarrier"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      ></g>
-      <g id="SVGRepo_iconCarrier">
-        <path
-          d="M6 12H18M12 6V18"
-          className="stroke-black"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        ></path>{" "}
+    <svg className={"w-6 h-6 " + add} viewBox="0 0 32 32">
+      <g strokeLinecap="round" strokeLinejoin="round" ></g>
+      <g>
+        <path  d="M16 0c-8.836 0-16 7.163-16 16s7.163 16 16 16c8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 30.032c-7.72 0-14-6.312-14-14.032s6.28-14 14-14 14 6.28 14 14-6.28 14.032-14 14.032zM23 15h-6v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1v6h-6c-0.552 0-1 0.448-1 1s0.448 1 1 1h6v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6h6c0.552 0 1-0.448 1-1s-0.448-1-1-1z"></path>{" "}
       </g>
     </svg>
   );

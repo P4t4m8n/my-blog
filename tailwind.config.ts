@@ -25,10 +25,9 @@ const config: Config = {
       margin: {
         detailsHeaderLeft: "calc(20% + 1rem)",
       },
-      
       minHeight: {
         "screen-minus-sticky": "calc(100svh - 12rem)",
-        "screen-minus-sticky-mobile": "calc(100svh - 14rem)",
+        "screen-minus-sticky-mobile": "calc(100svh - 32rem)",
         "text-editor": "calc(100vh - 23rem)",
         "profile-minus": "calc(100vh - 18rem) ",
       },
@@ -37,9 +36,11 @@ const config: Config = {
       },
       maxWidth: {
         editor: "calc(100vw - 2rem)",
+        details: "calc(100svw - 4rem)",
       },
       maxHeight: {
         "screen-minus-sticky": "calc(100vh - 14rem)",
+        "screen-minus-sticky-mobile": "calc(100svh - 32rem)",
         "profile-minus": "calc(100vh - 18rem) ",
       },
       colors: {
@@ -70,27 +71,74 @@ const config: Config = {
         "bg-slide": "bg-slide 0.5s ease-in-out forwards",
         "text-color-slide": "text-color-slide 0.2s ease-in-out forwards",
       },
+      gridTemplateColumns: {
+        "custom-lg": "13rem 1fr",
+        "custom-md": "calc(100svw - 4rem)",
+      },
+      gridTemplateRows: {
+        "custom-lg": "auto auto 1fr auto auto auto",
+        "custom-md": "auto auto auto auto 1fr auto auto auto",
+      },
 
       screens: {
         mobile: {
-          max: "640px",
+          max: "650px",
+        },
+        details_breakpoint: {
+          max: "930px",
         },
       },
     },
   },
-  plugins: [function ({ addUtilities }: any) {
-    const newUtilities = {
-      '.truncate-multiline': {
-        display: '-webkit-box',
-        '-webkit-box-orient': 'vertical',
-        overflow: 'hidden',
-        'text-overflow': 'ellipsis',
-        '-webkit-line-clamp': '3', 
-      },
-      
-    };
-    addUtilities(newUtilities, ['responsive', 'hover']);
-  },],
+  plugins: [
+    function ({ addUtilities }: any) {
+      const newUtilities = {
+        ".truncate-multiline": {
+          display: "-webkit-box",
+          "-webkit-box-orient": "vertical",
+          overflow: "hidden",
+          "text-overflow": "ellipsis",
+          "-webkit-line-clamp": "3",
+        },
+      };
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+    function ({ addUtilities }: any) {
+      const newUtilities = {
+        ".grid-area-details-header-lg": {
+          gridArea: "1 / 2 / 2 / -1",
+        },
+        ".grid-area-details-content-lg": {
+          gridArea: "2 / 2 / 3 / -1",
+        },
+        ".grid-area-details-tags-lg": {
+          gridArea: "3 / 2 / 4 / -1",
+        },
+        ".grid-area-details-comments-lg": {
+          gridArea: "4 / 2 / 5 / -1",
+        },
+        ".grid-area-details-info-lg": {
+          gridArea: "1 / 1 / -1 / 2",
+        },
+        ".grid-area-details-header-md": {
+          gridArea: "1 / 1 / 2 / -1",
+        },
+        ".grid-area-details-info-md": {
+          gridArea: "2 / 1 / 3 / -1",
+        },
+        ".grid-area-details-content-md": {
+          gridArea: "3 / 1 / 4 / -1",
+        },
+        ".grid-area-details-tags-md": {
+          gridArea: "4 / 1 / 5 / -1",
+        },
+        ".grid-area-details-comments-md": {
+          gridArea: "5 / 1 / 6 / -1",
+        },
+      };
+      addUtilities(newUtilities, ["responsive"]);
+    },
+  ],
   darkMode: "class",
 };
 export default config;

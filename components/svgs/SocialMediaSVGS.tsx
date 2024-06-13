@@ -1,4 +1,4 @@
-type SocialMediaTypes =
+export type SocialMediaTypes =
   | "github"
   | "linkedin"
   | "twitter"
