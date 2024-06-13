@@ -15,7 +15,7 @@ export default function ProfileNav() {
       <Link
         href="/profile"
         className={`hover:text-customCardBgOrange ${
-          isActive("/profile") ? "text-customHighlight font-semibold" : ""
+          isActive("/profile") ? "highlight-theme-text font-semibold" : ""
         }`}
       >
         Settings

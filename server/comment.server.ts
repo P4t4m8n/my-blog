@@ -6,6 +6,29 @@ import {
   commentDTO,
 } from "@/models/comment.model";
 import { prisma } from "@/prisma/prismaClient";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+
+export const getCommentsBySession = async (): Promise<
+  CommentModel[] | null
+> => {
+  const token = cookies().get("token");
+  if (!token) {
+    return null;
+  }
+  try {
+    const decoded = jwt.decode(token.value) as { userId: string };
+    if (!decoded || !decoded.userId) return null;
+
+    const comments = await getCommentsByUserId(decoded.userId);
+
+    return comments;
+  } catch (error) {
+    throw new Error(`Error in getCommentsByUserId: ${error}`);
+  } finally {
+    await prisma.$disconnect();
+  }
+};
 
 export const getCommentsByUserId = async (
   userId: string
@@ -46,6 +69,20 @@ export const saveComment = async (
     }
   } catch (error) {
     throw new Error(`Error in saveComment: ${error}`);
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export const deleteComment = async (commentId: string): Promise<void> => {
+  try {
+    await prisma.comments.delete({
+      where: {
+        id: commentId,
+      },
+    });
+  } catch (error) {
+    throw new Error(`Error in deleteComment: ${error}`);
   } finally {
     await prisma.$disconnect();
   }

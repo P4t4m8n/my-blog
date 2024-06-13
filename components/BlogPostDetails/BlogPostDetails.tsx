@@ -54,11 +54,11 @@ export default async function BlogPostDetails({ blogPostId }: Props) {
   return (
     <section
       className={
-        "grid grid-cols-custom-lg grid-rows-custom-lg details_breakpoint:grid-cols-custom-md details_breakpoint:grid-rows-custom-md gap-x-4 gap-y-8 mobile:pt-4 rounded-lg font-bitter  " +
+        "grid grid-cols-custom-lg grid-rows-custom-lg mobile:grid-cols-custom-sm details_breakpoint:grid-cols-custom-md  details_breakpoint:grid-rows-custom-md gap-x-4 gap-y-8 mobile:pt-4 rounded-lg font-bitter  " +
         titleClass
       }
     >
-      <header className=" w-full grid-area-details-header-lg details_breakpoint:grid-area-details-header-md">
+      <header className="  grid-area-details-header-lg details_breakpoint:grid-area-details-header-md">
         <div className="flex items-center">
           <BackButton />
           <h1 className="text-4xl font-bold">{title}</h1>
@@ -71,7 +71,7 @@ export default async function BlogPostDetails({ blogPostId }: Props) {
             width={128}
             height={128}
           />
-          <h2 className={`text-3xl text-customTeal w-full mobile:px-2 ${titleClass}`}>
+          <h2 className={`text-3xl text-customTeal mobile:px-2 ${titleClass}`}>
             {description}
           </h2>
         </div>

@@ -13,10 +13,14 @@ export default function CommentList({ comments, saveCommentServer }: Props) {
   const [commentsState, setCommentsState] = useState<CommentModel[]>(comments);
   const { user } = useAuthStore();
 
-  const onSaveComment = async (content: string) => {
+  const onSaveComment = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (!user || !user.id)
       return console.log("You must be logged in to comment");
-    const updateComment = await saveCommentServer(content, user.id);
+    const comment = event.currentTarget.comment.value;
+
+    const updateComment = await saveCommentServer(comment, user.id);
 
     setCommentsState((prev) => {
       const idx = prev.findIndex((comment) => comment.id === updateComment.id);
@@ -31,7 +35,10 @@ export default function CommentList({ comments, saveCommentServer }: Props) {
         <CommentEdit onSaveComment={onSaveComment} />
       </li>
       {commentsState.map((comment) => (
-        <li className="border p-4 rounded-lg flex flex-col gap-2" key={comment.id}>
+        <li
+          className="border p-4 rounded-lg flex flex-col gap-2"
+          key={comment.id}
+        >
           <CommentPreview comment={comment} loginUserId={user?.id} />
         </li>
       ))}

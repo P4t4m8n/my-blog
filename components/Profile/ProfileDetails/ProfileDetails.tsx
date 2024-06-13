@@ -1,37 +1,74 @@
 "use client";
-import { UserModel } from "@/models/user.model";
 import { useAuthStore } from "@/store/auth.store";
-interface Props {
-  user: UserModel;
+import {
+  useState,
+  useCallback,
+  MouseEventHandler,
+  MouseEvent,
+  useEffect,
+} from "react";
+import ProfileDetailsInput from "./ProfileDetailsInput/ProfileDetailsInput";
+
+interface UserToEdit {
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
 }
 export default function ProfileDetails() {
   const { user } = useAuthStore();
+  const [userToEdit, setUserToEdit] = useState<UserToEdit>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    username: "",
+  });
 
+  useEffect(() => {
+    if (user) {
+      setUserToEdit({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username,
+      });
+    }
+  }, [user]);
+
+  const onChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
+    setUserToEdit((prevUserToEdit) => ({
+      ...prevUserToEdit,
+      [ev.target.name]: ev.target.value,
+    }));
+  }, []);
+
+  const onSubmit = (ev: MouseEvent) => {
+    ev.preventDefault;
+  };
   if (!user) return null;
-  const { firstName, lastName, email, username, role } = user;
+  const { firstName, lastName, email, username } = userToEdit;
+  const inputs = [
+    { label: "First name", value: firstName, name: "firstName" },
+    { label: "Last name", value: lastName, name: "lastName" },
+    { label: "Email", value: email, name: "email" },
+    { label: "Username", value: username, name: "username" },
+  ];
 
   return (
-    <section className="bg-customDark text-2xl min-h-[90%] my-4 p-4 rounded">
-      <div className="flex gap-4">
-        <h3>First name:</h3>
-        <h3>{firstName}</h3>
-      </div>
-      <div className="flex gap-4">
-        <h3>Last name:</h3>
-        <h3>{lastName}</h3>
-      </div>
-      <div className="flex gap-4">
-        <h3>Email:</h3>
-        <h3>{email}</h3>
-      </div>
-      <div className="flex gap-4">
-        <h3>User-Name:</h3>
-        <h3>{username}</h3>
-      </div>
-      <div className="flex gap-4">
-        <h3>Role:</h3>
-        <h3>{role}</h3>
-      </div>
-    </section>
+    <ul className=" background-theme text-2xl border mt-4 p-4 rounded flex flex-col place-self-center max-w-fit gap-2 font-workSans">
+      {inputs.map((input) => (
+        <li key={input.name} className="flex flex-col gap-4">
+          <ProfileDetailsInput
+            label={input.label}
+            value={input.value!}
+            name={input.name}
+            onChange={onChange}
+          />
+        </li>
+      ))}
+      <button onClick={onSubmit} className="border rounded p-1 w-fit self-end">
+        Save
+      </button>
+    </ul>
   );
 }

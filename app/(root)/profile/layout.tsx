@@ -6,7 +6,7 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className=" min-h-screen-minus-sticky font-workSans grid text-customLight">
+    <section className="font-workSans grid text-customLight">
       <ProfileNav />
       {children}
     </section>

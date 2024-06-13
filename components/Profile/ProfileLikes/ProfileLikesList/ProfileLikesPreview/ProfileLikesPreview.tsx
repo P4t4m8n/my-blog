@@ -15,7 +15,7 @@ export default function ProfileLikePreview({ like, onDislike, index }: Props) {
       <h3>{title}</h3>
       <h3>{fixedDate}</h3>
       <button
-        className="bg-customCardBgOrange text-white px-2 py-1 rounded"
+        className="px-2 py-1 rounded background-theme-1"
         onClick={() => onDislike(id)}
       >
         Dislike

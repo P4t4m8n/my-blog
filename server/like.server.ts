@@ -4,7 +4,6 @@ import { LikeDTO, LikeModel, LikeSmallModel } from "@/models/like.model";
 import { prisma } from "@/prisma/prismaClient";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
-import { title } from "process";
 
 export const getLikesBySession = async (): Promise<LikeModel[] | null> => {
   const token = cookies().get("token");

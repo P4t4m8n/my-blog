@@ -36,7 +36,7 @@ const config: Config = {
       },
       maxWidth: {
         editor: "calc(100vw - 2rem)",
-        details: "calc(100svw - 4rem)",
+        details: "calc(100svw - 5rem)",
       },
       maxHeight: {
         "screen-minus-sticky": "calc(100vh - 14rem)",
@@ -73,7 +73,8 @@ const config: Config = {
       },
       gridTemplateColumns: {
         "custom-lg": "13rem 1fr",
-        "custom-md": "calc(100svw - 4rem)",
+        "custom-md": "calc(100svw - 14rem)",
+        "custom-sm": "calc(100svw - 4rem)",
       },
       gridTemplateRows: {
         "custom-lg": "auto auto 1fr auto auto auto",
@@ -81,12 +82,12 @@ const config: Config = {
       },
 
       screens: {
-        mobile: {
-          max: "650px",
-        },
         details_breakpoint: {
           max: "930px",
-        },
+          },
+            mobile: {
+              max: "650px",
+            },
       },
     },
   },

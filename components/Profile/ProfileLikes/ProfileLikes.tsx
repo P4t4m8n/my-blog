@@ -11,13 +11,14 @@ interface Props {
   likes: LikeModel[];
 }
 export default function ProfileLikes({ likes }: Props) {
-  const [userLikes, setUserLikes] = useState<LikeModel[]>(likes);
+  const [userLikes, setUserLikes] = useState<LikeModel[]>([]);
   const { setUserNoRender } = useAuthStore();
   const user = useAuthStore.getState().user;
 
   useEffect(() => {
     setUserNoRender({ ...user!, likes });
-  },[userLikes]);
+    setUserLikes(likes);
+  }, []);
 
   const onDislike = useCallback(
     async (likeId: string): Promise<void> => {

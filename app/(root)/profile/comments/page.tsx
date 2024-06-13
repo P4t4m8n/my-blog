@@ -1,12 +1,9 @@
-import { getCommentsByUserId } from "@/server/comment.server";
-import { cookies } from "next/headers";
+import ProfileComments from "@/components/Profile/ProfileComments/ProfileComments";
+import { getCommentsBySession } from "@/server/comment.server";
 
 export default async function comments() {
-  const cookieStore = cookies()
+  const comments = (await getCommentsBySession()) || [];
+  console.log("comments:", comments)
 
-  const comments = await getCommentsByUserId("userId");
-  
-  return (
-    <div>comments</div>
-  )
+  return <ProfileComments comments={comments} />;
 }

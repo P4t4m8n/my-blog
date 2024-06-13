@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useModal } from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
@@ -13,11 +12,11 @@ interface Props {
 }
 
 export default function User({ isMinimized, isMobile }: Props) {
-  console.log("isMinimized:", isMinimized)
-  console.log("isMobile:", isMobile)
+
   const { user, logout, setUser } = useAuthStore();
   const modelRef = useRef(null);
   const [isModel, setModel] = useModal(modelRef, null);
+  console.log("isModel:", isModel)
   const router = useRouter();
 
   useEffect(() => {
@@ -30,9 +29,10 @@ export default function User({ isMinimized, isMobile }: Props) {
   };
 
   const handleNavigation = (path: string) => {
+    console.log("path:", path)
+    setModel(false);
     if (path === "/") logout();
     router.push(path);
-    setModel(false);
   };
 
   return user ? (
@@ -49,8 +49,8 @@ export default function User({ isMinimized, isMobile }: Props) {
         <div
           className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-fit absolute h-fit ${
             isMinimized
-              ? ` -top-[11rem] -left-8 `
-              : `-left-8 top-[3rem] ${isMobile ? ` -top-[12rem] -left-8` : ""}`
+              ? ` -top-[11rem] -left-10 `
+              : `-left-10 top-[3rem] ${isMobile ? `mobile:-top-[12rem] mobile:-left-[1.5rem]` : ""}`
           } z-20`}
         >
           <button
@@ -68,12 +68,7 @@ export default function User({ isMinimized, isMobile }: Props) {
               >
                 Editor
               </button>
-              <button
-                className="hover:animate-text-color-slide"
-                onClick={() => handleNavigation("/profile/admin")}
-              >
-                Dashboard
-              </button>
+            
             </>
           )}
           <button

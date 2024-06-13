@@ -97,6 +97,7 @@ body:has(.model) {
   --background-theme-1: #ff403d;
   --background-theme-2: #ffac3f;
   --highlight-color: #6690ff;
+  --highlight-color-text: #302872;
 }
 
 .dark {
@@ -112,6 +113,7 @@ body:has(.model) {
   --background-theme-1: #7a0b2f;
   --background-theme-2: #7a370c;
   --highlight-color: #091a7a;
+  --highlight-color-text: #6455e9;
 }
 
 .bg-text {
@@ -177,4 +179,7 @@ svg {
 
 .highlight-theme-background {
   background-color: var(--highlight-color);
+}
+.highlight-theme-text {
+  color: var(--highlight-color-text);
 }

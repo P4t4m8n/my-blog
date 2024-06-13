@@ -23,9 +23,7 @@ export default function CommentPreview({ comment, loginUserId }: Props) {
         <h3 className=" font-semibold">Created at: {fixedDate}</h3>
         {updatedDate && <p>Updated at: {updatedDate}</p>}
       </div>
-      {loginUserId === userId && (
-        <button   className="highlight-theme-background p-2 rounded-lg self-end">Edit</button>
-      )}
+    
     </>
   );
 }
