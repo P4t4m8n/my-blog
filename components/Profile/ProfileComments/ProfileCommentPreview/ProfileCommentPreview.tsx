@@ -15,7 +15,6 @@ export default function ProfileCommentPreview({
   onSaveComment,
   onDeleteComment,
 }: Props) {
-  console.log("userId:", userId)
   const [isEdit, setIsEdit] = useState(false);
 
   const saveComment = (ev: React.FormEvent<HTMLFormElement>) => {

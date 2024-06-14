@@ -1,67 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useRef } from "react";
 import { SocialMediaTypes } from "../svgs/SocialMediaSVGS";
 import LinkList from "../Header/LinkList/LinkList";
 import PlusSVG from "../svgs/PlusSVG";
+import { useAnimationPhase } from "@/hooks/useAnimation";
 
 export default function Footer() {
-  const [minimized, setMinimized] = useState(false);
-  const [animationPhase, setAnimationPhase] = useState(0);
-  const isMobile = useRef(false);
+
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-  const scrollUpCheck = useRef(false);
-
-  const handleIntersect = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      if (!entries[0].isIntersecting) {
-        setAnimationPhase(1);
-        setMinimized(true);
-      } else if (scrollUpCheck.current) {
-        setAnimationPhase(3);
-      }
-    },
-    []
-  );
-
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-
-    const observer = new IntersectionObserver(handleIntersect, {
-      threshold: [1.0],
-      rootMargin: "0px 0px 0px 0px",
-    });
-
-    if (sentinel) {
-      observer.observe(sentinel);
-    }
-
-    return () => {
-      if (sentinel) {
-        observer.unobserve(sentinel);
-      }
-      observer.disconnect();
-    };
-  }, [handleIntersect]);
-
-  useEffect(() => {
-    if (animationPhase === 1) {
-      setTimeout(() => setAnimationPhase(2), 500);
-    } else if (animationPhase === 2) {
-      setTimeout(() => (scrollUpCheck.current = true), 200);
-    } else if (animationPhase === 3) {
-      setTimeout(() => {
-        isMobile.current = false;
-        setAnimationPhase(4);
-      }, 500);
-    } else if (animationPhase === 4) {
-      setTimeout(() => {
-        scrollUpCheck.current = false;
-        setMinimized(false);
-        setAnimationPhase(0);
-      }, 200);
-    }
-  }, [animationPhase]);
+  const { minimized, setMinimized, animationPhase, isMobile } =
+    useAnimationPhase({ sentinelRef });
 
   const links: { href: string; name?: string; svg?: SocialMediaTypes }[] = [
     { href: "mailto:michaelieran@gmail.com", svg: "email" },
@@ -91,7 +40,7 @@ export default function Footer() {
           animationPhase === 4
             ? "w-full transition-width duration-700 flex-row"
             : ""
-        } flex bg-customDark text-customLight rounded-lg`}
+        } flex bg-customDark text-customLight `}
       >
         <button
           onClick={() => {
@@ -121,7 +70,6 @@ export default function Footer() {
           >
             <LinkList
               links={links}
-              pathname=""
               animationPhase={animationPhase}
               minimized={minimized}
             />

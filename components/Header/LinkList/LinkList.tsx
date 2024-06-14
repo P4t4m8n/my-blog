@@ -3,19 +3,14 @@ import SocialMediaSVGS, {
 } from "@/components/svgs/SocialMediaSVGS";
 import ThemeSwitch from "@/hooks/useTheme";
 import Link from "next/link";
-
+import { usePathname } from "next/navigation";
 interface Props {
   links: { href: string; name?: string; svg?: SocialMediaTypes }[];
-  pathname: string;
   animationPhase: number;
   minimized: boolean;
 }
-export default function LinkList({
-  links,
-  pathname,
-  animationPhase,
-  minimized,
-}: Props) {
+export default function LinkList({ links, animationPhase, minimized }: Props) {
+  const pathname = usePathname();
   return (
     <nav
       className={`flex items-center nav-links ${

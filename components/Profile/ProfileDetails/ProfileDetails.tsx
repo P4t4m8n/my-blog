@@ -3,7 +3,6 @@ import { useAuthStore } from "@/store/auth.store";
 import {
   useState,
   useCallback,
-  MouseEventHandler,
   MouseEvent,
   useEffect,
 } from "react";
@@ -45,7 +44,6 @@ export default function ProfileDetails() {
   const onSubmit = (ev: MouseEvent) => {
     ev.preventDefault;
   };
-  if (!user) return null;
   const { firstName, lastName, email, username } = userToEdit;
   const inputs = [
     { label: "First name", value: firstName, name: "firstName" },

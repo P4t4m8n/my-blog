@@ -7,7 +7,6 @@ export default function ProfileNav() {
   const { user } = useAuthStore();
   const pathname = usePathname();
 
-  // Function to determine if the link is active
   const isActive = (href: string) => pathname === href;
 
   return (

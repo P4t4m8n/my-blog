@@ -1,76 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import User from "./User/User";
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import ThemeSwitch from "@/hooks/useTheme";
-import { usePathname } from "next/navigation";
+import { useRef } from "react";
 import PlusSVG from "../svgs/PlusSVG";
 import LinkList from "./LinkList/LinkList";
+import { useAnimationPhase } from "@/hooks/useAnimation";
 
 export default function Header() {
-  const [minimized, setMinimized] = useState(false);
-  const [animationPhase, setAnimationPhase] = useState(0);
-  const isMobile = useRef(false);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-  const scrollUpCheck = useRef(false);
-  const pathname = usePathname();
-
-  const handleIntersect = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      if (!entries[0].isIntersecting) {
-        setAnimationPhase(1);
-        setMinimized(true);
-      } else if (scrollUpCheck.current) {
-        setAnimationPhase(3);
-      }
-    },
-    []
-  );
-
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-
-    const observer = new IntersectionObserver(handleIntersect, {
-      threshold: [1.0],
-      rootMargin: "0px 0px 0px 0px",
-    });
-
-    if (sentinel) {
-      observer.observe(sentinel);
-    }
-
-    return () => {
-      if (sentinel) {
-        observer.unobserve(sentinel);
-      }
-      observer.disconnect();
-    };
-  }, [handleIntersect]);
-
-  useEffect(() => {
-    if (animationPhase === 1) {
-      setTimeout(() => {
-        setAnimationPhase(2);
-      }, 500);
-    } else if (animationPhase === 2) {
-      setTimeout(() => {
-        scrollUpCheck.current = true;
-      }, 200);
-    } else if (animationPhase === 3) {
-      setTimeout(() => {
-        isMobile.current = false;
-        setAnimationPhase(4);
-      }, 500);
-    } else if (animationPhase === 4) {
-      setTimeout(() => {
-        scrollUpCheck.current = false;
-        setMinimized(false);
-        setAnimationPhase(0);
-      }, 200);
-    }
-  }, [animationPhase]);
+  const { minimized, setMinimized, animationPhase, isMobile } =
+    useAnimationPhase({ sentinelRef });
 
   const links = [
     { name: "Home", href: "/" },
@@ -128,7 +68,6 @@ export default function Header() {
         </button>
         <LinkList
           links={links}
-          pathname={pathname}
           animationPhase={animationPhase}
           minimized={minimized}
         />

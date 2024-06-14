@@ -1,7 +1,7 @@
 "use client";
 import { useModal } from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { useAuthStore } from "@/store/auth.store";
 import { getSessionUser } from "@/server/user.server";
 import LoginModel from "@/components/Login/LoginModel/LoginModel";
@@ -12,15 +12,14 @@ interface Props {
 }
 
 export default function User({ isMinimized, isMobile }: Props) {
-
   const { user, logout, setUser } = useAuthStore();
   const modelRef = useRef(null);
   const [isModel, setModel] = useModal(modelRef, null);
-  console.log("isModel:", isModel)
   const router = useRouter();
 
   useEffect(() => {
     loadUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadUser = async () => {
@@ -29,7 +28,6 @@ export default function User({ isMinimized, isMobile }: Props) {
   };
 
   const handleNavigation = (path: string) => {
-    console.log("path:", path)
     setModel(false);
     if (path === "/") logout();
     router.push(path);
@@ -50,7 +48,9 @@ export default function User({ isMinimized, isMobile }: Props) {
           className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-fit absolute h-fit ${
             isMinimized
               ? ` -top-[11rem] -left-10 `
-              : `-left-10 top-[3rem] ${isMobile ? `mobile:-top-[12rem] mobile:-left-[1.5rem]` : ""}`
+              : `-left-10 top-[3rem] ${
+                  isMobile ? `mobile:-top-[12rem] mobile:-left-[1.5rem]` : ""
+                }`
           } z-20`}
         >
           <button
@@ -68,7 +68,6 @@ export default function User({ isMinimized, isMobile }: Props) {
               >
                 Editor
               </button>
-            
             </>
           )}
           <button
