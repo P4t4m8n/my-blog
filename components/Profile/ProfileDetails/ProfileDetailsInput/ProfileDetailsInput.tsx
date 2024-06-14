@@ -12,7 +12,7 @@ export default function ProfileDetailsInput({
 }: Props) {
   return (
     <>
-      <label htmlFor={name} className=" w-fit font-light">
+      <label htmlFor={name} className=" w-fit font-light" >
         {label}:
       </label>
       <input

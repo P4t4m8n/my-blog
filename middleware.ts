@@ -15,7 +15,12 @@ export async function middleware(req: NextRequest) {
   }
   const user = await decodeJWT(token.value, process.env.SECRET_KEY as string);
 
-  if (pathname === "/blog/edit" && user?.user?.role !== "admin") {
+  if (
+    (pathname === "/blog/edit" ||
+      pathname === "/profile/blog-posts" ||
+      pathname === "/profile/users") &&
+    user?.user?.role !== "admin"
+  ) {
     const returnUrl = req.nextUrl.clone();
     returnUrl.pathname = "/";
     return NextResponse.redirect(returnUrl);

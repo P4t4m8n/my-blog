@@ -1,12 +1,8 @@
 "use client";
 import { useAuthStore } from "@/store/auth.store";
-import {
-  useState,
-  useCallback,
-  MouseEvent,
-  useEffect,
-} from "react";
+import { useState, useCallback, MouseEvent, useEffect } from "react";
 import ProfileDetailsInput from "./ProfileDetailsInput/ProfileDetailsInput";
+import { updateUser } from "@/server/user.server";
 
 interface UserToEdit {
   firstName: string;
@@ -41,8 +37,17 @@ export default function ProfileDetails() {
     }));
   }, []);
 
-  const onSubmit = (ev: MouseEvent) => {
+  const onSubmit = async (ev: MouseEvent) => {
     ev.preventDefault;
+
+    const _user = { ...user, ...userToEdit,role:user!.role};
+
+    try {
+      const updatedUser = await updateUser(_user);
+      console.log("updatedUser:", updatedUser)
+    } catch (error) {
+      console.error("error:", error);
+    }
   };
   const { firstName, lastName, email, username } = userToEdit;
   const inputs = [
@@ -53,12 +58,12 @@ export default function ProfileDetails() {
   ];
 
   return (
-    <ul className=" background-theme text-2xl border mt-4 p-4 rounded flex flex-col place-self-center max-w-fit gap-2 font-workSans">
+    <ul  className=" background-theme text-2xl border mt-4 p-4 rounded flex flex-col place-self-center max-w-fit gap-2 font-workSans">
       {inputs.map((input) => (
-        <li key={input.name} className="flex flex-col gap-4">
+        <li  key={input.name} className="flex flex-col gap-4">
           <ProfileDetailsInput
             label={input.label}
-            value={input.value!}
+            value={input.value||''}
             name={input.name}
             onChange={onChange}
           />

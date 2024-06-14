@@ -47,9 +47,9 @@ export default function User({ isMinimized, isMobile }: Props) {
         <div
           className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-fit absolute h-fit ${
             isMinimized
-              ? ` -top-[11rem] -left-10 `
-              : `-left-10 top-[3rem] ${
-                  isMobile ? `mobile:-top-[12rem] mobile:-left-[1.5rem]` : ""
+              ? ` -top-[6rem] -left-[1rem]`
+              : `-left-[1rem] top-[3rem] ${
+                  isMobile ? `mobile:-top-[6rem] mobile:-left-[1rem]` : ""
                 }`
           } z-20`}
         >

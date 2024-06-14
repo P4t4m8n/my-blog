@@ -20,7 +20,7 @@ export const useModal = (
     if (!ev.target) return;
     if (!open) return;
 
-    // if (ref.current?.contains(ev.target as Node)) return;
+    if (ref.current?.contains(ev.target as Node)) return;
     setOpen(false);
     if (callBack) callBack();
   };

@@ -28,9 +28,9 @@ export default function LoginModel() {
 
   return (
     <>
-      <button onClick={() => setModel(true)}>Login</button>
+      <button onClick={() => setModel(true)} suppressHydrationWarning>Login</button>
       {model && (
-        <section
+        <section suppressHydrationWarning
           ref={modelRef}
           className="model background-theme flex z-30 flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  fixed min-h-screen-minus-sticky rounded p-4 items-center bg-customDark font-workSans"
         >

@@ -28,4 +28,5 @@ export interface UserModel extends UserSmallModel {
   updatedAt?: Date;
 }
 
+
 export type RoleType = "PUBLIC" | "ADMIN" | "USER";

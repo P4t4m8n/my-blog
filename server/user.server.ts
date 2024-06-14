@@ -26,7 +26,6 @@ export const getUsers = async (): Promise<UserModel[]> => {
     throw new Error(`Error fetching users: ${error}`);
   }
 };
-
 export const getSessionUser = async (): Promise<UserModel | null> => {
   "use server";
   const token = cookies().get("token");
@@ -48,7 +47,6 @@ export const getSessionUser = async (): Promise<UserModel | null> => {
     throw new Error(`Error fetching session user: ${err}`);
   }
 };
-
 export const getUserById = async (userId: string): Promise<UserModel> => {
   try {
     const user: UserDTO = await prisma.user.findUniqueOrThrow({
@@ -81,7 +79,6 @@ export const getUserById = async (userId: string): Promise<UserModel> => {
     throw new Error(`Error fetching user: ${error}`);
   }
 };
-
 export const updateUserRole = async (
   role: Role,
   userId: string

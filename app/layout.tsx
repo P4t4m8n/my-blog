@@ -28,9 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={` max-w-screen  ${bitter.variable} ${work_sans.variable}`}
+    <html suppressHydrationWarning lang="en" >
+      
+      <body suppressHydrationWarning
+        className={` max-w-screen  ${bitter.variable} ${work_sans.variable}`} 
       >
         <Providers>{children}</Providers>
       </body>
