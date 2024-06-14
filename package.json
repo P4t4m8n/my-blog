@@ -14,6 +14,7 @@
     "purge": "npx tsc prisma/deleteAllBlogPosts.ts && node prisma/deleteAllBlogPosts.js"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.5.4",
     "@next/env": "^14.2.3",
     "@prisma/client": "^5.15.0",
     "@types/dompurify": "^3.0.5",
@@ -27,6 +28,7 @@
     "js-cookie": "^3.0.5",
     "jsdom": "^24.1.0",
     "jsonwebtoken": "^9.0.2",
+    "negotiator": "^0.6.3",
     "next": "^14.2.4",
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
@@ -46,6 +48,7 @@
     "@types/js-cookie": "^3.0.6",
     "@types/jsdom": "^21.1.7",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/negotiator": "^0.6.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

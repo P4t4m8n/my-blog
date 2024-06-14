@@ -6,14 +6,20 @@ import { useRef } from "react";
 import PlusSVG from "../svgs/PlusSVG";
 import LinkList from "./LinkList/LinkList";
 import { useAnimationPhase } from "@/hooks/useAnimation";
+import LangSwitch from "../LangSwitch/LangSwitch";
 
-export default function Header() {
+interface Props {
+  dict: any;
+  lang: string;
+}
+
+export default function Header({ dict, lang }: Props) {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const { minimized, setMinimized, animationPhase, isMobile } =
     useAnimationPhase({ sentinelRef });
 
   const links = [
-    { name: "Home", href: "/" },
+    { name: dict.home, href: "/" },
     { name: "Blog", href: "/blog" },
     { name: "About", href: "/about" },
   ];
@@ -71,6 +77,7 @@ export default function Header() {
           animationPhase={animationPhase}
           minimized={minimized}
         />
+        <LangSwitch dict={dict} lang={lang} />
 
         <User isMinimized={minimized} isMobile={isMobile.current} />
       </header>
