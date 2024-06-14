@@ -1,3 +1,4 @@
+import { getDictionary } from "@/app/[lang]/dictionaries";
 import LikeButton from "@/components/Buttons/LikeButton";
 import { SmallBlogPostModel } from "@/models/blogPost.model";
 import { getFixedDateAStr, isHebrew } from "@/service/blog.service";
@@ -7,8 +8,14 @@ import Image from "next/image";
 interface Props {
   blogPost: SmallBlogPostModel;
   isFirst: boolean;
+  lang: string;
 }
-export default function BlogHomePreview({ blogPost, isFirst }: Props) {
+export default async function BlogHomePreview({
+  blogPost,
+  isFirst,
+  lang,
+}: Props) {
+  const dict = await getDictionary(lang);
   const { title, description, img, readTime, createdAt, mainTag, id } =
     blogPost;
   const placeholder = getBlurDataURL(
@@ -34,9 +41,7 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
       <div className="   p-2 absolute -bottom-6 left-0 w-full ">
         {isFirst && (
           <div className=" background-theme relative card-curve-before p-4 w-fit rounded-t-2xl">
-            <h3 className=" w-fit p-1 px-2 rounded-3xl text-center">
-              LATEST
-            </h3>
+            <h3 className=" w-fit p-1 px-2 rounded-3xl text-center">{dict.sections.latest}</h3>
           </div>
         )}
         <div
@@ -44,15 +49,17 @@ export default function BlogHomePreview({ blogPost, isFirst }: Props) {
             !isFirst ? "rounded-t-2xl" : ""
           } `}
         >
-          <h3 className="font-bold text-2xl z-10 background-theme  ">{title}</h3>
-          <p className=" font-semibold z-10 background-theme truncate-multiline  ">{description}</p>
+          <h3 className="font-bold text-2xl z-10 background-theme  ">
+            {title}
+          </h3>
+          <p className=" font-semibold z-10 background-theme truncate-multiline  ">
+            {description}
+          </p>
         </div>
         <div className=" w-[80%] font-medium card-curve-after justify-evenly background-theme relative p-4 flex items-center  rounded-b-2xl mobile:flex-col mobile:items-start">
-          <h4 className="  300 rounded-2xl min-w-fit  ">
-            {mainTag}
-          </h4>
+          <h4 className="  300 rounded-2xl min-w-fit  ">{mainTag}</h4>
           <h4>{date}</h4>
-          <h4>{readTime + " min read"} </h4>
+          <h4>{`${readTime}  ${dict.article.min} ${dict.article.read}`} </h4>
         </div>
         ֱ
       </div>

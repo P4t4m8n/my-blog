@@ -9,13 +9,17 @@ import { isHebrew } from "@/service/blog.service";
 import CommentList from "./Comments/CommentList/CommentList";
 import { saveComment } from "@/server/comment.server";
 import { CommentModel } from "@/models/comment.model";
+import { LanguageType } from "@/models/dictionary.model";
+import { getDictionary } from "@/app/[lang]/dictionaries";
 
 interface Props {
   blogPostId: string;
+  lang: LanguageType;
 }
 
-export default async function BlogPostDetails({ blogPostId }: Props) {
+export default async function BlogPostDetails({ blogPostId, lang }: Props) {
   const blogPost = await getBlogById(blogPostId);
+  const dict = await getDictionary(lang);
 
   const {
     title,
@@ -47,7 +51,7 @@ export default async function BlogPostDetails({ blogPostId }: Props) {
     return updatedComment;
   };
 
-  const titleClass = isHebrew(title)
+  const titleClass = isHebrew(dict.article.create_At)
     ? "text-right direction-rtl"
     : "text-left direction-ltr";
 
@@ -79,25 +83,29 @@ export default async function BlogPostDetails({ blogPostId }: Props) {
 
       <div className=" grid-area-details-info-lg details_breakpoint:grid-area-details-info-md details_breakpoint:flex  details_breakpoint:flex-wrap  relative">
         <div className="background-theme-1 sticky top-[27%] px-12 py-4 rounded-lg h-[13rem] font-light details_breakpoint:w-[50%]">
-          <h3 className="text-xl font-light relative border-longer">Details</h3>
+          <h3 className="text-xl font-light relative border-longer">
+            {dict.article.details}
+          </h3>
           <div>
-            <span className="text-xs">Created at</span>
+            <span className="text-xs">{dict.article.create_At}</span>
             <h3 className="font-medium">{createdAt.toLocaleDateString()}</h3>
           </div>
           {updatedAt && (
             <div>
-              <span className="text-xs">Updated at</span>
+              <span className="text-xs">{dict.article.update_At}</span>
               <h3 className="font-medium">{updatedAt.toLocaleDateString()}</h3>
             </div>
           )}
           <div>
-            <span className="text-xs">Read time</span>
-            <h3 className="font-medium">{readTime} Minutes</h3>
+            <span className="text-xs">{dict.article.read_Time}</span>
+            <h3 className="font-medium">
+              {readTime} {dict.article.minutes}
+            </h3>
           </div>
         </div>
         <div className="background-theme-2 flex flex-col sticky top-[58%] h-[13rem]  px-12 py-4 rounded-lg font-light details_breakpoint:w-[50%] mobile:flex mobile:flex-col mobile:items-center">
           <h3 className="text-xl font-light relative border-longer mb-1">
-            Share
+            {dict.article.share}
           </h3>
           <div>
             <button className="flex my-2  gap-4">
@@ -122,7 +130,7 @@ export default async function BlogPostDetails({ blogPostId }: Props) {
       <div className=" grid-area-details-content-lg details_breakpoint:grid-area-details-content-md flex flex-col gap-2">
         <article className="px-2">{parse(sanitizedContent)}</article>
         <h1 className="text-4xl my-8 text-customCardBgYellow mobile:text-center">
-          Thanks you for reading
+          {dict.article.thanks}
         </h1>
       </div>
       <div className=" grid-area-details-tags-lg details_breakpoint:grid-area-details-tags-md">

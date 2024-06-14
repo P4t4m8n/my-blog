@@ -1,3 +1,63 @@
 {
-  "home": "בית"
+  "navigation": {
+    "home": "בית",
+    "blog": "בלוג",
+    "about": "אודות",
+    "contact": "צור קשר",
+    "search": "חיפוש",
+    "login": "התחברות",
+    "logout": "התנתקות",
+    "profile": "פרופיל",
+    "editor": "עורך"
+  },
+  "footer": {
+    "copy": "זכויות יוצרים ©2024 מיכאלי ערן כל הזכויות שמורות."
+  },
+  "sections": {
+    "latest": "החדש ביותר",
+    "most_Popular": "הפופולרי ביותר",
+    "most_Commented": "הכי הרבה תגובות",
+    "most_Viewed": "הכי נצפה",
+    "categories": "קטגוריות",
+    "tags": "תגיות"
+  },
+  "article": {
+    "read_More": "קרא עוד",
+    "min": "דקות",
+    "by": "מאת",
+    "no_Comments": "אין תגובות",
+    "comments": "תגובות",
+    "leave_Comment": "השאר תגובה",
+    "read": "קרא",
+    "like": "אהבתי",
+    "details": "פרטים",
+    "share": "שיתוף",
+    "facebook": "פייסבוק",
+    "twitter": "טוויטר",
+    "linkedin": "לינקדין",
+    "whatsapp": "וואטסאפ",
+    "create_At": "נוצר ב",
+    "update_At": "עודכן ב",
+    "minutes": "דקות",
+     "read_Time": "זמן קריאה",
+     "thanks": "תודה על הקריאה"
+  },
+  "form": {
+    "submit": "שלח",
+    "email": "אימייל",
+    "last_Name": "שם משפחה",
+    "first_Name": "שם פרטי",
+    "username": "שם משתמש",
+    "save": "שמור",
+    "password": "סיסמה",
+    "number": "מספר",
+    "title": "כותרת",
+    "date_liked": "תאריך אהבתי",
+    "actions": "פעולות"
+  },
+  "settings": {
+    "settings": "הגדרות",
+    "edit": "ערוך",
+    "delete": "מחק"
+  }
 }

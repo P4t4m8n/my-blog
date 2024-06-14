@@ -7,9 +7,10 @@ import PlusSVG from "../svgs/PlusSVG";
 import LinkList from "./LinkList/LinkList";
 import { useAnimationPhase } from "@/hooks/useAnimation";
 import LangSwitch from "../LangSwitch/LangSwitch";
+import { DictionaryModel } from "@/models/dictionary.model";
 
 interface Props {
-  dict: any;
+  dict: DictionaryModel;
   lang: string;
 }
 
@@ -19,9 +20,9 @@ export default function Header({ dict, lang }: Props) {
     useAnimationPhase({ sentinelRef });
 
   const links = [
-    { name: dict.home, href: "/" },
-    { name: "Blog", href: "/blog" },
-    { name: "About", href: "/about" },
+    { name: dict.navigation.home, href: "/" },
+    { name: dict.navigation.blog, href: "/blog" },
+    { name: dict.navigation.about, href: "/about" },
   ];
 
   return (
@@ -29,7 +30,7 @@ export default function Header({ dict, lang }: Props) {
       <div ref={sentinelRef} className="h-1 absolute top-0 w-[50%]"></div>
 
       <header
-        className={`fixed background-theme top-0 right-0 z-50 font-workSans  p-4 transition-all flex justify-between items-center ease-in ${
+        className={`fixed  background-theme top-0 right-0 z-50 font-workSans  p-4 transition-all flex justify-between items-center ease-in ${
           minimized
             ? "w-24 h-24 mobile:w-4"
             : `w-full h-24 ${isMobile.current ? "mobile:w-24" : "w-full"} `
@@ -72,14 +73,21 @@ export default function Header({ dict, lang }: Props) {
         >
           <PlusSVG isRemove={isMobile.current} />
         </button>
-        <LinkList
-          links={links}
-          animationPhase={animationPhase}
-          minimized={minimized}
-        />
-        <LangSwitch dict={dict} lang={lang} />
+        <div className={`flex gap-2 ${minimized ? "flex-col" : ""}`}>
+          <LinkList
+            links={links}
+            animationPhase={animationPhase}
+            minimized={minimized}
+          />
+          <LangSwitch lang={lang} />
+        </div>
 
-        <User isMinimized={minimized} isMobile={isMobile.current} />
+        <User
+          isMinimized={minimized}
+          isMobile={isMobile.current}
+          dict={dict}
+          lang={lang}
+        />
       </header>
     </>
   );

@@ -1,10 +1,12 @@
+import React from "react";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import { getDictionary } from "../dictionaries";
+import { LanguageType } from "@/models/dictionary.model";
 
 interface Props {
   children: React.ReactNode;
-  params: { lang: string };
+  params: { lang: LanguageType };
 }
 
 export async function generateStaticParams() {
@@ -19,13 +21,8 @@ export default async function layout({
   return (
     <main className=" flex flex-col">
       <Header lang={lang} dict={dict} />
-      <section
-        suppressHydrationWarning
-        className=" my-24 px-24 mobile:px-8 h-full "
-      >
-        {children}
-      </section>
-      <Footer />
+      <section className=" my-24 px-24 mobile:px-8 h-full ">{children}</section>
+      <Footer dict={dict} />
     </main>
   );
 }

@@ -5,9 +5,11 @@ import { SocialMediaTypes } from "../svgs/SocialMediaSVGS";
 import LinkList from "../Header/LinkList/LinkList";
 import PlusSVG from "../svgs/PlusSVG";
 import { useAnimationPhase } from "@/hooks/useAnimation";
-
-export default function Footer() {
-
+import { DictionaryModel } from "@/models/dictionary.model";
+interface Props {
+  dict: DictionaryModel;
+}
+export default function Footer({ dict }: Props) {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const { minimized, setMinimized, animationPhase, isMobile } =
     useAnimationPhase({ sentinelRef });
@@ -79,7 +81,7 @@ export default function Footer() {
               (minimized || isMobile.current) && "hidden"
             }`}
           >
-            Copyright ©2024 Michaeli Eran
+            {dict.footer.copy}
           </h1>
         </div>
       </footer>

@@ -34,7 +34,7 @@ export default function RootLayout({
   params: { lang },
 }: Readonly<Props>) {
   return (
-    <html lang={lang}>
+    <html suppressHydrationWarning lang={lang}>
       <body
         className={` max-w-screen  ${bitter.variable} ${work_sans.variable}`}
       >

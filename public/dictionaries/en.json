@@ -1,3 +1,63 @@
 {
-    "home": "Home"
+  "navigation": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search",
+    "profile": "Profile",
+    "editor": "Editor",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "footer": {
+    "copy": "Copyright ©2024 Michaeli Eran All rights reserved."
+  },
+  "sections": {
+    "latest": "Latest",
+    "most_Popular": "Most Popular",
+    "most_Commented": "Most Commented",
+    "most_Viewed": "Most Viewed",
+    "categories": "Categories",
+    "tags": "Tags"
+  },
+  "article": {
+    "read_More": "Read More",
+    "min": "min",
+    "by": "By",
+    "no_Comments": "No Comments",
+    "comments": "Comments",
+    "leave_Comment": "Leave a Comment",
+    "read": "Read",
+    "like": "Like",
+    "details": "Details",
+    "share": "Share",
+    "facebook": "Facebook",
+    "twitter": "Twitter",
+    "linkedin": "Linkedin",
+    "whatsapp": "Whatsapp",
+    "create_At": "Create At",
+    "update_At": "Update At",
+    "minutes": "Minutes",
+    "read_Time": "Read Time",
+    "thanks": "Thanks you for reading"
+  },
+  "form": {
+    "submit": "Submit",
+    "email": "Email",
+    "last_Name": "Last Name",
+    "first_Name": "First Name",
+    "username": "Username",
+    "save": "Save",
+    "password": "Password",
+    "number": "Number",
+    "title": "Title",
+    "date_liked": "Date liked",
+    "actions": "Actions"
+  },
+  "settings": {
+    "settings": "Settings",
+    "edit": "Edit",
+    "delete": "Delete"
+  }
 }

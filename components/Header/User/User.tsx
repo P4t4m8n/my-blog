@@ -5,13 +5,16 @@ import { useRef, useEffect } from "react";
 import { useAuthStore } from "@/store/auth.store";
 import { getSessionUser } from "@/server/user.server";
 import LoginModel from "@/components/Login/LoginModel/LoginModel";
+import { DictionaryModel } from "@/models/dictionary.model";
 
 interface Props {
   isMinimized: boolean;
   isMobile: boolean;
+  dict: DictionaryModel;
+  lang: string;
 }
 
-export default function User({ isMinimized, isMobile }: Props) {
+export default function User({ isMinimized, isMobile, dict, lang }: Props) {
   const { user, logout, setUser } = useAuthStore();
   const modelRef = useRef(null);
   const [isModel, setModel] = useModal(modelRef, null);
@@ -48,7 +51,7 @@ export default function User({ isMinimized, isMobile }: Props) {
           className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-fit absolute h-fit ${
             isMinimized
               ? ` -top-[6rem] -left-[1rem]`
-              : `-left-[1rem] top-[3rem] ${
+              : `-left-[2rem] top-[3rem] ${
                   isMobile ? `mobile:-top-[6rem] mobile:-left-[1rem]` : ""
                 }`
           } z-20`}
@@ -57,7 +60,7 @@ export default function User({ isMinimized, isMobile }: Props) {
             onClick={() => handleNavigation("/profile")}
             className="hover:animate-text-color-slide"
           >
-            Profile
+            {dict.navigation.profile}
           </button>
 
           {user.role === "ADMIN" && (
@@ -66,20 +69,20 @@ export default function User({ isMinimized, isMobile }: Props) {
                 className="hover:animate-text-color-slide"
                 onClick={() => handleNavigation("/blog/edit/new")}
               >
-                Editor
+                {dict.navigation.editor}
               </button>
             </>
           )}
           <button
             onClick={() => handleNavigation("/")}
-            className="hover:animate-text-color-slide"
+            className="hover:animate-text-color-slide "
           >
-            Logout
+            {dict.navigation.logout}
           </button>
         </div>
       )}
     </div>
   ) : (
-    <LoginModel />
+    <LoginModel dict={dict} />
   );
 }

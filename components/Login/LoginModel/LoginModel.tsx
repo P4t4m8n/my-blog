@@ -1,10 +1,15 @@
 "use client";
 
 import { useModal } from "@/hooks/useModal";
+import { DictionaryModel } from "@/models/dictionary.model";
 import { useAuthStore } from "@/store/auth.store";
 import { FormEvent, useRef, useState } from "react";
 
-export default function LoginModel() {
+interface Props {
+  dict: DictionaryModel;
+}
+
+export default function LoginModel({ dict }: Props) {
   const [isLogin, setIsLogin] = useState(false);
   const modelRef = useRef<HTMLDivElement>(null);
   const [model, setModel] = useModal(modelRef, null);
@@ -28,9 +33,12 @@ export default function LoginModel() {
 
   return (
     <>
-      <button onClick={() => setModel(true)} suppressHydrationWarning>Login</button>
+      <button onClick={() => setModel(true)} suppressHydrationWarning>
+        {dict.navigation.login}
+      </button>
       {model && (
-        <section suppressHydrationWarning
+        <section
+          suppressHydrationWarning
           ref={modelRef}
           className="model background-theme flex z-30 flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  fixed min-h-screen-minus-sticky rounded p-4 items-center bg-customDark font-workSans"
         >
@@ -40,15 +48,19 @@ export default function LoginModel() {
           >
             {!isLogin && (
               <>
-                <h3 className=" text-sm font-semibold">First Name</h3>
+                <h3 className=" text-sm font-semibold">
+                  {dict.form.first_Name}
+                </h3>
                 <input
                   className="min-w-[20rem] bg-customLight text-customDark pl-4 py-2 rounded-lg border-2 border-cyan-200 focus:border-cyan-400 border-solid "
-                  placeholder="Enter your First name"
+                  placeholder={dict.form.first_Name}
                   name="firstName"
                   type="text"
                   required
                 />
-                <h3 className=" text-sm font-semibold">Last Name</h3>
+                <h3 className=" text-sm font-semibold">
+                  {dict.form.last_Name}
+                </h3>
                 <input
                   className="min-w-[20rem] bg-customLight text-customDark pl-4 py-2 rounded-lg border-2 border-cyan-200 focus:border-cyan-400 border-solid "
                   placeholder="Enter your Last name"
@@ -56,28 +68,28 @@ export default function LoginModel() {
                   type="text"
                   required
                 />
-                <h3 className=" text-sm font-semibold">User Name</h3>
+                <h3 className=" text-sm font-semibold">{dict.form.username}</h3>
                 <input
                   className="min-w-[20rem] bg-customLight text-customDark pl-4 py-2 rounded-lg border-2 border-cyan-200 focus:border-cyan-400 border-solid "
-                  placeholder="User name"
+                  placeholder={dict.form.username}
                   name="username"
                   type="text"
                   required
                 />
               </>
             )}
-            <h3 className=" text-sm font-semibold">Email</h3>
+            <h3 className=" text-sm font-semibold">{dict.form.email}</h3>
             <input
               className="min-w-[20rem] bg-customLight text-customDark pl-4 py-2 rounded-lg border-2 border-cyan-200 focus:border-cyan-400 border-solid "
-              placeholder="Email"
+              placeholder={dict.form.email}
               name="email"
               type="email"
               required
             />
-            <h3 className=" text-sm font-semibold">Password</h3>
+            <h3 className=" text-sm font-semibold">{dict.form.password}</h3>
             <input
               className="min-w-[20rem] bg-customLight text-customDark pl-4 py-2 rounded-lg border-2 border-cyan-200 focus:border-cyan-400 border-solid "
-              placeholder="Password"
+              placeholder={dict.form.password}
               name="password"
               type="password"
               required
@@ -87,7 +99,7 @@ export default function LoginModel() {
                 {!isLogin ? "Already a member? Login" : "Not a member? Sign-Up"}
               </button>
               <button className=" " type="submit">
-                Submit
+                {dict.form.submit}
               </button>
             </div>
           </form>
