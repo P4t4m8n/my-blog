@@ -180,6 +180,9 @@ svg {
 .highlight-theme-background {
   background-color: var(--highlight-color);
 }
+.highlight-theme-text-2 {
+  color: var(--highlight-color);
+}
 .highlight-theme-text {
   color: var(--highlight-color-text);
 }

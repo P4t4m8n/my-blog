@@ -110,19 +110,19 @@ export default async function BlogPostDetails({ blogPostId, lang }: Props) {
           <div>
             <button className="flex my-2  gap-4">
               <SocialMediaSVGS type="facebook" />
-              <span className="">Facebook</span>
+              <span className="">{dict.article.facebook}</span>
             </button>
             <button className="flex my-2 gap-4">
               <SocialMediaSVGS type="twitter" />
-              <span>Twitter</span>
+              <span>{dict.article.twitter}</span>
             </button>
             <button className="flex my-2 gap-4">
               <SocialMediaSVGS type="linkedin" />
-              <span>Linkedin</span>
+              <span>{dict.article.linkedin}</span>
             </button>
             <button className="flex my-2 gap-4">
               <SocialMediaSVGS type="whatsapp" />
-              <span>Whatsapp</span>
+              <span>{dict.article.whatsapp}</span>
             </button>
           </div>
         </div>

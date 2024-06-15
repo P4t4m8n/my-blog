@@ -40,7 +40,8 @@
     "update_At": "Update At",
     "minutes": "Minutes",
     "read_Time": "Read Time",
-    "thanks": "Thanks you for reading"
+    "thanks": "Thanks you for reading",
+    "description": "Description"
   },
   "form": {
     "submit": "Submit",
@@ -58,6 +59,48 @@
   "settings": {
     "settings": "Settings",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "id": "ID",
+    "main_Tag": "Main Tag",
+    "accessibleBy": "Accessible By",
+    "create_at": "Create At",
+    "update_at": "Update At",
+    "actions": "Actions",
+    "publish": "Publish",
+    "private": "Private",
+    "public": "Public",
+    "user": "User",
+    "admin": "Admin"
+  },
+  "tags": {
+    "personal": "Personal",
+    "tech": "Tech",
+    "health": "Health",
+    "sport": "Sport",
+    "politics": "Politics",
+    "food": "Food",
+    "culture": "Culture",
+    "science": "Science",
+    "opinion": "Opinion",
+    "react": "React",
+    "angular": "Angular",
+    "vue": "Vue",
+    "javascript": "Javascript",
+    "nodejs": "Nodejs",
+    "python": "Python",
+    "java": "Java",
+    "c": "C",
+    "c++": "C++",
+    "c#": "C#",
+    "php": "PHP",
+    "kotlin": "Kotlin",
+    "go": "Go",
+    "rust": "Rust",
+    "gaming": "Gaming",
+    "music": "Music",
+    "movies": "Movies",
+    "books": "Books",
+    "art": "Art",
+    "fitness": "Fitness"
   }
 }

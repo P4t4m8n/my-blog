@@ -2,6 +2,7 @@
 
 import { useModal } from "@/hooks/useModal";
 import { DictionaryModel } from "@/models/dictionary.model";
+import { isHebrew } from "@/service/blog.service";
 import { useAuthStore } from "@/store/auth.store";
 import { FormEvent, useRef, useState } from "react";
 
@@ -31,6 +32,8 @@ export default function LoginModel({ dict }: Props) {
     }
   };
 
+  const isRIghtToLeft = isHebrew(dict.article.comments)?" items-end":" items-start";
+
   return (
     <>
       <button onClick={() => setModel(true)} suppressHydrationWarning>
@@ -40,10 +43,10 @@ export default function LoginModel({ dict }: Props) {
         <section
           suppressHydrationWarning
           ref={modelRef}
-          className="model background-theme flex z-30 flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  fixed min-h-screen-minus-sticky rounded p-4 items-center bg-customDark font-workSans"
+          className={`model background-theme shadow-full-screen flex z-30 flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  fixed min-h-screen-minus-sticky rounded p-4 items-center bg-customDark font-workSans`}
         >
           <form
-            className="flex flex-col gap-2 h-[65vh] max-w-[30rem] bg-customLight rounded-lg p-8  "
+            className={`flex flex-col gap-2 h-[65vh] max-w-[30rem] bg-customLight rounded-lg p-8 ${isRIghtToLeft}  `}
             onSubmit={handleSubmit}
           >
             {!isLogin && (
@@ -63,7 +66,7 @@ export default function LoginModel({ dict }: Props) {
                 </h3>
                 <input
                   className="min-w-[20rem] bg-customLight text-customDark pl-4 py-2 rounded-lg border-2 border-cyan-200 focus:border-cyan-400 border-solid "
-                  placeholder="Enter your Last name"
+                  placeholder={dict.form.last_Name}
                   name="lastName"
                   type="text"
                   required
@@ -94,7 +97,7 @@ export default function LoginModel({ dict }: Props) {
               type="password"
               required
             />
-            <div className=" pt-1 flex justify-between">
+            <div className=" pt-1 flex w-full justify-between">
               <button onClick={() => setIsLogin(!isLogin)}>
                 {!isLogin ? "Already a member? Login" : "Not a member? Sign-Up"}
               </button>

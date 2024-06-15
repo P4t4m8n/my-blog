@@ -43,6 +43,7 @@ interface Article {
   minutes: string;
   read_Time: string;
   thanks: string;
+  description: string;
 }
 
 interface Form {
@@ -63,6 +64,17 @@ interface Settings {
   settings: string;
   edit: string;
   delete: string;
+  id: string;
+  main_Tag: string;
+  accessibleBy: string;
+  create_at: string;
+  update_at: string;
+  actions: string;
+  publish: string;
+  private: string;
+  public: string;
+  user: string;
+  admin: "string";
 }
 
 export interface DictionaryModel {
@@ -75,4 +87,3 @@ export interface DictionaryModel {
 }
 
 export type LanguageType = "he" | "en";
-

@@ -44,7 +44,6 @@ export default function ProfileDetails() {
 
     try {
       const updatedUser = await updateUser(_user);
-      console.log("updatedUser:", updatedUser)
     } catch (error) {
       console.error("error:", error);
     }

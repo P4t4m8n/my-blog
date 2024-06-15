@@ -19,7 +19,7 @@ export default function ProfileComments({ comments }: Props) {
   }, [comments]);
 
   const onSaveComment = useCallback(async (commentToSave: CommentSaveModel) => {
-    if (!user?.id) return console.log("You must be logged in to comment");
+    if (!user?.id) return console.error("You must be logged in to comment");
     try {
       const updateComment = await saveComment(commentToSave);
 
@@ -37,7 +37,7 @@ export default function ProfileComments({ comments }: Props) {
 
   const onDeleteComment = useCallback(async (commentId: string) => {
     if (!user?.id)
-      return console.log("You must be logged in to delete comment");
+      return console.error("You must be logged in to delete comment");
     try {
       await deleteComment(commentId);
       setCommentsState((prev) => {

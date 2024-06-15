@@ -1,15 +1,19 @@
 "use client";
-import { useState, useEffect } from "react";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import { useState, useEffect, ChangeEvent } from "react";
+import ReactQuill, { Quill, UnprivilegedEditor } from "react-quill";
+import "react-quill/dist/quill.snow.css"; 
 import hljs from "highlight.js";
-import "highlight.js/styles/monokai-sublime.css"; // Import Highlight.js styles
+import "highlight.js/styles/monokai-sublime.css"; 
 import { BlogPostModel } from "@/models/blogPost.model";
 import { isHebrew } from "@/service/blog.service";
+import { saveBlog } from "@/server/blog.server";
+import { DictionaryModel } from "@/models/dictionary.model";
+import DeltaStatic from "quill";
+import Sources from "quill";
 
 interface Props {
-  onSaveBlogPost: (blogPost: BlogPostModel) => void
   blogPost: BlogPostModel;
+  dict: DictionaryModel;
 }
 
 // Custom fonts
@@ -29,56 +33,39 @@ Quill.register("modules/syntax", true);
 // Register History module
 const History = Quill.import("modules/history");
 Quill.register("modules/history", History, true);
-/////////////*******************//////////////////
-const TextEditor = ({onSaveBlogPost,blogPost}:Props) => {
-  const [content, setContent] = useState(blogPost.content);
-  const [title, setTitle] = useState(blogPost.title);
 
-  // Load content from localStorage when the component mounts
-  useEffect(() => {
-    const savedContent = localStorage.getItem("quill-content");
-    if (savedContent) {
-      setContent(savedContent);
-      }
-    const savedTitle = localStorage.getItem("quill-title");
-    if (savedTitle) {
-      setTitle(savedTitle);
+const TextEditor = ({ blogPost, dict }: Props) => {
+  const [blogPostState, setBlogPostState] = useState<BlogPostModel>(blogPost);
+
+  // useEffect(() => {
+  //   setBlogPostState(blogPost);
+  // }, [blogPost]);
+
+  const handleContentChange = (
+    value: string,
+    delta: DeltaStatic,
+    source: Sources,
+    editor: UnprivilegedEditor
+  ) => {};
+
+  const handleTitleDescriptionChange = (ev: ChangeEvent) => {};
+
+  const handleSave = async () => {
+    try {
+      const savedBlog = await saveBlog(blogPostState!);
+      setBlogPostState(savedBlog);
+    } catch (error) {
+      console.error("error:", error);
     }
-  }, []);
-
-  // Save content to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem("quill-content", content);
-  }, [content]);
-  useEffect(() => {
-    localStorage.setItem("quill-title", title);
-  }, [title]);
-
-  const handleChange = (value: string) => {
-    setContent(value);
   };
 
-  const handleSave = () => {
-    const blogPostToSave = {
-      ...blogPost,
-      content,
-      title,
-    };
-    try {
-      const savedBlog = onSaveBlogPost(blogPostToSave);
-      
-    } catch (error) {
-      
-    }
-    }
-  
-  const titleClass = isHebrew(title)
+  const titleClass = isHebrew(blogPostState?.title)
     ? "text-right direction-rtl"
     : "text-left direction-ltr";
 
   return (
     <>
-      <div className="" id="toolbar-container">
+      <div className={`${titleClass}`} id="toolbar-container">
         <span className="ql-formats text-customLight fill-customLight">
           <select className="ql-font  text-customLight fill-customLight  ">
             {fonts.map((font) => (
@@ -131,15 +118,23 @@ const TextEditor = ({onSaveBlogPost,blogPost}:Props) => {
       </div>
       <input
         type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
+        value={blogPost.title}
+        name="title"
+        onChange={handleTitleDescriptionChange}
+        placeholder={dict.form.title}
         className={`bg-customDark text-customLight p-4 pl-8 w-full border-2 border-customLight ${titleClass}`}
+      />
+      <textarea
+        value={blogPost.description}
+        name="description"
+        placeholder={dict.article.description}
+        onChange={handleTitleDescriptionChange}
+        className="bg-customDark text-customLight p-4 border-2 border-customLight w-full h-32"
       />
       <ReactQuill
         className="bg-customDark text-customLight p-4 border-2  border-customLight min-h-text-editor max-w-editor outline-none"
-        value={content}
-        onChange={handleChange}
+        value={blogPost.content}
+        onChange={handleContentChange}
         modules={TextEditor.modules}
         formats={TextEditor.formats}
         theme="snow"
@@ -148,7 +143,7 @@ const TextEditor = ({onSaveBlogPost,blogPost}:Props) => {
         className=" float-right p-4 mt-2 rounded font-workSans bg-customTeal"
         onClick={handleSave}
       >
-        Save Content
+        {dict.form.save}
       </button>
     </>
   );

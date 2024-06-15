@@ -17,7 +17,7 @@ export default function CommentList({ comments, saveCommentServer }: Props) {
     event.preventDefault();
 
     if (!user || !user.id)
-      return console.log("You must be logged in to comment");
+      return console.error("You must be logged in to comment");
     const comment = event.currentTarget.comment.value;
 
     const updateComment = await saveCommentServer(comment, user.id);

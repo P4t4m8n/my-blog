@@ -13,7 +13,7 @@ export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const { pathname } = req.nextUrl;
 
-  let user = { user: { role: "" } };
+  let user = { role: "" };
   if (token)
     user = await decodeJWT(token.value, process.env.SECRET_KEY as string);
 
@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
     (pathname === "/blog/edit" ||
       pathname === "/profile/blog-posts" ||
       pathname === "/profile/users") &&
-    user?.user?.role !== "admin"
+    user.role !== "ADMIN"
   ) {
     const returnUrl = req.nextUrl.clone();
     returnUrl.pathname = "/";
@@ -35,13 +35,13 @@ export async function middleware(req: NextRequest) {
   if (pathnameHasLocale) return res;
   // Redirect if there is no locale
   const returnUrl = req.nextUrl.clone();
-  returnUrl.pathname = `/${locale}${pathname}`
+  returnUrl.pathname = `/${locale}${pathname}`;
   return NextResponse.redirect(returnUrl);
 }
 export const config = {
   matcher: [
     // Skip all internal paths (_next)
-    "/((?!_next).*)",
+    "/((?!_next|api).*)",
     // Optional: only run on root (/) URL
     // '/'
   ],

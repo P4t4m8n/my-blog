@@ -6,7 +6,6 @@ import { prisma } from "@/prisma/prismaClient";
 
 export async function POST(request: Request) {
   const { email, password } = await request.json();
- 
 
   try {
     const userData = await prisma.user.findFirstOrThrow({
@@ -30,9 +29,6 @@ export async function POST(request: Request) {
         },
       },
     });
-    
-
-  
 
     const isPasswordValid = await bcrypt.compare(password, userData.password);
     if (!isPasswordValid) {
@@ -40,7 +36,7 @@ export async function POST(request: Request) {
     }
 
     const token = jwt.sign(
-      { userId: userData.id },
+      { userId: userData.id,role:userData.role },
       process.env.SECRET_KEY as string,
       {
         expiresIn: "72h",

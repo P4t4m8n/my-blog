@@ -68,9 +68,9 @@ model User {
 model Comments {
   id         String   @id @default(uuid())
   content    String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
-  blogPost   BlogPost @relation(fields: [blogPostId], references: [id])
+  blogPost   BlogPost @relation(fields: [blogPostId], references: [id],onDelete: Cascade)
   blogPostId String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -78,9 +78,9 @@ model Comments {
 
 model Like {
   id         String   @id @default(uuid())
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
-  blogPost   BlogPost @relation(fields: [blogPostId], references: [id])
+  blogPost   BlogPost @relation(fields: [blogPostId], references: [id] , onDelete: Cascade)
   blogPostId String
   createdAt  DateTime @default(now())
 }

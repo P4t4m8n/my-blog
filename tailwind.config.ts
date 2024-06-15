@@ -75,19 +75,23 @@ const config: Config = {
         "custom-lg": "13rem 1fr",
         "custom-md": "calc(100svw - 14rem)",
         "custom-sm": "calc(100svw - 4rem)",
+        posts:
+          "minmax(1rem,5%) minmax(6.5rem,20%) minmax(6.5rem,10%) minmax(5rem,15%) minmax(7rem,15%) minmax(5rem,15%) minmax(5rem,15%) minmax(5rem,15%) ",
       },
       gridTemplateRows: {
         "custom-lg": "auto auto 1fr auto auto auto",
         "custom-md": "auto auto auto auto 1fr auto auto auto",
       },
-
+      boxShadow: {
+        "full-screen": "0px 10px 3000px 1500px rgba(0, 0, 0, 0.5)",
+      },
       screens: {
         details_breakpoint: {
           max: "930px",
-          },
-            mobile: {
-              max: "650px",
-            },
+        },
+        mobile: {
+          max: "650px",
+        },
       },
     },
   },

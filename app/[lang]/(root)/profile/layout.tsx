@@ -6,7 +6,7 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <section suppressHydrationWarning className="font-workSans grid text-customLight">
+    <section  className="font-workSans grid">
       <ProfileNav />
       {children}
     </section>

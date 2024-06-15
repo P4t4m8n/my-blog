@@ -1,4 +1,3 @@
-import { getDictionary } from "@/app/[lang]/dictionaries";
 import BlogPostDetails from "@/components/BlogPostDetails/BlogPostDetails";
 import { LanguageType } from "@/models/dictionary.model";
 

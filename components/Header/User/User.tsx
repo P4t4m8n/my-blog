@@ -48,10 +48,10 @@ export default function User({ isMinimized, isMobile, dict, lang }: Props) {
 
       {isModel && (
         <div
-          className={`background-theme border shadow-md left-0 rounded-lg gap-4 flex flex-col items-start p-2 w-fit absolute h-fit ${
+          className={`background-theme border shadow-md  -left-4 rounded-lg gap-4 flex flex-col items-start p-2 w-fit absolute h-fit ${
             isMinimized
-              ? ` -top-[6rem] -left-[1rem]`
-              : `-left-[2rem] top-[3rem] ${
+              ? ` -top-[6rem] `
+              : ` top-[3rem] ${
                   isMobile ? `mobile:-top-[6rem] mobile:-left-[1rem]` : ""
                 }`
           } z-20`}

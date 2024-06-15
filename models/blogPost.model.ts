@@ -4,6 +4,8 @@ import { CommentModel, commentDTO } from "./comment.model";
 export interface MinimumBlogPostModel {
   id?: string;
   title: string;
+  published: boolean;
+
   mainTag: string;
   createdAt: Date;
   updatedAt?: Date | null;
@@ -28,7 +30,6 @@ export interface SmallBlogPostDTO {
 export interface BlogPostModel extends SmallBlogPostModel {
   content: string;
   imgs: string[];
-  published: boolean;
   updatedAt?: Date | null;
   tags: string[];
   comments?: CommentModel[];
@@ -46,8 +47,8 @@ export interface BlogPostDTO {
   mainTag: string;
   createdAt: Date;
   updatedAt: Date | null;
-    tags: {
-      name: string;
-    }[];
+  tags: {
+    name: string;
+  }[];
   comments: commentDTO[];
 }
