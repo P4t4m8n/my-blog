@@ -1,4 +1,3 @@
-"use client";
 import {  useState, useCallback } from "react";
 import { MinimumBlogPostModel } from "@/models/blogPost.model";
 import { DictionaryModel } from "@/models/dictionary.model";

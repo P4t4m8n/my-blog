@@ -35,13 +35,15 @@ export default async function BlogHomePreview({
         fill
         placeholder="blur"
         blurDataURL={placeholder}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        sizes="(max-width: 768px) 33vw, (max-width: 1200px)33vw, 33vw"
       />
       <LikeButton blogId={id!} />
       <div className="   p-2 absolute -bottom-6 left-0 w-full ">
         {isFirst && (
           <div className=" background-theme relative card-curve-before p-4 w-fit rounded-t-2xl">
-            <h3 className=" w-fit p-1 px-2 rounded-3xl text-center">{dict.sections.latest}</h3>
+            <h3 className=" w-fit p-1 px-2 rounded-3xl text-center">
+              {dict.sections.latest}
+            </h3>
           </div>
         )}
         <div
