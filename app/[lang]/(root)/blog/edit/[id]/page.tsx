@@ -1,13 +1,10 @@
 import dynamic from "next/dynamic";
-const TextEditor = dynamic(
-  () => import("../../../../../../components/TextEditor/Texteditor"),
-  {
-    ssr: true,
-  }
-);
+
+
 import { getEmptyBlogPost } from "@/service/blog.service";
 import { getBlogById } from "@/server/blog.server";
 import { getDictionary } from "@/app/[lang]/dictionaries";
+import TextEditor from "../../../../../../components/TextEditor/Texteditor";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "he" }];
