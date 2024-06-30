@@ -65,7 +65,7 @@ export const getSmallBlogPosts = async (
       orderBy: {
         createdAt: orderBy || "desc",
       },
-      take: criteria.take || 10,
+      take: criteria.take || 99999,
     });
 
     const blogs = convertSmallBlogPostDTOsToSmallModels(dbBlogPosts);

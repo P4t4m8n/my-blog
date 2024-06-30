@@ -2,7 +2,7 @@ import { prisma } from "./prismaClient";
 
 async function main() {
   for (let i = 0; i < 20; i++) {
-    const title = `Blog Post ${i + 1}`;
+    const title = `Blog Post ${i + 21}`;
     const randomNumber = getRandomNumber(100, 500);
     const content = makeLorem(randomNumber);
     const published = i % 2 === 0;
