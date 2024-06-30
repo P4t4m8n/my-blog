@@ -52,7 +52,7 @@ export default function Header({ dict, lang }: Props) {
       >
         <Image
           priority={true}
-          src="/logo.png"
+          src="logo.png"
           alt="logo"
           width={64}
           height={64}
