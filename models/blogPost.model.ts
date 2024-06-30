@@ -5,7 +5,6 @@ export interface MinimumBlogPostModel {
   id?: string;
   title: string;
   published: boolean;
-
   mainTag: string;
   createdAt: Date;
   updatedAt?: Date | null;
@@ -25,6 +24,8 @@ export interface SmallBlogPostDTO {
   mainTag: string;
   createdAt: Date;
   imgs: string[];
+  published: boolean;
+
 }
 
 export interface BlogPostModel extends SmallBlogPostModel {

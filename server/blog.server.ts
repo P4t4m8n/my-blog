@@ -60,6 +60,7 @@ export const getSmallBlogPosts = async (
         mainTag: true,
         createdAt: true,
         imgs: true,
+        published: true,
       },
       orderBy: {
         createdAt: orderBy || "desc",

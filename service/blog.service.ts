@@ -46,6 +46,7 @@ export const convertSmallBlogPostDTOsToSmallModels = (
       readTime: post.readTime,
       mainTag: post.mainTag,
       createdAt: post.createdAt,
+      published: post.published,
     };
   });
 };

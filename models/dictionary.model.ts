@@ -74,7 +74,7 @@ interface Settings {
   private: string;
   public: string;
   user: string;
-  admin: "string";
+  admin: string;
 }
 
 export interface DictionaryModel {
