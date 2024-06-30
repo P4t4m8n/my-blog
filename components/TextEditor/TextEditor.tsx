@@ -1,8 +1,6 @@
 "use client";
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState,  ChangeEvent } from "react";
 import ReactQuill, { Quill, UnprivilegedEditor } from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import "highlight.js/styles/monokai-sublime.css";
 import { BlogPostModel } from "@/models/blogPost.model";
 import { isHebrew } from "@/service/blog.service";
 import { saveBlog } from "@/server/blog.server";
