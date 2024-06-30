@@ -24,7 +24,7 @@ export default function Footer({ dict }: Props) {
   return (
     <>
       <footer
-        className={`background-theme fixed bottom-0 left-0 z-50 font-workSans gap-4 p-4 transition-width flex items-center justify-center ease-in ${
+        className={`background-theme  fixed bottom-0 left-0 z-50 font-workSans gap-4 p-4 transition-width flex items-center justify-center ease-in ${
           minimized
             ? "w-24 h-24 mobile:w-4"
             : `w-full h-24 ${isMobile.current ? "mobile:w-24" : "w-full"} `

@@ -6,5 +6,25 @@
         "signup",
         "Texteditor",
         "zustand"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#c6fe17",
+        "activityBar.background": "#c6fe17",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#01a9de",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#c6fe17",
+        "statusBar.background": "#abe101",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#84ae01",
+        "statusBarItem.remoteBackground": "#abe101",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#abe101",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#abe10199",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#abe101"
 }

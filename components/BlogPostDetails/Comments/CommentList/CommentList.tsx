@@ -29,14 +29,14 @@ export default function CommentList({ comments, saveCommentServer }: Props) {
     });
   };
   return (
-    <ul className="my-12 flex flex-col grid-area-details-comments-lg details_breakpoint:grid-area-details-comments-md gap-4 ">
+    <ul className="my-12 flex  flex-col  grid-area-details-comments-lg details_breakpoint:grid-area-details-comments-md gap-4 ">
       <h1 className="text-4xl mt-8">Comments</h1>
-      <li className="mt-8 border p-4 rounded-lg flex flex-col gap-2 ">
+      <li className="mt-8 border  p-4 rounded-lg flex flex-col gap-2 pr-4 ">
         <CommentEdit onSaveComment={onSaveComment} />
       </li>
       {commentsState.map((comment) => (
         <li
-          className="border p-4 rounded-lg flex flex-col gap-2"
+          className="border p-4  rounded-lg flex flex-col gap-2"
           key={comment.id}
         >
           <CommentPreview comment={comment} loginUserId={user?.id} />

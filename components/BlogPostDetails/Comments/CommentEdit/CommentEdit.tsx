@@ -8,7 +8,7 @@ interface Props {
 }
 export default function CommentEdit({ onSaveComment, comment }: Props) {
   return (
-    <form onSubmit={onSaveComment} className="flex flex-col gap-2">
+    <form onSubmit={onSaveComment} className="flex flex-col gap-2 ">
       <textarea
         className="text-customLight h-40 resize-none rounded-lg p-4 bg-gray-300"
         name="comment"

@@ -58,7 +58,7 @@ export default async function BlogPostDetails({ blogPostId, lang }: Props) {
   return (
     <section
       className={
-        "grid grid-cols-custom-lg grid-rows-custom-lg mobile:grid-cols-custom-sm details_breakpoint:grid-cols-custom-md  details_breakpoint:grid-rows-custom-md gap-x-4 gap-y-8 mobile:pt-4 rounded-lg font-bitter  " +
+        "grid  grid-cols-custom-lg grid-rows-custom-lg mobile:grid-cols-custom-sm details_breakpoint:grid-cols-custom-md  details_breakpoint:grid-rows-custom-md gap-x-4 gap-y-8 mobile:pt-4 rounded-lg font-bitter  " +
         titleClass
       }
     >
@@ -82,7 +82,7 @@ export default async function BlogPostDetails({ blogPostId, lang }: Props) {
       </header>
 
       <div className=" grid-area-details-info-lg details_breakpoint:grid-area-details-info-md details_breakpoint:flex  details_breakpoint:flex-wrap  relative">
-        <div className="background-theme-1 sticky top-[27%] px-12 py-4 rounded-lg h-[13rem] font-light details_breakpoint:w-[50%]">
+        <div className="background-theme-1 sticky top-[30%] px-12 py-4 rounded-lg h-[13rem] font-light details_breakpoint:w-[50%]">
           <h3 className="text-xl font-light relative border-longer">
             {dict.article.details}
           </h3>
@@ -103,7 +103,7 @@ export default async function BlogPostDetails({ blogPostId, lang }: Props) {
             </h3>
           </div>
         </div>
-        <div className="background-theme-2 flex flex-col sticky top-[58%] h-[13rem]  px-12 py-4 rounded-lg font-light details_breakpoint:w-[50%] mobile:flex mobile:flex-col mobile:items-center">
+        <div className="background-theme-2 flex flex-col sticky top-[55%] h-[13rem]  px-12 py-4 rounded-lg font-light details_breakpoint:w-[50%] mobile:flex mobile:flex-col mobile:items-center">
           <h3 className="text-xl font-light relative border-longer mb-1">
             {dict.article.share}
           </h3>
