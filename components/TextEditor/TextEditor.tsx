@@ -2,7 +2,6 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import ReactQuill, { Quill, UnprivilegedEditor } from "react-quill";
 import "react-quill/dist/quill.snow.css"; 
-import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css"; 
 import { BlogPostModel } from "@/models/blogPost.model";
 import { isHebrew } from "@/service/blog.service";

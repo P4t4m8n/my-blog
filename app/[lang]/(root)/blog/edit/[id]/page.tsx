@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 const TextEditor = dynamic(
   () => import("../../../../../../components/TextEditor/Texteditor"),
   {
-    ssr: false,
+    ssr: true,
   }
 );
 import { getEmptyBlogPost } from "@/service/blog.service";
