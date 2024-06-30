@@ -9,7 +9,7 @@
     "lint": "next lint",
     "seed": "npx tsc prisma/seed.ts && node prisma/seed.js",
     "tests": "npx tsc service/tests.ts && node service/tests.js ",
-    "migrate": "npx prisma migrate dev",
+    "migrate": "prisma migrate deploy",
     "reset": "npx prisma migrate reset",
     "purge": "npx tsc prisma/deleteAllBlogPosts.ts && node prisma/deleteAllBlogPosts.js"
   },
