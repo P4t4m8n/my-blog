@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, ChangeEvent } from "react";
 import ReactQuill, { Quill, UnprivilegedEditor } from "react-quill";
-import "react-quill/dist/quill.snow.css"; 
-import "highlight.js/styles/monokai-sublime.css"; 
+import "react-quill/dist/quill.snow.css";
+import "highlight.js/styles/monokai-sublime.css";
 import { BlogPostModel } from "@/models/blogPost.model";
 import { isHebrew } from "@/service/blog.service";
 import { saveBlog } from "@/server/blog.server";
@@ -33,7 +33,7 @@ Quill.register("modules/syntax", true);
 const History = Quill.import("modules/history");
 Quill.register("modules/history", History, true);
 
-const TextEditor = ({ blogPost, dict }: Props) => {
+export default function TextEditor({ blogPost, dict }: Props) {
   const [blogPostState, setBlogPostState] = useState<BlogPostModel>(blogPost);
 
   // useEffect(() => {
@@ -146,7 +146,7 @@ const TextEditor = ({ blogPost, dict }: Props) => {
       </button>
     </>
   );
-};
+}
 
 // Configure Quill modules (toolbar, clipboard, syntax, history, etc.)
 TextEditor.modules = {
@@ -189,5 +189,3 @@ TextEditor.formats = [
   "formula",
   "clean",
 ];
-
-export default TextEditor;
