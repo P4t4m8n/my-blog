@@ -2,7 +2,7 @@
 import { getEmptyBlogPost } from "@/service/blog.service";
 import { getBlogById } from "@/server/blog.server";
 import { getDictionary } from "@/app/[lang]/dictionaries";
-import TextEditor from "@/components/TextEditor/Texteditor";
+import TextEditor from "@/components/TextEditor/TextEditor";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "he" }];
